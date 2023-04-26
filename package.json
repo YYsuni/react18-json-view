@@ -1,0 +1,82 @@
+{
+	"name": "react18-json-view",
+	"version": "0.0.1",
+	"type": "module",
+	"description": "JSON viewer for react18",
+	"main": "dist/cjs/index.cjs",
+	"types": "dist/index",
+	"module": "dist/es/index.mjs",
+	"brower": "dist/es/index.mjs",
+	"scripts": {
+		"dev": "npm run storybook",
+		"prepare": "husky install",
+		"prebuild": "npm run clean",
+		"build": "rollup -c",
+		"clean": "rm -rf dist",
+		"format": "prettier --write .",
+		"prepublishOnly": "npm run build",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build"
+	},
+	"files": [
+		"src",
+		"dist"
+	],
+	"devDependencies": {
+		"@rollup/plugin-commonjs": "^24.0.0",
+		"@rollup/plugin-node-resolve": "^15.0.1",
+		"@storybook/addon-essentials": "^7.0.5",
+		"@storybook/addon-interactions": "^7.0.5",
+		"@storybook/addon-links": "^7.0.5",
+		"@storybook/addon-styling": "^1.0.1",
+		"@storybook/blocks": "^7.0.5",
+		"@storybook/react": "^7.0.5",
+		"@storybook/react-vite": "^7.0.5",
+		"@types/node": "^18.11.18",
+		"@types/react": "^18.0.26",
+		"@types/react-dom": "^18.0.8",
+		"autoprefixer": "^10.4.14",
+		"husky": "^8.0.3",
+		"lint-staged": "^13.1.0",
+		"postcss": "^8.4.23",
+		"postcss-loader": "^7.2.4",
+		"prettier": "^2.8.2",
+		"prettier-plugin-tailwindcss": "^0.2.7",
+		"react": "^18.2.0",
+		"rollup": "^3.9.1",
+		"rollup-plugin-peer-deps-external": "^2.2.4",
+		"rollup-plugin-typescript2": "^0.34.1",
+		"storybook": "^7.0.7",
+		"tailwindcss": "^3.3.2",
+		"typescript": "^5.0.4"
+	},
+	"peerDependencies": {
+		"react": ">=16.8.0"
+	},
+	"lint-staged": {
+		"**/*": "prettier --write --ignore-unknown"
+	},
+	"license": "MIT",
+	"author": "Suni",
+	"keywords": [
+		"function component",
+		"interactive",
+		"interactive-json",
+		"json",
+		"json-component",
+		"json-display",
+		"json-tree",
+		"json-view",
+		"json-viewer",
+		"json-inspector",
+		"json-tree",
+		"react",
+		"react18",
+		"react-component",
+		"react-json",
+		"theme",
+		"tree",
+		"tree-view",
+		"treeview"
+	]
+}
