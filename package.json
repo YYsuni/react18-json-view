@@ -78,5 +78,14 @@
 		"tree",
 		"tree-view",
 		"treeview"
-	]
+	],
+	"homepage": "https://github.com/YYsuni/react18-json-view#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YYsuni/react18-json-view.git"
+	},
+	"bugs": {
+		"url": "https://github.com/YYsuni/react18-json-view/issues"
+	},
+	"sideEffects": false
 }
