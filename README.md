@@ -1,7 +1,12 @@
+
+
 # React18 JSON View
 React function component for displaying javascript arrays and JSON objects.
 
-Storybook
+[**Storybook**](https://react18-json-view.vercel.app/)
+
+![Sample of generated blockies](sample.png "JSON View")
+
 
 ## Installation
 ```bash

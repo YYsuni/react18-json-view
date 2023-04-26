@@ -1,6 +1,6 @@
 {
-	"name": "react-json-view-new",
-	"version": "0.0.1",
+	"name": "react18-json-view",
+	"version": "0.0.2",
 	"type": "module",
 	"description": "JSON viewer for react18",
 	"main": "dist/cjs/index.cjs",
@@ -78,5 +78,14 @@
 		"tree",
 		"tree-view",
 		"treeview"
-	]
+	],
+	"homepage": "https://github.com/YYsuni/react18-json-view#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YYsuni/react18-json-view.git"
+	},
+	"bugs": {
+		"url": "https://github.com/YYsuni/react18-json-view/issues"
+	},
+	"sideEffects": false
 }
