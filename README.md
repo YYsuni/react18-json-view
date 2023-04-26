@@ -1,5 +1,3 @@
-
-
 # React18 JSON View
 React function component for displaying javascript arrays and JSON objects.
 
@@ -16,6 +14,7 @@ npm install react18-json-view --save
 ## Usage
 ```tsx
 import JsonView from 'react18-json-view'
+import 'react18-json-view/src/style.css'
 
 <JsonView src={my_json_object} />
 ```
