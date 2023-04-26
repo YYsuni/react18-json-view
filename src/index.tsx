@@ -10,7 +10,7 @@ export default function JsonView({
 	collapseStringsAfterLength = 12
 }: {
 	src: any
-	collapseStringsAfterLength: number
+	collapseStringsAfterLength?: number
 }) {
 	return (
 		<JsonViewContext.Provider value={{ collapseStringsAfterLength }}>
