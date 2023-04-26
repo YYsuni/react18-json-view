@@ -17,7 +17,7 @@ export default {
 	},
 	decorators: [
 		Story => (
-			<div className='rounded-xl bg-white/80 p-6 font-mono shadow'>
+			<div className='rounded-xl bg-white/80 p-6 font-mono shadow max-w-[600px] m-6 backdrop-blur'>
 				<Story />
 			</div>
 		)
