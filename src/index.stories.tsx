@@ -7,18 +7,37 @@ type TYPE_FC = typeof JsonView
 export default {
 	title: 'JSON View',
 	component: JsonView,
+
 	argTypes: {
 		src: {
-			description: 'Array | Object'
+			description: 'Array | Object',
 		},
 		collapseStringsAfterLength: {
-			control: 'number'
+			control: 'number',
+			description:
+				'When an integer value is assigned, strings will be cut off at that length. Collapsed strings are inserted by an ellipsis. String content can be expanded and collapsed by clicking on the string value.',
+			default: 12,
+			table: {
+				defaultValue: { summary: 12 }
+			}
+		},
+		collapseObjectsAfterLength: {
+			control: 'number',
+			description: 'When an integer value is assigned, the object and array will be collapsed initially.',
+			defaultValue: 10,
+			table: {
+				defaultValue: { summary: 10 }
+			}
 		}
 	},
 	decorators: [
 		Story => (
-			<div className='rounded-xl bg-white/80 p-6 font-mono shadow max-w-[600px] m-6 backdrop-blur'>
-				<Story />
+			<div
+				className='flex h-full items-center justify-center overflow-auto p-8'
+				style={{ backgroundImage: 'linear-gradient(140deg, rgb(165, 142, 251), rgb(233, 191, 248))' }}>
+				<div className='max-w-[600px] rounded-xl bg-white/90 p-6 font-mono shadow backdrop-blur'>
+					<Story />
+				</div>
 			</div>
 		)
 	]
@@ -39,6 +58,54 @@ export const Primary: StoryObj<TYPE_FC> = {
 	}
 }
 
+export const BigObject: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			Date: new Date(),
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null],
+
+			bigObject: {
+				abc0: 'abc',
+				abc1: 'abc',
+				abc2: 'abc',
+				abc3: 'abc',
+				abc4: 'abc',
+				abc5: 'abc',
+				abc6: 'abc',
+				abc7: 'abc',
+				abc8: 'abc',
+				abc9: 'abc',
+				abc10: 'abc',
+				abc11: 'abc',
+				abc12: 'abc',
+				abc13: 'abc',
+				abc14: 'abc',
+				abc15: 'abc',
+				abc16: 'abc',
+				abc17: 'abc',
+				abc18: 'abc',
+				abc19: 'abc',
+				abc20: 'abc',
+				abc21: 'abc',
+				abc22: 'abc',
+				abc23: 'abc',
+				abc24: 'abc',
+				abc25: 'abc',
+				abc26: 'abc',
+				abc27: 'abc',
+				abc28: 'abc',
+				abc29: 'abc'
+			}
+		}
+	}
+}
+
 export const Array: StoryObj<TYPE_FC> = {
 	args: {
 		src: [
@@ -47,6 +114,44 @@ export const Array: StoryObj<TYPE_FC> = {
 			false,
 			null,
 			{ string: 'string', number: 123456, boolean: false, null: null, Date: new Date(), Symbol: Symbol('JSON View') }
+		]
+	}
+}
+
+export const BigArray: StoryObj<TYPE_FC> = {
+	args: {
+		src: [
+			'string',
+			123456,
+			false,
+			null,
+			{ string: 'string', number: 123456, boolean: false, null: null, Date: new Date(), Symbol: Symbol('JSON View') },
+			[
+				'string',
+				123456,
+				false,
+				'string',
+				123456,
+				false,
+				'string',
+				123456,
+				false,
+				'string',
+				123456,
+				false,
+				'string',
+				123456,
+				false,
+				'string',
+				123456,
+				false,
+				'string',
+				123456,
+				false,
+				'string',
+				123456,
+				false
+			]
 		]
 	}
 }
