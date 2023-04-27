@@ -1,19 +1,22 @@
 import { createContext, useContext, useState } from 'react'
 import ChevronIcon from './ChevronDownSvg'
 
-const JsonViewContext = createContext<{ collapseStringsAfterLength: number }>({
-	collapseStringsAfterLength: 12
+const JsonViewContext = createContext({
+	collapseStringsAfterLength: 12,
+	collapseObjectsAfterLength: 10
 })
 
 export default function JsonView({
 	src,
-	collapseStringsAfterLength = 12
+	collapseStringsAfterLength = 12,
+	collapseObjectsAfterLength = 10
 }: {
 	src: any
 	collapseStringsAfterLength?: number
+	collapseObjectsAfterLength?: number
 }) {
 	return (
-		<JsonViewContext.Provider value={{ collapseStringsAfterLength }}>
+		<JsonViewContext.Provider value={{ collapseStringsAfterLength, collapseObjectsAfterLength }}>
 			<code className='json-view'>
 				<JsonNode node={src} />
 			</code>
@@ -33,10 +36,12 @@ function JsonNode({ node }: { node: any }) {
 }
 
 function ObjectNode({ node }: { node: Record<string, any> | Array<any> }) {
+	const jv = useContext(JsonViewContext)
+
 	const [fold, setFold] = useState(
-		Array.isArray(node) && node.length > 10
+		Array.isArray(node) && node.length > jv.collapseObjectsAfterLength
 			? true
-			: !Array.isArray(node) && typeof node === 'object' && node !== null && Object.keys(node).length > 10
+			: isObject(node) && Object.keys(node).length > jv.collapseObjectsAfterLength
 			? true
 			: false
 	)
