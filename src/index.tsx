@@ -2,14 +2,14 @@ import { createContext, useContext, useState } from 'react'
 import ChevronIcon from './ChevronDownSvg'
 
 const JsonViewContext = createContext({
-	collapseStringsAfterLength: 12,
-	collapseObjectsAfterLength: 10
+	collapseStringsAfterLength: 99,
+	collapseObjectsAfterLength: 20
 })
 
 export default function JsonView({
 	src,
-	collapseStringsAfterLength = 12,
-	collapseObjectsAfterLength = 10
+	collapseStringsAfterLength = 99,
+	collapseObjectsAfterLength = 20
 }: {
 	src: any
 	collapseStringsAfterLength?: number
