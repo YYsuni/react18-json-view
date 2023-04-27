@@ -16,17 +16,15 @@ export default {
 			control: 'number',
 			description:
 				'When an integer value is assigned, strings will be cut off at that length. Collapsed strings are inserted by an ellipsis. String content can be expanded and collapsed by clicking on the string value.',
-			default: 12,
 			table: {
-				defaultValue: { summary: 12 }
+				defaultValue: { summary: 99 }
 			}
 		},
 		collapseObjectsAfterLength: {
 			control: 'number',
 			description: 'When an integer value is assigned, the object and array will be collapsed initially.',
-			defaultValue: 10,
 			table: {
-				defaultValue: { summary: 10 }
+				defaultValue: { summary: 20 }
 			}
 		}
 	},
@@ -51,7 +49,7 @@ export const Primary: StoryObj<TYPE_FC> = {
 			number: 123456,
 			boolean: false,
 			null: null,
-			Date: new Date(),
+			func: function(){},
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		}
