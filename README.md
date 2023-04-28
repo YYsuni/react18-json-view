@@ -28,3 +28,8 @@ Name|Type|Default|Description
 
 ## Why
 react-json-view does not support React 18.
+
+## Todo
+- [] copy (enableClipboard)
+- [] collapse at a particular depth (collapsed)
+- [] css
