@@ -25,11 +25,17 @@ export default function JsonView({
 }
 
 function JsonNode({ node }: { node: any }) {
+	const jv = useContext(JsonViewContext)
+
 	if (Array.isArray(node) || isObject(node)) {
 		return <ObjectNode node={node} />
 	} else if (typeof node === 'number') return <span className='json-view--number'>{node}</span>
 	else if (typeof node === 'string')
-		return node.length > 12 ? <LongString str={node} /> : <span className='json-view--string'>"{node}"</span>
+		return node.length > jv.collapseStringsAfterLength ? (
+			<LongString str={node} />
+		) : (
+			<span className='json-view--string'>"{node}"</span>
+		)
 	else if (typeof node === 'boolean') return <span className='json-view--boolean'>{String(node)}</span>
 	else if (node === null) return <span className='json-view--null'>null</span>
 	else return <span className='json-view--string'>{String(node)}</span>
@@ -95,9 +101,7 @@ function ObjectNode({ node }: { node: Record<string, any> | Array<any> }) {
 }
 
 function LongString({ str }: { str: string }) {
-	const jv = useContext(JsonViewContext)
-
-	if (str.length < jv.collapseStringsAfterLength) return <span className='json-view--string'>"{str}"</span>
+	if (str.length <= 10) return <span className='json-view--string'>"{str}"</span>
 
 	const [fold, setFold] = useState(true)
 

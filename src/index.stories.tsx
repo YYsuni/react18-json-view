@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
-import JsonView from './index'
+import JsonView from '../dist/es/index.mjs'
 
 type TYPE_FC = typeof JsonView
 
@@ -10,7 +10,7 @@ export default {
 
 	argTypes: {
 		src: {
-			description: 'Array | Object',
+			description: 'Array | Object'
 		},
 		collapseStringsAfterLength: {
 			control: 'number',
@@ -45,11 +45,11 @@ export const Primary: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
-			longString: 'long string long string long string long string',
+			longString: 'long string long string long string long string long string long string',
 			number: 123456,
 			boolean: false,
 			null: null,
-			func: function(){},
+			func: function () {},
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		}
