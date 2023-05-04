@@ -33,7 +33,7 @@
 .json-view .json-view--copy {
 	display: none;
 	width: 16px;
-	width: 16px;
+	height: 16px;
 	margin-left: 4px;
 	vertical-align: -6.5px;
 	cursor: pointer;
