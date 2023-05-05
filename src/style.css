@@ -32,10 +32,10 @@
 }
 .json-view .json-view--copy {
 	display: none;
-	width: 16px;
-	height: 16px;
+	width: 1em;
+	height: 1em;
 	margin-left: 4px;
-	vertical-align: -6.5px;
+	vertical-align: -11%;
 	cursor: pointer;
 }
 

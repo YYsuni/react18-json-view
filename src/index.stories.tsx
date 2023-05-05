@@ -84,6 +84,96 @@ export const Copy: StoryObj<TYPE_FC> = {
 	}
 }
 
+export const Copy_sm: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-sm'>
+				<Story />
+			</div>
+		)
+	]
+}
+
+export const Copy_xs: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-xs'>
+				<Story />
+			</div>
+		)
+	]
+}
+export const Copy_lg: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-lg'>
+				<Story />
+			</div>
+		)
+	]
+}
+export const Copy_xl: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-xl'>
+				<Story />
+			</div>
+		)
+	]
+}
+
 export const BigObject: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
