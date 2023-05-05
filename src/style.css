@@ -24,6 +24,20 @@
 .json-view .json-view--null {
 	color: var(--json-null);
 }
+.json-view:hover > .json-view--copy {
+	display: inline-block;
+}
+.json-view .json-view--pair:hover > .json-view--copy {
+	display: inline-block;
+}
+.json-view .json-view--copy {
+	display: none;
+	width: 1em;
+	height: 1em;
+	margin-left: 4px;
+	vertical-align: -11%;
+	cursor: pointer;
+}
 
 .json-view .jv-indent {
 	padding-left: 16px;

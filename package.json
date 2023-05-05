@@ -1,6 +1,6 @@
 {
 	"name": "react-json-view-new",
-	"version": "0.0.6",
+	"version": "0.0.8",
 	"type": "module",
 	"description": "JSON viewer for react18",
 	"main": "dist/cjs/index.cjs",

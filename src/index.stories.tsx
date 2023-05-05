@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
-import JsonView from '../dist/es/index.mjs'
+import JsonView from './index'
 
 type TYPE_FC = typeof JsonView
 
@@ -25,6 +25,13 @@ export default {
 			description: 'When an integer value is assigned, the object and array will be collapsed initially.',
 			table: {
 				defaultValue: { summary: 20 }
+			}
+		},
+		enableClipboard: {
+			control: 'boolean',
+			description: 'Boolean',
+			table: {
+				defaultValue: { summary: false }
 			}
 		}
 	},
@@ -51,9 +58,120 @@ export const Primary: StoryObj<TYPE_FC> = {
 			null: null,
 			func: function () {},
 			Symbol: Symbol('JSON View'),
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
 			arr: ['string', 123456, false, null]
 		}
 	}
+}
+
+export const Copy: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	}
+}
+
+export const Copy_sm: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-sm'>
+				<Story />
+			</div>
+		)
+	]
+}
+
+export const Copy_xs: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-xs'>
+				<Story />
+			</div>
+		)
+	]
+}
+export const Copy_lg: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-lg'>
+				<Story />
+			</div>
+		)
+	]
+}
+export const Copy_xl: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null]
+		},
+		enableClipboard: true
+	},
+	decorators: [
+		Story => (
+			<div className='text-xl'>
+				<Story />
+			</div>
+		)
+	]
 }
 
 export const BigObject: StoryObj<TYPE_FC> = {
