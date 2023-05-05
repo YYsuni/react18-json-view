@@ -33,4 +33,71 @@ react-json-view does not support React 18.
 ## Todo
 - [x] copy (enableClipboard)
 - [ ] collapse at a particular depth (collapsed)
-- [ ] css
+- [x] css
+
+## Custom styles
+Here are all the style codes, you can freely change color variables, such as --json-property, or others.
+```css
+.json-view {
+	--json-property: #009033;
+	--json-index: #676dff;
+	--json-number: #676dff;
+	--json-string: #b2762e;
+	--json-boolean: #dc155e;
+	--json-null: #dc155e;
+}
+.json-view .json-view--property {
+	color: var(--json-property);
+}
+.json-view .json-view--index {
+	color: var(--json-index);
+}
+.json-view .json-view--number {
+	color: var(--json-number);
+}
+.json-view .json-view--string {
+	color: var(--json-string);
+}
+.json-view .json-view--boolean {
+	color: var(--json-boolean);
+}
+.json-view .json-view--null {
+	color: var(--json-null);
+}
+.json-view:hover > .json-view--copy {
+	display: inline-block;
+}
+.json-view .json-view--pair:hover > .json-view--copy {
+	display: inline-block;
+}
+.json-view .json-view--copy {
+	display: none;
+	width: 1em;
+	height: 1em;
+	margin-left: 4px;
+	vertical-align: -11%;
+	cursor: pointer;
+}
+
+.json-view .jv-indent {
+	padding-left: 16px;
+}
+.json-view .jv-chevron {
+	display: inline-block;
+	vertical-align: -20%;
+	cursor: pointer;
+	opacity: 0.4;
+}
+.json-view .jv-chevron:hover {
+	opacity: 0.8;
+}
+.json-view .jv-button {
+	background: transparent;
+	outline: none;
+	border: none;
+	cursor: pointer;
+}
+.json-view .cursor-pointer {
+	cursor: pointer;
+}
+```
