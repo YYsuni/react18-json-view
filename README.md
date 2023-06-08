@@ -1,4 +1,17 @@
 # React18 JSON View
+
+<p >
+  <a href="https://www.npmjs.com/package/react18-json-view" target="_blank">
+    <img src="https://img.shields.io/npm/v/react18-json-view.svg" />
+  </a>
+  <a href="https://www.npmjs.com/package/react18-json-view" target="_blank">
+    <img src="https://img.shields.io/npm/dm/react18-json-view.svg" />
+  </a>
+    <a href="https://github.com/YYsuni/react18-json-view/blob/main/LICENSE" target="_blank">
+    <img src="https://img.shields.io/npm/l/react18-json-view.svg">
+  </a>
+</p>
+
 React function component for displaying javascript arrays and JSON objects.
 
 [**Storybook**](https://react18-json-view.vercel.app/)
