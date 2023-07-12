@@ -33,6 +33,13 @@ export default {
 			table: {
 				defaultValue: { summary: false }
 			}
+		},
+		collapsed: {
+			description:
+				'When set to true, all nodes will be collapsed by default. Use an integer value to collapse at a particular depth.',
+			table: {
+				defaultValue: { summary: false }
+			}
 		}
 	},
 	decorators: [
@@ -296,14 +303,72 @@ export const Null: StoryObj<TYPE_FC> = {
 	}
 }
 
-export const True: StoryObj<TYPE_FC> = {
+export const Boolean: StoryObj<TYPE_FC> = {
 	args: {
 		src: true
 	}
 }
 
-export const False: StoryObj<TYPE_FC> = {
+export const Undefined: StoryObj<TYPE_FC> = {
 	args: {
-		src: false
+		src: undefined
 	}
+}
+
+export const Collapsed_Boolean: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
+			arr: ['string', 123456, false, null]
+		},
+		collapsed: true
+	},
+	decorators: [
+		Story => (
+			<div style={{ minWidth: 300 }}>
+				<Story />
+			</div>
+		)
+	]
+}
+
+export const Collapsed_Number: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			boolean: false,
+			null: null,
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false,
+				k4: {
+					k: {
+						k: {
+							k: 'k5'
+						}
+					}
+				}
+			},
+			arr: ['string', 123456, false, null, [123, 123, 123, [123, 123, 123]]]
+		},
+		collapsed: 2
+	},
+	decorators: [
+		Story => (
+			<div style={{ minWidth: 300 }}>
+				<Story />
+			</div>
+		)
+	]
 }

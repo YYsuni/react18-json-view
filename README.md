@@ -45,7 +45,7 @@ react-json-view does not support React 18.
 
 ## Todo
 - [x] copy (enableClipboard)
-- [ ] collapse at a particular depth (collapsed)
+- [x] collapse at a particular depth (collapsed)
 - [x] css
 
 ## Custom styles

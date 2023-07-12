@@ -1,84 +1,96 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import ChevronIcon from './ChevronDownSvg'
 import Copy from './Copy'
 
 const JsonViewContext = createContext({
 	collapseStringsAfterLength: 99,
 	collapseObjectsAfterLength: 20,
-	enableClipboard: true
+	enableClipboard: true,
+	collapsed: false as number | boolean
 })
 
 export default function JsonView({
 	src,
 	collapseStringsAfterLength = 99,
 	collapseObjectsAfterLength = 20,
-	enableClipboard = true
+	enableClipboard = true,
+	collapsed = false
 }: {
 	src: any
 	collapseStringsAfterLength?: number
 	collapseObjectsAfterLength?: number
 	enableClipboard?: boolean
+	collapsed: boolean | number
 }) {
 	return (
-		<JsonViewContext.Provider value={{ collapseStringsAfterLength, collapseObjectsAfterLength, enableClipboard }}>
+		<JsonViewContext.Provider
+			value={{ collapseStringsAfterLength, collapseObjectsAfterLength, enableClipboard, collapsed }}>
 			<code className='json-view'>
-				<JsonNode node={src} />
+				<JsonNode node={src} depth={1} />
 			</code>
 		</JsonViewContext.Provider>
 	)
 }
 
-function JsonNode({ node }: { node: any }) {
+function JsonNode({ node, depth }: { node: any; depth: number }) {
 	const jv = useContext(JsonViewContext)
 
 	if (Array.isArray(node) || isObject(node)) {
-		return <ObjectNode node={node} />
-	} else if (typeof node === 'number')
+		return <ObjectNode node={node} depth={depth} />
+	} else if (typeof node === 'string')
 		return (
 			<>
-				<span className='json-view--number'>{node}</span>
-				{jv.enableClipboard && <Copy text={String(node)} />}
+				{node.length > jv.collapseStringsAfterLength ? (
+					<LongString str={node} />
+				) : (
+					<span className='json-view--string'>"{node}"</span>
+				)}
+				{jv.enableClipboard && <Copy text={node} />}
 			</>
 		)
-	else if (typeof node === 'string')
-		return node.length > jv.collapseStringsAfterLength ? (
-			<>
-				<LongString str={node} />
-				{jv.enableClipboard && <Copy text={String(node)} />}
-			</>
-		) : (
-			<>
-				<span className='json-view--string'>"{node}"</span>
-				{jv.enableClipboard && <Copy text={String(node)} />}
-			</>
-		)
-	else if (typeof node === 'boolean')
+	else {
+		const type = typeof node
+		const value = String(node)
 		return (
 			<>
-				<span className='json-view--boolean'>{String(node)}</span>
-				{jv.enableClipboard && <Copy text={String(node)} />}
+				{type === 'number' || type === 'bigint' ? (
+					<span className='json-view--number'>{value}</span>
+				) : type === 'boolean' ? (
+					<span className='json-view--boolean'>{value}</span>
+				) : node === null ? (
+					<span className='json-view--null'>null</span>
+				) : (
+					<span className='json-view--string'>{value}</span>
+				)}
+				{jv.enableClipboard && <Copy text={value} />}
 			</>
 		)
-	else if (node === null)
-		return (
-			<>
-				<span className='json-view--null'>null</span>
-				{jv.enableClipboard && <Copy text={String(node)} />}
-			</>
-		)
-	else return <span className='json-view--string'>{String(node)}</span>
+	}
 }
 
-function ObjectNode({ node }: { node: Record<string, any> | Array<any> }) {
+function ObjectNode({ node, depth }: { node: Record<string, any> | Array<any>; depth: number }) {
 	const jv = useContext(JsonViewContext)
 
 	const [fold, setFold] = useState(
-		Array.isArray(node) && node.length > jv.collapseObjectsAfterLength
-			? true
-			: isObject(node) && Object.keys(node).length > jv.collapseObjectsAfterLength
+		jv.collapsed === true ||
+			(typeof jv.collapsed === 'number' && depth > jv.collapsed) ||
+			(Array.isArray(node) && node.length > jv.collapseObjectsAfterLength) ||
+			(isObject(node) && Object.keys(node).length > jv.collapseObjectsAfterLength)
 			? true
 			: false
 	)
+
+	useEffect(() => {
+		const originCollapsed =
+			(Array.isArray(node) && node.length > jv.collapseObjectsAfterLength) ||
+			(isObject(node) && Object.keys(node).length > jv.collapseObjectsAfterLength)
+
+		if (typeof jv.collapsed === 'boolean') {
+			setFold(jv.collapsed || originCollapsed)
+		} else if (typeof jv.collapsed === 'number') {
+			setFold(depth > jv.collapsed || originCollapsed)
+		}
+	}, [jv.collapsed, jv.collapseObjectsAfterLength, jv.collapseObjectsAfterLength])
 
 	if (Array.isArray(node)) {
 		return (
@@ -92,7 +104,7 @@ function ObjectNode({ node }: { node: Record<string, any> | Array<any> }) {
 				{!fold ? (
 					<div className='jv-indent'>
 						{node.map((n, i) => (
-							<NameValue key={i} name={i} value={n} />
+							<NameValue key={i} name={i} value={n} depth={depth} />
 						))}
 					</div>
 				) : (
@@ -116,7 +128,7 @@ function ObjectNode({ node }: { node: Record<string, any> | Array<any> }) {
 				{!fold ? (
 					<div className='jv-indent'>
 						{Object.entries(node).map(([name, value]) => (
-							<NameValue key={name} name={name} value={value} />
+							<NameValue key={name} name={name} value={value} depth={depth} />
 						))}
 					</div>
 				) : (
@@ -144,11 +156,11 @@ function LongString({ str }: { str: string }) {
 	)
 }
 
-function NameValue({ name, value }: { name: number | string; value: any }) {
+function NameValue({ name, value, depth }: { name: number | string; value: any; depth: number }) {
 	return (
 		<div className='json-view--pair'>
 			<span className={typeof name === 'number' ? 'json-view--index' : 'json-view--property'}>{name}</span>:{' '}
-			<JsonNode node={value} />
+			<JsonNode node={value} depth={depth + 1} />
 		</div>
 	)
 }
