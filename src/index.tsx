@@ -20,7 +20,7 @@ export default function JsonView({
 	collapseStringsAfterLength?: number
 	collapseObjectsAfterLength?: number
 	enableClipboard?: boolean
-	collapsed: boolean | number
+	collapsed?: boolean | number
 }) {
 	return (
 		<JsonViewContext.Provider
