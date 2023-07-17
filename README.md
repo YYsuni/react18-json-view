@@ -14,7 +14,7 @@
 
 React function component for displaying javascript arrays and JSON objects.
 
-[**Storybook**](https://react18-json-view.vercel.app/), or [**Try it online.**](https://jv.yysuni.com/)
+[**Storybook**](https://react18-json-view.vercel.app/), or [**Try it online**](https://jv.yysuni.com/) [(**Github**)](https://github.com/YYsuni/json-view-online).
 
 
 ![Sample of generated blockies](sample.png "JSON View")
