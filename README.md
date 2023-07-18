@@ -22,7 +22,7 @@ React function component for displaying javascript arrays and JSON objects.
 
 ## Installation
 ```bash
-npm install react18-json-view --save
+npm i react18-json-view
 ```
 
 ## Usage
@@ -40,14 +40,15 @@ Name|Type|Default|Description
 `collapseStringsAfterLength`|`integer`|99|When an integer value is assigned, strings will be cut off at that length. Collapsed strings are inserted by an ellipsis. String content can be expanded and collapsed by clicking on the string value.
 `collapseObjectsAfterLength`|`integer`|20|When an integer value is assigned, the object and array will be collapsed initially.
 `enableClipboard`|`boolean`|true|When prop is not false, the user can copy objects and arrays to clipboard by clicking on the clipboard icon.
+`collapsed`|`boolean`/`integer`|false|When set to true, all nodes will be collapsed by default. Use an integer value to collapse at a particular depth.
 
 ## Why
 react-json-view does not support React 18.
 
 ## Todo
 - [x] copy (enableClipboard)
-- [x] collapse at a particular depth (collapsed)
 - [x] css
+- [x] collapse at a particular depth (collapsed)
 
 ## Custom styles
 Here are all the style codes, you can freely change color variables, such as --json-property, or others.
