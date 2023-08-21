@@ -27,16 +27,27 @@
 .json-view:hover > .json-view--copy {
 	display: inline-block;
 }
-.json-view .json-view--pair:hover > .json-view--copy {
-	display: inline-block;
-}
+
 .json-view .json-view--copy {
 	display: none;
+	vertical-align: -10%;
 	width: 1em;
 	height: 1em;
 	margin-left: 4px;
-	vertical-align: -11%;
 	cursor: pointer;
+}
+.json-view .json-view--edit {
+	display: none;
+	vertical-align: -10%;
+	width: 1em;
+	height: 1em;
+	margin-left: 4px;
+	cursor: pointer;
+}
+
+.json-view .json-view--pair:hover > .json-view--copy,
+.json-view .json-view--pair:hover > .json-view--edit {
+	display: inline-block;
 }
 
 .json-view .jv-indent {
@@ -47,7 +58,10 @@
 	vertical-align: -20%;
 	cursor: pointer;
 	opacity: 0.4;
+	width: 1em;
+	height: 1em;
 }
+
 .json-view .jv-chevron:hover {
 	opacity: 0.8;
 }

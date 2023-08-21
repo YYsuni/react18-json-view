@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
-import JsonView from './index'
+import JsonView from '../index'
 
 type TYPE_FC = typeof JsonView
 
