@@ -3,13 +3,6 @@ import { useState } from 'react'
 export default function Copy({ text }: { text: string }) {
 	const [copied, setCopied] = useState(false)
 
-	const copy = (e: any) => {
-		e.stopPropagation()
-		navigator.clipboard.writeText(text)
-		setCopied(true)
-		setTimeout(() => setCopied(false), 3000)
-	}
-
 	return copied ? (
 		<svg
 			className='json-view--copy'
@@ -23,7 +16,12 @@ export default function Copy({ text }: { text: string }) {
 		</svg>
 	) : (
 		<svg
-			onClick={copy}
+			onClick={event => {
+				event.stopPropagation()
+				navigator.clipboard.writeText(text)
+				setCopied(true)
+				setTimeout(() => setCopied(false), 3000)
+			}}
 			className='json-view--copy'
 			xmlns='http://www.w3.org/2000/svg'
 			width='24'
