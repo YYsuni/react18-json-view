@@ -49,6 +49,11 @@ react-json-view does not support React 18.
 - [x] copy (enableClipboard)
 - [x] css
 - [x] collapse at a particular depth (collapsed)
+- [ ] editable
+  - [ ] add
+  - [ ] edit
+  - [ ] delete
+  - [ ] onSelect
 
 ## Custom styles
 Here are all the style codes, you can freely change color variables, such as --json-property, or others.
