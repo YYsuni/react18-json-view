@@ -54,6 +54,7 @@ react-json-view does not support React 18.
   - [ ] edit
   - [ ] delete
   - [ ] onSelect
+- [ ] custom icon
 
 ## Custom styles
 Here are all the style codes, you can freely change color variables, such as --json-property, or others.
