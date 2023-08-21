@@ -2,8 +2,9 @@ import typescript from 'rollup-plugin-typescript2'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import external from 'rollup-plugin-peer-deps-external'
+import svgr from '@svgr/rollup'
 
-const plugins = [external(), typescript({ useTsconfigDeclarationDir: true }), nodeResolve(), commonjs()]
+const plugins = [external(), svgr(), typescript({ useTsconfigDeclarationDir: true }), nodeResolve(), commonjs()]
 
 /** @type {import('rollup').InputOption} */
 export default {

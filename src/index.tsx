@@ -1,30 +1,35 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import ChevronIcon from './ChevronDownSvg'
 import Copy from './Copy'
+import AngleDownSVG from './svgs/angle-down.svg'
 
 const JsonViewContext = createContext({
 	collapseStringsAfterLength: 99,
 	collapseObjectsAfterLength: 20,
 	enableClipboard: true,
-	collapsed: false as number | boolean
+	collapsed: false as number | boolean,
+	editable: false
 })
+
+interface Props {
+	src: any
+	collapseStringsAfterLength?: number
+	collapseObjectsAfterLength?: number
+	enableClipboard?: boolean
+	collapsed?: boolean | number
+	editable?: boolean
+}
 
 export default function JsonView({
 	src,
 	collapseStringsAfterLength = 99,
 	collapseObjectsAfterLength = 20,
 	enableClipboard = true,
-	collapsed = false
-}: {
-	src: any
-	collapseStringsAfterLength?: number
-	collapseObjectsAfterLength?: number
-	enableClipboard?: boolean
-	collapsed?: boolean | number
-}) {
+	collapsed = false,
+	editable = false
+}: Props) {
 	return (
 		<JsonViewContext.Provider
-			value={{ collapseStringsAfterLength, collapseObjectsAfterLength, enableClipboard, collapsed }}>
+			value={{ collapseStringsAfterLength, collapseObjectsAfterLength, enableClipboard, collapsed, editable }}>
 			<code className='json-view'>
 				<JsonNode node={src} depth={1} />
 			</code>
@@ -45,6 +50,7 @@ function JsonNode({ node, depth }: { node: any; depth: number }) {
 				) : (
 					<span className='json-view--string'>"{node}"</span>
 				)}
+
 				{jv.enableClipboard && <Copy text={node} />}
 			</>
 		)
@@ -62,6 +68,7 @@ function JsonNode({ node, depth }: { node: any; depth: number }) {
 				) : (
 					<span className='json-view--string'>{value}</span>
 				)}
+
 				{jv.enableClipboard && <Copy text={value} />}
 			</>
 		)
@@ -97,7 +104,7 @@ function ObjectNode({ node, depth }: { node: Record<string, any> | Array<any>; d
 			<>
 				<span>{'['}</span>
 
-				{!fold && <ChevronIcon onClick={() => setFold(true)} className='jv-chevron' />}
+				{!fold && <AngleDownSVG onClick={() => setFold(true)} className='jv-chevron' />}
 
 				{!fold && jv.enableClipboard && <Copy text={JSON.stringify(node)} />}
 
@@ -121,7 +128,7 @@ function ObjectNode({ node, depth }: { node: Record<string, any> | Array<any>; d
 			<>
 				<span>{'{'}</span>
 
-				{!fold && <ChevronIcon onClick={() => setFold(true)} className='jv-chevron' />}
+				{!fold && <AngleDownSVG onClick={() => setFold(true)} className='jv-chevron' />}
 
 				{!fold && jv.enableClipboard && <Copy text={JSON.stringify(node)} />}
 

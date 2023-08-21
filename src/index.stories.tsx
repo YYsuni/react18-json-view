@@ -372,3 +372,24 @@ export const Collapsed_Number: StoryObj<TYPE_FC> = {
 		)
 	]
 }
+
+export const Editable: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
+			arr: ['string', 123456, false, null]
+		},
+		editable: true
+	}
+}
