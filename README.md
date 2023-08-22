@@ -51,7 +51,7 @@ react-json-view does not support React 18.
 - [x] collapse at a particular depth (collapsed)
 - [ ] editable
   - [ ] add
-  - [ ] edit
+  - [x] edit
   - [ ] delete
   - [ ] onSelect
 - [ ] custom icon
