@@ -8,7 +8,13 @@ import { ReactComponent as EditSVG } from '../svgs/edit.svg'
 import { ReactComponent as DoneSVG } from '../svgs/done.svg'
 import { ReactComponent as CancelSVG } from '../svgs/cancel.svg'
 
-export default function JsonNode({ node, depth }: { node: any; depth: number }) {
+interface Props {
+	node: any
+	depth: number
+	editValue?: (value: any) => void
+}
+
+export default function JsonNode({ node, depth, editValue }: Props) {
 	const { collapseStringsAfterLength, enableClipboard, editable } = useContext(JsonViewContext)
 
 	if (Array.isArray(node) || isObject(node)) {
@@ -35,9 +41,11 @@ export default function JsonNode({ node, depth }: { node: any; depth: number }) 
 
 				setType(newType)
 				setValue(String(evalValue))
+				if (editValue) editValue(evalValue)
 			} catch (e) {
 				setType('string')
 				setValue(newValue)
+				if (editValue) editValue(newValue)
 			}
 
 			setEditing(false)
@@ -71,7 +79,7 @@ export default function JsonNode({ node, depth }: { node: any; depth: number }) 
 			return (
 				<>
 					{node.length > collapseStringsAfterLength ? (
-						<LongString str={node} />
+						<LongString str={value} ref={valueRef} editing={editing} handleKeyDown={handleKeyDown} />
 					) : editing ? (
 						<span
 							className='json-view--string'
@@ -88,47 +96,26 @@ export default function JsonNode({ node, depth }: { node: any; depth: number }) 
 				</>
 			)
 		else {
+			let className = 'json-view--string'
+
+			switch (type) {
+				case 'number':
+				case 'bigint':
+					className = 'json-view--number'
+					break
+				case 'boolean':
+					className = 'json-view--boolean'
+					break
+				case 'object':
+					className = 'json-view--null'
+					break
+			}
+
 			return (
 				<>
-					{type === 'number' || type === 'bigint' ? (
-						editing ? (
-							<span
-								className='json-view--number'
-								contentEditable={editing}
-								dangerouslySetInnerHTML={{ __html: value }}
-								ref={valueRef}
-								onKeyDown={handleKeyDown}
-							/>
-						) : (
-							<span className='json-view--number'>{value}</span>
-						)
-					) : type === 'boolean' ? (
-						editing ? (
-							<span
-								className='json-view--boolean'
-								contentEditable={editing}
-								dangerouslySetInnerHTML={{ __html: value }}
-								ref={valueRef}
-								onKeyDown={handleKeyDown}
-							/>
-						) : (
-							<span className='json-view--boolean'>{value}</span>
-						)
-					) : type === 'object' ? (
-						editing ? (
-							<span
-								className='json-view--null'
-								contentEditable={editing}
-								dangerouslySetInnerHTML={{ __html: value }}
-								ref={valueRef}
-								onKeyDown={handleKeyDown}
-							/>
-						) : (
-							<span className='json-view--null'>{value}</span>
-						)
-					) : editing ? (
+					{editing ? (
 						<span
-							className='json-view--string'
+							className={className}
 							contentEditable={editing}
 							dangerouslySetInnerHTML={{ __html: value }}
 							ref={valueRef}
