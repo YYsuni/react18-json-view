@@ -1,21 +1,22 @@
 import { createContext } from 'react'
 import JsonNode from './json-node'
 
-type OnEdit = (event: {
+type OnEdit = (params: {
 	newValue: any
 	oldValue: any
 	depth: number
 	src: any
-	name: string | number
+	indexOrName: string | number
 	parentType: 'object' | 'array'
 }) => void
-type OnDelete = (event: {
+type OnDelete = (params: {
 	value: any
-	name: string | number
+	indexOrName: string | number
 	depth: number
 	src: any
 	parentType: 'object' | 'array'
 }) => void
+type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
 
 export const JsonViewContext = createContext({
 	collapseStringsAfterLength: 99,
@@ -25,7 +26,8 @@ export const JsonViewContext = createContext({
 	editable: false,
 	src: undefined,
 	onEdit: (() => {}) as OnEdit | undefined,
-	onDelete: (() => {}) as OnDelete | undefined
+	onDelete: (() => {}) as OnDelete | undefined,
+	onAdd: (() => {}) as OnAdd | undefined
 })
 
 interface Props {
@@ -37,6 +39,7 @@ interface Props {
 	editable?: boolean
 	onEdit?: OnEdit
 	onDelete?: OnDelete
+	onAdd?: OnAdd
 }
 
 export default function JsonView({
@@ -47,7 +50,8 @@ export default function JsonView({
 	collapsed = false,
 	editable = false,
 	onEdit,
-	onDelete
+	onDelete,
+	onAdd
 }: Props) {
 	return (
 		<JsonViewContext.Provider
@@ -59,7 +63,8 @@ export default function JsonView({
 				editable,
 				src,
 				onEdit,
-				onDelete
+				onDelete,
+				onAdd
 			}}>
 			<code className='json-view'>
 				<JsonNode node={src} depth={1} />

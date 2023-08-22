@@ -42,20 +42,20 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			try {
 				const evalValue = eval(newValue)
 				const newType = typeof evalValue
-				const newEvalValue = String(evalValue)
+				const evalString = String(evalValue)
 
 				setType(newType)
-				setValue(newEvalValue)
+				setValue(evalString)
 				if (parent) {
 					//@ts-ignore
-					parent[name] = newEvalValue
+					parent[name] = evalValue
 					if (onEdit)
 						onEdit({
-							newValue: newEvalValue,
+							newValue: evalString,
 							oldValue: value,
 							depth,
 							src,
-							name: name!,
+							indexOrName: name!,
 							parentType: Array.isArray(parent) ? 'array' : 'object'
 						})
 				}
@@ -71,7 +71,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 							oldValue: value,
 							depth,
 							src,
-							name: name!,
+							indexOrName: name!,
 							parentType: Array.isArray(parent) ? 'array' : 'object'
 						})
 				}
@@ -86,7 +86,8 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 		const deleteHandle = () => {
 			setDeleting(false)
 			if (_deleteHandle) _deleteHandle(name!)
-			if (onDelete) onDelete({ value, depth, src, name: name!, parentType: Array.isArray(parent) ? 'array' : 'object' })
+			if (onDelete)
+				onDelete({ value, depth, src, indexOrName: name!, parentType: Array.isArray(parent) ? 'array' : 'object' })
 		}
 
 		const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -135,7 +136,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 		if (type === 'string')
 			return (
 				<>
-					{node.length > collapseStringsAfterLength ? (
+					{value.length > collapseStringsAfterLength ? (
 						<LongString
 							str={value}
 							ref={valueRef}
