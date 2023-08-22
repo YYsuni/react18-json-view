@@ -44,6 +44,11 @@
 	margin-left: 4px;
 	cursor: pointer;
 }
+.json-view .json-view--deleting {
+	outline: 1px solid #da0000;
+	background-color: #da000011;
+	text-decoration-line: line-through;
+}
 
 .json-view .json-view--pair:hover > .json-view--copy,
 .json-view .json-view--pair:hover > .json-view--edit {

@@ -391,10 +391,11 @@ export const Editable: StoryObj<TYPE_FC> = {
 			arr: ['string', 123456, false, null]
 		},
 		editable: true,
-		collapseStringsAfterLength: 20,
-		onEdit: ({ newValue, src, oldValue }) => {
-			console.log('[suni value]', newValue, oldValue)
-			console.log('[suni src]', src)
+		onEdit: ({ newValue, src, oldValue, name }) => {
+			console.log('[onEdit]', name, newValue, oldValue, src)
+		},
+		onDelete: ({ value, src, name }) => {
+			console.log('[onDelete]', name, value, src)
 		}
 	}
 }

@@ -9,6 +9,13 @@ type OnEdit = (event: {
 	name: string | number
 	parentType: 'object' | 'array'
 }) => void
+type OnDelete = (event: {
+	value: any
+	name: string | number
+	depth: number
+	src: any
+	parentType: 'object' | 'array'
+}) => void
 
 export const JsonViewContext = createContext({
 	collapseStringsAfterLength: 99,
@@ -17,7 +24,8 @@ export const JsonViewContext = createContext({
 	collapsed: false as number | boolean,
 	editable: false,
 	src: undefined,
-	onEdit: ((_: any) => {}) as OnEdit | undefined
+	onEdit: (() => {}) as OnEdit | undefined,
+	onDelete: (() => {}) as OnDelete | undefined
 })
 
 interface Props {
@@ -28,6 +36,7 @@ interface Props {
 	collapsed?: boolean | number
 	editable?: boolean
 	onEdit?: OnEdit
+	onDelete?: OnDelete
 }
 
 export default function JsonView({
@@ -37,7 +46,8 @@ export default function JsonView({
 	enableClipboard = true,
 	collapsed = false,
 	editable = false,
-	onEdit
+	onEdit,
+	onDelete
 }: Props) {
 	return (
 		<JsonViewContext.Provider
@@ -48,7 +58,8 @@ export default function JsonView({
 				collapsed,
 				editable,
 				src,
-				onEdit
+				onEdit,
+				onDelete
 			}}>
 			<code className='json-view'>
 				<JsonNode node={src} depth={1} />
