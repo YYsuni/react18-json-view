@@ -30,7 +30,6 @@
 
 .json-view .json-view--copy {
 	display: none;
-	vertical-align: -10%;
 	width: 1em;
 	height: 1em;
 	margin-left: 4px;
@@ -38,7 +37,6 @@
 }
 .json-view .json-view--edit {
 	display: none;
-	vertical-align: -10%;
 	width: 1em;
 	height: 1em;
 	margin-left: 4px;
@@ -48,6 +46,16 @@
 	outline: 1px solid #da0000;
 	background-color: #da000011;
 	text-decoration-line: line-through;
+}
+.json-view .json-view--input {
+	width: 120px;
+	margin-left: 4px;
+	border-radius: 4px;
+	border: 1px solid currentColor;
+	padding: 0px 4px;
+	font-size: 87.5%;
+	line-height: 1.25;
+	background: transparent;
 }
 
 .json-view .json-view--pair:hover > .json-view--copy,
