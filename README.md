@@ -12,12 +12,12 @@
   </a>
 </p>
 
-React function component for displaying javascript arrays and JSON objects.
+React function component for displaying javascript arrays and JSON objects. Supports all JS types.
 
 [**Storybook**](https://react18-json-view.vercel.app/), or [**Try it online**](https://jv.yysuni.com/) [(**Github**)](https://github.com/YYsuni/json-view-online).
 
 
-![Sample of generated blockies](sample.png "JSON View")
+![JSON View](sample.png "JSON View")
 
 
 ## Installation
@@ -63,6 +63,8 @@ The editor uses `eval(<input-value>)`. While in edit mode, you can enter `({})` 
 
 This component does not perform any cloning operations, so every step of the operation is carried out on the original object. If cloning is required, please handle it yourself.
 
+## Figma (icons) [link](https://www.figma.com/file/1XAkndYOprEcUZQU2KFFoT/Json-View?type=design&node-id=9%3A1570&mode=design&t=SQHDsbrSYStNeEOD-1)
+![Figma Icons](icons.png)
 
 ## Custom styles
 Here are all the style codes, you can freely change color variables, such as `--json-property`, or others.
