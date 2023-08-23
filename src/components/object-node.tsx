@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import { isObject as _isObject } from '../utils'
+import { isObject as _isObject, stringify } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
 import NameValue from './name-value'
@@ -126,7 +126,7 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 			)}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-			{!fold && !isEditing && enableClipboard && <CopyButton text={JSON.stringify(node)} />}
+			{!fold && !isEditing && enableClipboard && <CopyButton text={stringify(node)} />}
 			{!fold && !isEditing && editable && (
 				<AddSVG
 					className='json-view--edit'

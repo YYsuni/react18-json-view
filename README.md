@@ -25,6 +25,11 @@ React function component for displaying javascript arrays and JSON objects.
 npm i react18-json-view
 # or pnpm i react18-json-view
 # or yarn i react18-json-view
+
+# canary
+# or npm i react18-json-view@canary
+# or pnpm i react18-json-view@canary
+# or yarn i react18-json-view@canary
 ```
 
 ## Usage
