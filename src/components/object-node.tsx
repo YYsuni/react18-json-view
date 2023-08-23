@@ -17,13 +17,21 @@ interface Props {
 }
 
 export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSelf }: Props) {
-	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange } =
-		useContext(JsonViewContext)
+	const {
+		collapsed,
+		enableClipboard,
+		collapseObjectsAfterLength,
+		editable,
+		onDelete,
+		src,
+		onAdd,
+		onEdit,
+		onChange,
+		forceUpdate
+	} = useContext(JsonViewContext)
 
 	const isObject = _isObject(node)
 
-	const [_, update] = useState(0)
-	const forceUpdate = () => update(state => ++state)
 	const [fold, setFold] = useState(
 		collapsed === true ||
 			(typeof collapsed === 'number' && depth > collapsed) ||

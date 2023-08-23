@@ -1,4 +1,4 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import JsonNode from './json-node'
 
 type OnEdit = (params: {
@@ -35,7 +35,8 @@ export const JsonViewContext = createContext({
 	onEdit: (() => {}) as OnEdit | undefined,
 	onDelete: (() => {}) as OnDelete | undefined,
 	onAdd: (() => {}) as OnAdd | undefined,
-	onChange: (() => {}) as OnChange | undefined
+	onChange: (() => {}) as OnChange | undefined,
+	forceUpdate: () => {}
 })
 
 interface Props {
@@ -63,6 +64,9 @@ export default function JsonView({
 	onAdd,
 	onChange
 }: Props) {
+	const [_, update] = useState(0)
+	const forceUpdate = () => update(state => ++state)
+
 	return (
 		<JsonViewContext.Provider
 			value={{
@@ -75,7 +79,8 @@ export default function JsonView({
 				onEdit,
 				onDelete,
 				onAdd,
-				onChange
+				onChange,
+				forceUpdate
 			}}>
 			<code className='json-view'>
 				<JsonNode node={src} depth={1} />
