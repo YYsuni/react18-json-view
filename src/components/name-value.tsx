@@ -5,14 +5,22 @@ interface Props {
 	value: any
 	depth: number
 	parent?: Record<string, any> | Array<any>
-	deleteHandle: (_: string | number) => void
+	deleteHandle: (indexOrName: string | number) => void
+	editHandle: (indexOrName: string | number, newValue: any, oldValue: any) => void
 }
 
-export default function NameValue({ name, value, depth, parent, deleteHandle }: Props) {
+export default function NameValue({ name, value, depth, parent, deleteHandle, editHandle }: Props) {
 	return (
 		<div className='json-view--pair'>
 			<span className={typeof name === 'number' ? 'json-view--index' : 'json-view--property'}>{name}</span>:{' '}
-			<JsonNode node={value} depth={depth + 1} deleteHandle={deleteHandle} parent={parent} name={name} />
+			<JsonNode
+				node={value}
+				depth={depth + 1}
+				deleteHandle={deleteHandle}
+				editHandle={editHandle}
+				parent={parent}
+				name={name}
+			/>
 		</div>
 	)
 }

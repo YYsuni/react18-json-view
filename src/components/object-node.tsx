@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import { isObject } from '../utils'
+import { isObject as _isObject } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
 import NameValue from './name-value'
@@ -18,15 +18,18 @@ interface Props {
 }
 
 export default function ObjectNode({ node, depth, name, parent, deleteHandle: _deleteSelf }: Props) {
-	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd } =
+	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit } =
 		useContext(JsonViewContext)
 
-	const [nodeState, setNodeState] = useState(node)
+	const isObject = _isObject(node)
+
+	const [_, update] = useState(0)
+	const forceUpdate = () => update(state => ++state)
 	const [fold, setFold] = useState(
 		collapsed === true ||
 			(typeof collapsed === 'number' && depth > collapsed) ||
-			(Array.isArray(nodeState) && nodeState.length > collapseObjectsAfterLength) ||
-			(isObject(nodeState) && Object.keys(nodeState).length > collapseObjectsAfterLength)
+			(Array.isArray(node) && node.length > collapseObjectsAfterLength) ||
+			(isObject && Object.keys(node).length > collapseObjectsAfterLength)
 			? true
 			: false
 	)
@@ -34,7 +37,7 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 	useEffect(() => {
 		const originCollapsed =
 			(Array.isArray(node) && node.length > collapseObjectsAfterLength) ||
-			(isObject(node) && Object.keys(node).length > collapseObjectsAfterLength)
+			(isObject && Object.keys(node).length > collapseObjectsAfterLength)
 
 		if (typeof collapsed === 'boolean') {
 			setFold(collapsed || originCollapsed)
@@ -43,15 +46,26 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 		}
 	}, [collapsed, collapseObjectsAfterLength])
 
+	// Edit property
+	const editHandle = (indexOrName: number | string, newValue: any, oldValue: any) => {
+		if (Array.isArray(node)) {
+			node[+indexOrName] = newValue
+		} else if (node) {
+			node[indexOrName] = newValue
+		}
+		if (onEdit)
+			onEdit({ newValue, oldValue, depth, src, indexOrName: name!, parentType: isObject ? 'object' : 'array' })
+		forceUpdate()
+	}
+
 	// Delete property
 	const deleteHandle = (indexOrName: number | string) => {
-		if (Array.isArray(nodeState)) {
-			nodeState.splice(+indexOrName, 1)
-			setNodeState([...nodeState])
-		} else if (nodeState) {
-			delete nodeState[indexOrName]
-			setNodeState({ ...nodeState })
+		if (Array.isArray(node)) {
+			node.splice(+indexOrName, 1)
+		} else if (node) {
+			delete node[indexOrName]
 		}
+		forceUpdate()
 	}
 
 	// Delete self
@@ -67,23 +81,30 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 	const [adding, setAdding] = useState(false)
 	const inputRef = useRef<HTMLInputElement>(null)
 	const add = () => {
-		if (isObject(nodeState)) {
+		if (isObject) {
 			const inputName = inputRef.current?.value
 
 			if (inputName) {
-				;(nodeState as Record<string, any>)[inputName] = null
-				setNodeState({ ...nodeState })
+				;(node as Record<string, any>)[inputName] = null
+
 				if (inputRef.current) inputRef.current.value = ''
 				setAdding(false)
 
 				if (onAdd) onAdd({ indexOrName: inputName, depth, src, parentType: 'object' })
 			}
-		} else if (Array.isArray(nodeState)) {
-			nodeState.push(null)
-			setNodeState([...nodeState])
-			if (onAdd) onAdd({ indexOrName: nodeState.length - 1, depth, src, parentType: 'object' })
+		} else if (Array.isArray(node)) {
+			node.push(null)
+			if (onAdd) onAdd({ indexOrName: node.length - 1, depth, src, parentType: 'array' })
 		}
-		return {}
+		forceUpdate()
+	}
+	const handleAddKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+		if (event.key === 'Enter') {
+			event.preventDefault()
+			add()
+		} else if (event.key === 'Escape') {
+			cancel()
+		}
 	}
 
 	const isEditing = deleting || adding
@@ -96,7 +117,9 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 		<>
 			{!fold && !isEditing && <AngleDownSVG onClick={() => setFold(true)} className='jv-chevron' />}
 
-			{adding && isObject(nodeState) && <input className='json-view--input' placeholder='property' ref={inputRef} />}
+			{adding && isObject && (
+				<input className='json-view--input' placeholder='property' ref={inputRef} onKeyDown={handleAddKeyDown} />
+			)}
 
 			{isEditing && (
 				<DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={adding ? add : deleteSelf} />
@@ -105,13 +128,23 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 
 			{!fold && !isEditing && enableClipboard && <CopyButton text={JSON.stringify(node)} />}
 			{!fold && !isEditing && editable && (
-				<AddSVG className='json-view--edit' onClick={() => (Array.isArray(nodeState) ? add() : setAdding(true))} />
+				<AddSVG
+					className='json-view--edit'
+					onClick={() => {
+						if (isObject) {
+							setAdding(true)
+							setTimeout(() => inputRef.current?.focus())
+						} else {
+							add()
+						}
+					}}
+				/>
 			)}
 			{!fold && !isEditing && editable && <DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />}
 		</>
 	)
 
-	if (Array.isArray(nodeState)) {
+	if (Array.isArray(node)) {
 		return (
 			<>
 				<span>{'['}</span>
@@ -120,7 +153,7 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 
 				{!fold ? (
 					<div className='jv-indent'>
-						{nodeState.map((n, i) => (
+						{node.map((n, i) => (
 							<NameValue
 								key={String(i) + String(n)}
 								name={i}
@@ -128,6 +161,7 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 								depth={depth}
 								parent={node}
 								deleteHandle={deleteHandle}
+								editHandle={editHandle}
 							/>
 						))}
 					</div>
@@ -140,7 +174,7 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 				<span>{']'}</span>
 			</>
 		)
-	} else if (isObject(nodeState)) {
+	} else if (isObject) {
 		return (
 			<>
 				<span>{'{'}</span>
@@ -149,14 +183,15 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 
 				{!fold ? (
 					<div className='jv-indent'>
-						{Object.entries(nodeState).map(([name, value]) => (
+						{Object.entries(node).map(([name, value]) => (
 							<NameValue
-								key={name}
+								key={name + String(value)}
 								name={name}
 								value={value}
 								depth={depth}
-								parent={parent}
+								parent={node}
 								deleteHandle={deleteHandle}
+								editHandle={editHandle}
 							/>
 						))}
 					</div>

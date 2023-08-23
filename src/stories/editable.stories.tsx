@@ -111,3 +111,9 @@ export const xl: StoryObj<TYPE_FC> = {
 		)
 	]
 }
+
+export const String: StoryObj<TYPE_FC> = {
+	args: {
+		src: 'string'
+	}
+}
