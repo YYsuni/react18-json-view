@@ -83,7 +83,6 @@ Here are all the style codes, you can freely change color variables, such as `--
 .json-view .json-view--string {	color: var(--json-string); }
 .json-view .json-view--boolean { color: var(--json-boolean); }
 .json-view .json-view--null { color: var(--json-null); }
-.json-view:hover > .json-view--copy { display: inline-block; }
 
 .json-view .json-view--copy,
 .json-view .json-view--edit {
@@ -109,6 +108,8 @@ Here are all the style codes, you can freely change color variables, such as `--
 	background: transparent;
 }
 
+.json-view:hover > .json-view--copy,
+.json-view:hover > .json-view--edit,
 .json-view .json-view--pair:hover > .json-view--copy,
 .json-view .json-view--pair:hover > .json-view--edit {
 	display: inline-block;

@@ -24,9 +24,6 @@
 .json-view .json-view--null {
 	color: var(--json-null);
 }
-.json-view:hover > .json-view--copy {
-	display: inline-block;
-}
 
 .json-view .json-view--copy,
 .json-view .json-view--edit {
@@ -53,6 +50,8 @@
 	background: transparent;
 }
 
+.json-view:hover > .json-view--copy,
+.json-view:hover > .json-view--edit,
 .json-view .json-view--pair:hover > .json-view--copy,
 .json-view .json-view--pair:hover > .json-view--edit {
 	display: inline-block;

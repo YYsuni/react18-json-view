@@ -158,7 +158,9 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 					}}
 				/>
 			)}
-			{!fold && !isEditing && editable && <DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />}
+			{!fold && !isEditing && editable && _deleteSelf && (
+				<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
+			)}
 		</>
 	)
 
