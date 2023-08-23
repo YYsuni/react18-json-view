@@ -15,14 +15,14 @@ export default {
 		collapseStringsAfterLength: {
 			control: 'number',
 			description:
-				'When an integer value is assigned, strings will be cut off at that length. Collapsed strings are inserted by an ellipsis. String content can be expanded and collapsed by clicking on the string value.',
+				'When an integer value is assigned, strings longer than that length will be truncated and indicated by an ellipsis. To expand or collapse the string content, simply click on the string value.',
 			table: {
 				defaultValue: { summary: 99 }
 			}
 		},
 		collapseObjectsAfterLength: {
 			control: 'number',
-			description: 'When an integer value is assigned, the object and array will be collapsed initially.',
+			description: 'When an integer value is assigned, the object and array will initially collapse.',
 			table: {
 				defaultValue: { summary: 20 }
 			}
@@ -36,10 +36,39 @@ export default {
 		},
 		collapsed: {
 			description:
-				'When set to true, all nodes will be collapsed by default. Use an integer value to collapse at a particular depth.',
+				'When set to true, all nodes will be collapsed by default. Use an integer value to collapse at a specific depth.',
 			table: {
 				defaultValue: { summary: false }
 			}
+		},
+		editable: {
+			table: {
+				defaultValue: { summary: false }
+			},
+			description:
+				'When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete.'
+		},
+		onAdd: {
+			description: `(params: { indexOrName: string | number, depth: number, src: any; parentType: 'object' | 'array' }) => void`
+		},
+		onDelete: {
+			description: `(params: {
+				value: any,
+				indexOrName: string | number,
+				depth: number,
+				src: any,
+				parentType: 'object' | 'array'
+			}) => void`
+		},
+		onEdit: {
+			description: `(params: {
+				newValue: any,
+				oldValue: any,
+				depth: number,
+				src: any,
+				indexOrName: string | number,
+				parentType: 'object' | 'array'
+			}) => void`
 		}
 	},
 	decorators: [
