@@ -52,7 +52,7 @@ import 'react18-json-view/src/style.css'
 
 ### How to generate object/array
 
-The editor uses eval(<input-value>). While in edit mode, you can enter ({}) or ([]), which will cause the result of eval to become a new object or array.
+The editor uses `eval(<input-value>)`. While in edit mode, you can enter `({})` or `([])`, which will cause the result of eval to become a new object or array.
 
 ### How the editor works
 
@@ -60,7 +60,7 @@ This component does not perform any cloning operations, so every step of the ope
 
 
 ## Custom styles
-Here are all the style codes, you can freely change color variables, such as --json-property, or others.
+Here are all the style codes, you can freely change color variables, such as `--json-property`, or others.
 ```css
 .json-view {
 	--json-property: #009033;
@@ -70,13 +70,13 @@ Here are all the style codes, you can freely change color variables, such as --j
 	--json-boolean: #dc155e;
 	--json-null: #dc155e;
 }
-.json-view .json-view--property {	color: var(--json-property); }
+.json-view .json-view--property { color: var(--json-property); }
 .json-view .json-view--index { color: var(--json-index); }
 .json-view .json-view--number {	color: var(--json-number); }
 .json-view .json-view--string {	color: var(--json-string); }
 .json-view .json-view--boolean { color: var(--json-boolean); }
-.json-view .json-view--null {	color: var(--json-null); }
-.json-view:hover > .json-view--copy {	display: inline-block; }
+.json-view .json-view--null { color: var(--json-null); }
+.json-view:hover > .json-view--copy { display: inline-block; }
 
 .json-view .json-view--copy,
 .json-view .json-view--edit {
@@ -107,7 +107,7 @@ Here are all the style codes, you can freely change color variables, such as --j
 	display: inline-block;
 }
 
-.json-view .jv-indent {	padding-left: 16px; }
+.json-view .jv-indent { padding-left: 16px; }
 .json-view .jv-chevron {
 	display: inline-block;
 	vertical-align: -20%;
@@ -116,7 +116,7 @@ Here are all the style codes, you can freely change color variables, such as --j
 	width: 1em;
 	height: 1em;
 }
-.json-view .jv-chevron:hover {	opacity: 0.8;}
+.json-view .jv-chevron:hover { opacity: 0.8;}
 .json-view .jv-button {
 	background: transparent;
 	outline: none;
@@ -138,5 +138,6 @@ react-json-view does not support React 18.
   - [x] add
   - [x] edit
   - [x] delete
+  - [ ] onChange
   - [ ] onSelect
 - [ ] custom icon
