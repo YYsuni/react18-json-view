@@ -13,12 +13,11 @@ interface Props {
 	node: Record<string, any> | Array<any>
 	depth: number
 	name?: number | string
-	parent?: Record<string, any> | Array<any>
 	deleteHandle?: (_: string | number) => void
 }
 
-export default function ObjectNode({ node, depth, name, parent, deleteHandle: _deleteSelf }: Props) {
-	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit } =
+export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSelf }: Props) {
+	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange } =
 		useContext(JsonViewContext)
 
 	const isObject = _isObject(node)
@@ -54,7 +53,9 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 			node[indexOrName] = newValue
 		}
 		if (onEdit)
-			onEdit({ newValue, oldValue, depth, src, indexOrName: name!, parentType: isObject ? 'object' : 'array' })
+			onEdit({ newValue, oldValue, depth, src, indexOrName: indexOrName, parentType: isObject ? 'object' : 'array' })
+		if (onChange)
+			onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isObject ? 'object' : 'array' })
 		forceUpdate()
 	}
 
@@ -73,8 +74,15 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 	const deleteSelf = () => {
 		setDeleting(false)
 		if (_deleteSelf) _deleteSelf(name!)
-		if (onDelete)
-			onDelete({ value: node, depth, src, indexOrName: name!, parentType: Array.isArray(parent) ? 'array' : 'object' })
+		if (onDelete) onDelete({ value: node, depth, src, indexOrName: name!, parentType: isObject ? 'object' : 'array' })
+		if (onChange)
+			onChange({
+				type: 'delete',
+				depth,
+				src,
+				indexOrName: name!,
+				parentType: isObject ? 'object' : 'array'
+			})
 	}
 
 	// Add
@@ -91,10 +99,12 @@ export default function ObjectNode({ node, depth, name, parent, deleteHandle: _d
 				setAdding(false)
 
 				if (onAdd) onAdd({ indexOrName: inputName, depth, src, parentType: 'object' })
+				if (onChange) onChange({ type: 'add', indexOrName: inputName, depth, src, parentType: 'object' })
 			}
 		} else if (Array.isArray(node)) {
 			node.push(null)
 			if (onAdd) onAdd({ indexOrName: node.length - 1, depth, src, parentType: 'array' })
+			if (onChange) onChange({ type: 'add', indexOrName: node.length - 1, depth, src, parentType: 'array' })
 		}
 		forceUpdate()
 	}

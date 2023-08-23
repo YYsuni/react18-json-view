@@ -17,6 +17,13 @@ type OnDelete = (params: {
 	parentType: 'object' | 'array'
 }) => void
 type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
+type OnChange = (params: {
+	indexOrName: string | number
+	depth: number
+	src: any
+	parentType: 'object' | 'array'
+	type: 'add' | 'edit' | 'delete'
+}) => void
 
 export const JsonViewContext = createContext({
 	collapseStringsAfterLength: 99,
@@ -27,7 +34,8 @@ export const JsonViewContext = createContext({
 	src: undefined,
 	onEdit: (() => {}) as OnEdit | undefined,
 	onDelete: (() => {}) as OnDelete | undefined,
-	onAdd: (() => {}) as OnAdd | undefined
+	onAdd: (() => {}) as OnAdd | undefined,
+	onChange: (() => {}) as OnChange | undefined
 })
 
 interface Props {
@@ -40,6 +48,7 @@ interface Props {
 	onEdit?: OnEdit
 	onDelete?: OnDelete
 	onAdd?: OnAdd
+	onChange?: OnChange
 }
 
 export default function JsonView({
@@ -51,7 +60,8 @@ export default function JsonView({
 	editable = false,
 	onEdit,
 	onDelete,
-	onAdd
+	onAdd,
+	onChange
 }: Props) {
 	return (
 		<JsonViewContext.Provider
@@ -64,7 +74,8 @@ export default function JsonView({
 				src,
 				onEdit,
 				onDelete,
-				onAdd
+				onAdd,
+				onChange
 			}}>
 			<code className='json-view'>
 				<JsonNode node={src} depth={1} />

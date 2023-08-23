@@ -143,6 +143,6 @@ react-json-view does not support React 18.
   - [x] add
   - [x] edit
   - [x] delete
-  - [ ] onChange
+  - [x] onChange
   - [ ] onSelect
 - [ ] custom icon

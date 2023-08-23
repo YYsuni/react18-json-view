@@ -97,6 +97,9 @@ export default {
 		},
 		onAdd: ({ src, indexOrName }) => {
 			console.log('[onAdd]', indexOrName, src)
+		},
+		onChange: ({ src, indexOrName }) => {
+			console.log('[onChange]', indexOrName, src)
 		}
 	},
 	decorators: [

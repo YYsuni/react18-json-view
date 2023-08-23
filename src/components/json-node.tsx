@@ -19,10 +19,10 @@ interface Props {
 }
 
 export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, name, parent, editHandle }: Props) {
-	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete } = useContext(JsonViewContext)
+	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange } = useContext(JsonViewContext)
 
 	if (Array.isArray(node) || isObject(node)) {
-		return <ObjectNode node={node} depth={depth} parent={parent} name={name} deleteHandle={_deleteHandle} />
+		return <ObjectNode node={node} depth={depth} name={name} deleteHandle={_deleteHandle} />
 	} else {
 		const type = typeof node
 
@@ -64,6 +64,14 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 					src,
 					indexOrName: name!,
 					parentType: Array.isArray(parent) ? 'array' : 'object'
+				})
+			if (onChange)
+				onChange({
+					depth,
+					src,
+					indexOrName: name!,
+					parentType: Array.isArray(parent) ? 'array' : 'object',
+					type: 'delete'
 				})
 		}
 
