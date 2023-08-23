@@ -1,4 +1,5 @@
 .json-view {
+	display: block;
 	--json-property: #009033;
 	--json-index: #676dff;
 	--json-number: #676dff;
