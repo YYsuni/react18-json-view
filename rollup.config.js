@@ -5,7 +5,14 @@ import external from 'rollup-plugin-peer-deps-external'
 import svgr from '@svgr/rollup'
 import url from '@rollup/plugin-url'
 
-const plugins = [external(), url(), svgr(), typescript({ useTsconfigDeclarationDir: true }), nodeResolve(), commonjs()]
+const plugins = [
+	external(),
+	url(),
+	svgr({ dimensions: false }),
+	typescript({ useTsconfigDeclarationDir: true }),
+	nodeResolve(),
+	commonjs()
+]
 
 /** @type {import('rollup').InputOption} */
 export default {
