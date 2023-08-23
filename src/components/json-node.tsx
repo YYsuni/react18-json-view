@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import { isObject } from '../utils'
+import { isObject, stringifyForCopying } from '../utils'
 import ObjectNode from './object-node'
 import LongString from './long-string'
 import CopyButton from './copy-button'
@@ -97,7 +97,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 				)}
 				{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-				{!isEditing && enableClipboard && <CopyButton text={node} />}
+				{!isEditing && enableClipboard && <CopyButton text={stringifyForCopying(node)} />}
 				{!isEditing && editable && <EditSVG className='json-view--edit' onClick={edit} />}
 				{!isEditing && editable && <DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />}
 			</>
@@ -118,6 +118,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 		}
 		if (deleting) className += ' json-view--deleting'
 
+		let displayValue = String(node)
+		if (type === 'bigint') displayValue += 'n'
+
 		if (type === 'string')
 			return (
 				<>
@@ -133,12 +136,12 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 						<span
 							className={className}
 							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: `"${node}"` }}
+							dangerouslySetInnerHTML={{ __html: `"${displayValue}"` }}
 							ref={valueRef}
 							onKeyDown={handleKeyDown}
 						/>
 					) : (
-						<span className={className}>"{String(node)}"</span>
+						<span className={className}>"{displayValue}"</span>
 					)}
 
 					{Icons}
@@ -151,12 +154,12 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 						<span
 							className={className}
 							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: String(node) }}
+							dangerouslySetInnerHTML={{ __html: displayValue }}
 							ref={valueRef}
 							onKeyDown={handleKeyDown}
 						/>
 					) : (
-						<span className={className}>{String(node)}</span>
+						<span className={className}>{displayValue}</span>
 					)}
 
 					{Icons}

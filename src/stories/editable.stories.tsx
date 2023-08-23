@@ -80,7 +80,9 @@ export default {
 			number: 123456,
 			boolean: false,
 			null: null,
-			func: function () {},
+			func: function () {
+				console.log('Hello World')
+			},
 			Symbol: Symbol('JSON View'),
 			obj: {
 				k1: 123,
