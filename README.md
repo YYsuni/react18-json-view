@@ -38,6 +38,10 @@ import JsonView from 'react18-json-view'
 import 'react18-json-view/src/style.css'
 
 <JsonView src={my_json_object} />
+
+// If needed, you can use the internal stringify function.
+import { stringify } from 'react18-json-view'
+
 ```
 
 ### Props
