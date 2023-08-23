@@ -151,3 +151,91 @@ export const String: StoryObj<TYPE_FC> = {
 		src: 'string'
 	}
 }
+
+export const LongString: StoryObj<TYPE_FC> = {
+	args: {
+		src: 'long string long string long string long string'
+	}
+}
+
+export const Number: StoryObj<TYPE_FC> = {
+	args: {
+		src: 12312312321
+	}
+}
+
+export const Null: StoryObj<TYPE_FC> = {
+	args: {
+		src: null
+	}
+}
+
+export const Boolean: StoryObj<TYPE_FC> = {
+	args: {
+		src: true
+	}
+}
+
+export const Undefined: StoryObj<TYPE_FC> = {
+	args: {
+		src: undefined
+	}
+}
+
+export const Collapsed_Boolean: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
+			arr: ['string', 123456, false, null]
+		},
+		collapsed: true
+	},
+	decorators: [
+		Story => (
+			<div style={{ minWidth: 300 }}>
+				<Story />
+			</div>
+		)
+	]
+}
+
+export const Collapsed_Number: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			boolean: false,
+			null: null,
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false,
+				k4: {
+					k: {
+						k: {
+							k: 'k5'
+						}
+					}
+				}
+			},
+			arr: ['string', 123456, false, null, [123, 123, 123, [123, 123, 123]]]
+		},
+		collapsed: 2
+	},
+	decorators: [
+		Story => (
+			<div style={{ minWidth: 300 }}>
+				<Story />
+			</div>
+		)
+	]
+}

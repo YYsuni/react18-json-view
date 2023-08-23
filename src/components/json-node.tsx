@@ -98,8 +98,10 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 				{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
 				{!isEditing && enableClipboard && <CopyButton text={stringifyForCopying(node)} />}
-				{!isEditing && editable && <EditSVG className='json-view--edit' onClick={edit} />}
-				{!isEditing && editable && <DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />}
+				{!isEditing && editable && editHandle && <EditSVG className='json-view--edit' onClick={edit} />}
+				{!isEditing && editable && _deleteHandle && (
+					<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
+				)}
 			</>
 		)
 
