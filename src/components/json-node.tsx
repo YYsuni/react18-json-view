@@ -12,21 +12,22 @@ import { ReactComponent as CancelSVG } from '../svgs/cancel.svg'
 interface Props {
 	node: any
 	depth: number
-	deleteHandle?: (_: string | number) => void
+	deleteHandle?: (indexOrName: string | number) => void
+	editHandle?: (indexOrName: string | number, newValue: any, oldValue: any) => void
 	name?: number | string
 	parent?: Record<string, any> | Array<any>
 }
 
-export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, name, parent }: Props) {
-	const { collapseStringsAfterLength, enableClipboard, editable, src, onEdit, onDelete } = useContext(JsonViewContext)
+export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, name, parent, editHandle }: Props) {
+	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete } = useContext(JsonViewContext)
 
 	if (Array.isArray(node) || isObject(node)) {
 		return <ObjectNode node={node} depth={depth} parent={parent} name={name} deleteHandle={_deleteHandle} />
 	} else {
+		const type = typeof node
+
 		const [editing, setEditing] = useState(false)
 		const [deleting, setDeleting] = useState(false)
-		const [value, setValue] = useState(String(node))
-		const [type, setType] = useState(typeof node)
 		const valueRef = useRef<HTMLSpanElement>(null)
 
 		const edit = () => {
@@ -41,40 +42,10 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 
 			try {
 				const evalValue = eval(newValue)
-				const newType = typeof evalValue
-				const evalString = String(evalValue)
 
-				setType(newType)
-				setValue(evalString)
-				if (parent) {
-					//@ts-ignore
-					parent[name] = evalValue
-					if (onEdit)
-						onEdit({
-							newValue: evalString,
-							oldValue: value,
-							depth,
-							src,
-							indexOrName: name!,
-							parentType: Array.isArray(parent) ? 'array' : 'object'
-						})
-				}
+				if (editHandle) editHandle(name!, evalValue, node)
 			} catch (e) {
-				setType('string')
-				setValue(newValue)
-				if (parent) {
-					//@ts-ignore
-					parent[name] = newValue
-					if (onEdit)
-						onEdit({
-							newValue,
-							oldValue: value,
-							depth,
-							src,
-							indexOrName: name!,
-							parentType: Array.isArray(parent) ? 'array' : 'object'
-						})
-				}
+				if (editHandle) editHandle(name!, newValue, node)
 			}
 
 			setEditing(false)
@@ -87,7 +58,13 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			setDeleting(false)
 			if (_deleteHandle) _deleteHandle(name!)
 			if (onDelete)
-				onDelete({ value, depth, src, indexOrName: name!, parentType: Array.isArray(parent) ? 'array' : 'object' })
+				onDelete({
+					value: node,
+					depth,
+					src,
+					indexOrName: name!,
+					parentType: Array.isArray(parent) ? 'array' : 'object'
+				})
 		}
 
 		const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -136,9 +113,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 		if (type === 'string')
 			return (
 				<>
-					{value.length > collapseStringsAfterLength ? (
+					{node.length > collapseStringsAfterLength ? (
 						<LongString
-							str={value}
+							str={node}
 							ref={valueRef}
 							editing={editing}
 							handleKeyDown={handleKeyDown}
@@ -148,12 +125,12 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 						<span
 							className={className}
 							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: `"${value}"` }}
+							dangerouslySetInnerHTML={{ __html: `"${node}"` }}
 							ref={valueRef}
 							onKeyDown={handleKeyDown}
 						/>
 					) : (
-						<span className={className}>"{value}"</span>
+						<span className={className}>"{String(node)}"</span>
 					)}
 
 					{Icons}
@@ -166,12 +143,12 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 						<span
 							className={className}
 							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: value }}
+							dangerouslySetInnerHTML={{ __html: String(node) }}
 							ref={valueRef}
 							onKeyDown={handleKeyDown}
 						/>
 					) : (
-						<span className={className}>{value}</span>
+						<span className={className}>{String(node)}</span>
 					)}
 
 					{Icons}
