@@ -74,6 +74,7 @@ This component does not perform any cloning operations, so every step of the ope
 Here are all the style codes, you can freely change color variables, such as `--json-property`, or others.
 ```css
 .json-view {
+	display: block;
 	--json-property: #009033;
 	--json-index: #676dff;
 	--json-number: #676dff;
