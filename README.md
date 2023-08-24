@@ -153,4 +153,5 @@ react-json-view does not support React 18.
   - [x] delete
   - [x] onChange
   - [ ] onSelect
+- [ ] dark mode
 - [ ] custom icon
