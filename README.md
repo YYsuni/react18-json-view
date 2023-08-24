@@ -58,7 +58,7 @@ import { stringify } from 'react18-json-view'
 | `editable`                   | `boolean`           | false   | When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete.                                                                          |
 | `onAdd`                      | `function`          | -       | `(params: { indexOrName: string\| number, depth: number, src: any; parentType: 'object' \| 'array' }) => void`                                                                                 |
 | `onDelete`                   | `function`          | -       | `(params:{ value: any,indexOrName: string \| number,depth: number,src: any,parentType: 'object' \| 'array'}) => void`                                                                          |
-| `onEdit`                     | `function`          | -       | `(params: { newValue: any, oldValue: any, depth: number,	src: any, indexOrName: string \| number, parentType: 'object' \| 'array'}) => void`                                                   |
+| `onEdit`                     | `function`          | -       | `(params: { newValue: any, oldValue: any, depth: number, src: any, indexOrName: string \| number, parentType: 'object' \| 'array'}) => void`                                                   |
 
 ## Editable
 
