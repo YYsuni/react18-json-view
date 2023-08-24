@@ -50,6 +50,7 @@ interface Props {
 	onDelete?: OnDelete
 	onAdd?: OnAdd
 	onChange?: OnChange
+	dark?: boolean
 }
 
 export default function JsonView({
@@ -62,7 +63,8 @@ export default function JsonView({
 	onEdit,
 	onDelete,
 	onAdd,
-	onChange
+	onChange,
+	dark = false
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = () => update(state => ++state)
@@ -82,7 +84,7 @@ export default function JsonView({
 				onChange,
 				forceUpdate
 			}}>
-			<code className='json-view'>
+			<code className={'json-view' + (dark ? ' dark' : '')}>
 				<JsonNode node={src} depth={1} />
 			</code>
 		</JsonViewContext.Provider>

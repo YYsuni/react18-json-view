@@ -12,6 +12,13 @@ export default {
 		src: {
 			description: 'Array | Object'
 		},
+		dark: {
+			control: 'boolean',
+			description: 'Boolean',
+			table: {
+				defaultValue: { summary: false }
+			}
+		},
 		collapseStringsAfterLength: {
 			control: 'number',
 			description:

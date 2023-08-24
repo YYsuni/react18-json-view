@@ -1,11 +1,12 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import JsonView from '../index'
+import '../dark.css'
 
 type TYPE_FC = typeof JsonView
 
 export default {
-	title: 'Editable',
+	title: 'Dark',
 	component: JsonView,
 
 	argTypes: {
@@ -98,25 +99,14 @@ export default {
 			},
 			arr: ['string', 123456, false, null]
 		},
-		onEdit: ({ newValue, src, oldValue, indexOrName }) => {
-			console.log('[onEdit]', indexOrName, newValue, oldValue, src)
-		},
-		onDelete: ({ value, src, indexOrName }) => {
-			console.log('[onDelete]', indexOrName, value, src)
-		},
-		onAdd: ({ src, indexOrName }) => {
-			console.log('[onAdd]', indexOrName, src)
-		},
-		onChange: ({ src, indexOrName }) => {
-			console.log('[onChange]', indexOrName, src)
-		}
+		dark: true
 	},
 	decorators: [
 		Story => (
 			<div
 				className='flex h-full items-center justify-center overflow-auto p-8'
-				style={{ backgroundImage: 'linear-gradient(140deg, rgb(165, 142, 251), rgb(233, 191, 248))' }}>
-				<div className='max-w-[600px] rounded-xl bg-white/90 p-6 font-mono shadow backdrop-blur'>
+				style={{ backgroundImage: 'linear-gradient(140deg, #2A00C5, #610483)' }}>
+				<div className='max-w-[600px] rounded-xl bg-black/40 p-6 font-mono shadow backdrop-blur'>
 					<Story />
 				</div>
 			</div>

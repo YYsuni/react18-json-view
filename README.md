@@ -36,6 +36,8 @@ npm i react18-json-view
 ```tsx
 import JsonView from 'react18-json-view'
 import 'react18-json-view/src/style.css'
+// If dark mode is needed, import `dark.css`.
+// import 'react18-json-view/src/dark.css'
 
 <JsonView src={my_json_object} />
 
@@ -48,6 +50,7 @@ import { stringify } from 'react18-json-view'
 | Name                         | Type                | Default | Description                                                                                                                                                                                    |
 | :--------------------------- | :------------------ | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `src`                        | `JSON Object`       | None    | This property contains your input JSON                                                                                                                                                         |
+| `dark`                       | `boolean`           | false   | Dark mode (Don't forget to import `dark.css`)                                                                                                                                                  |
 | `collapseStringsAfterLength` | `integer`           | 99      | When an integer value is assigned, strings longer than that length will be truncated and indicated by an ellipsis. To expand or collapse the string content, simply click on the string value. |
 | `collapseObjectsAfterLength` | `integer`           | 20      | When an integer value is assigned, the object and array will initially collapse.                                                                                                               |
 | `enableClipboard`            | `boolean`           | true    | When `prop` is not `false`, users can copy objects and arrays to the clipboard by clicking on it.                                                                                              |
@@ -84,19 +87,19 @@ Here are all the style codes, you can freely change color variables, such as `--
 }
 .json-view .json-view--property { color: var(--json-property); }
 .json-view .json-view--index { color: var(--json-index); }
-.json-view .json-view--number {	color: var(--json-number); }
-.json-view .json-view--string {	color: var(--json-string); }
+.json-view .json-view--number { color: var(--json-number); }
+.json-view .json-view--string { color: var(--json-string); }
 .json-view .json-view--boolean { color: var(--json-boolean); }
 .json-view .json-view--null { color: var(--json-null); }
 
-.json-view .json-view--copy,
-.json-view .json-view--edit {
+.json-view :is(.json-view--copy, .json-view--edit) {
 	display: none;
 	width: 1em;
 	height: 1em;
 	margin-left: 4px;
 	cursor: pointer;
 }
+
 .json-view .json-view--deleting {
 	outline: 1px solid #da0000;
 	background-color: #da000011;
@@ -113,14 +116,13 @@ Here are all the style codes, you can freely change color variables, such as `--
 	background: transparent;
 }
 
-.json-view:hover > .json-view--copy,
-.json-view:hover > .json-view--edit,
-.json-view .json-view--pair:hover > .json-view--copy,
-.json-view .json-view--pair:hover > .json-view--edit {
+:is(.json-view:hover, .json-view--pair:hover) > :is(.json-view--copy, .json-view--edit) {
 	display: inline-block;
 }
 
-.json-view .jv-indent { padding-left: 16px; }
+.json-view .jv-indent {
+	padding-left: 16px;
+}
 .json-view .jv-chevron {
 	display: inline-block;
 	vertical-align: -20%;
@@ -129,14 +131,38 @@ Here are all the style codes, you can freely change color variables, such as `--
 	width: 1em;
 	height: 1em;
 }
-.json-view .jv-chevron:hover { opacity: 0.8;}
+.json-view .jv-chevron:hover {
+	opacity: 0.8;
+}
+
 .json-view .jv-button {
 	background: transparent;
 	outline: none;
 	border: none;
 	cursor: pointer;
 }
-.json-view .cursor-pointer { cursor: pointer; }
+.json-view .cursor-pointer {
+	cursor: pointer;
+}
+
+```
+
+### dark.css
+
+```css
+:is(.dark .json-view, .dark.json-view) {
+	color: #ccc;
+	--json-property: #009033;
+	--json-index: #5d75f2;
+	--json-number: #5d75f2;
+	--json-string: #c57e29;
+	--json-boolean: #e4407b;
+	--json-null: #e4407b;
+}
+
+.dark :is(.json-view--copy, .json-view--edit) {
+	color: #d1d1d1;
+}
 
 ```
 
@@ -153,5 +179,5 @@ react-json-view does not support React 18.
   - [x] delete
   - [x] onChange
   - [ ] onSelect
-- [ ] dark mode
+- [x] dark mode
 - [ ] custom icon
