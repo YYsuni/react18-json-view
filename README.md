@@ -183,5 +183,6 @@ react-json-view does not support React 18.
 - [ ] custom icon
 - [ ] more usability/scenarios
 - [ ] gif guide
+- [ ] more color themes(dark)
 
 * tree?
