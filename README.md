@@ -181,5 +181,7 @@ react-json-view does not support React 18.
   - [ ] onSelect
 - [x] dark mode
 - [ ] custom icon
+- [ ] more usability/scenarios
+- [ ] gif guide
 
 * tree?
