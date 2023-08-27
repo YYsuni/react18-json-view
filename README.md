@@ -75,6 +75,11 @@ This component does not perform any cloning operations, so every step of the ope
 
 * Includes the design of *Json View Online*
 
+## Theme
+Every theme has a dark mode.
+
+![Theme](theme.png)
+
 ## Custom styles
 Here are the default theme codes, you can freely change color variables, such as `--json-property`, or others.
 ```css
@@ -112,6 +117,6 @@ react-json-view does not support React 18.
 - [ ] custom icon
 - [ ] more usability/scenarios
 - [ ] gif guide
-- [ ] more color themes(dark)
+- [ ] more color themes(dark) **<=**
 
 * tree?
