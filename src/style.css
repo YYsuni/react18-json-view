@@ -1,5 +1,6 @@
 .json-view {
 	display: block;
+	color: #4d4d4d;
 	--json-property: #009033;
 	--json-index: #676dff;
 	--json-number: #676dff;
@@ -77,4 +78,42 @@
 }
 .json-view .cursor-pointer {
 	cursor: pointer;
+}
+
+/* Themes */
+.json-view_a11y {
+	color: #545454;
+	--json-property: #aa5d00;
+	--json-index: #007299;
+	--json-number: #007299;
+	--json-string: #008000;
+	--json-boolean: #d91e18;
+	--json-null: #d91e18;
+}
+.json-view_github {
+	color: #005cc5;
+	--json-property: #005cc5;
+	--json-index: #005cc5;
+	--json-number: #005cc5;
+	--json-string: #032f62;
+	--json-boolean: #005cc5;
+	--json-null: #005cc5;
+}
+.json-view_vscode {
+	color: #005cc5;
+	--json-property: #0451a5;
+	--json-index: #0000ff;
+	--json-number: #0000ff;
+	--json-string: #a31515;
+	--json-boolean: #0000ff;
+	--json-null: #0000ff;
+}
+.json-view_atom {
+	color: #383a42;
+	--json-property: #e45649;
+	--json-index: #986801;
+	--json-number: #986801;
+	--json-string: #50a14f;
+	--json-boolean: #0184bc;
+	--json-null: #0184bc;
 }
