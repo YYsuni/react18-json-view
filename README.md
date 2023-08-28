@@ -51,7 +51,7 @@ import { stringify } from 'react18-json-view'
 | :--------------------------- | :------------------ | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `src`                        | `JSON Object`       | None    | This property contains your input JSON                                                                                                                                                         |
 | `dark`                       | `boolean`           | false   | Keep in dark mode (Don't forget to import `dark.css`)                                                                                                                                                  |
-| `theme`(@canary)                | `default` \| `a11y` \| `github` \| `vscode` \| `atom`     |'default'   | Color theme                                       |
+| `theme`(@canary)                | `default` \| `a11y` \| `github` \| `vscode` \| `atom`\|`winter-is-coming`     |'default'   | Color theme                                       |
 | `collapseStringsAfterLength` | `integer`           | 99      | When an integer value is assigned, strings longer than that length will be truncated and indicated by an ellipsis. To expand or collapse the string content, simply click on the string value. |
 | `collapseObjectsAfterLength` | `integer`           | 20      | When an integer value is assigned, the object and array will initially collapse.                                                                                                               |
 | `enableClipboard`            | `boolean`           | true    | When `prop` is not `false`, users can copy objects and arrays to the clipboard by clicking on it.                                                                                              |
@@ -120,6 +120,7 @@ react-json-view does not support React 18.
 - [ ] more usability/scenarios
 - [ ] gif guide
 - [x] more color themes(dark)
+- [ ] collapse objects callback
 - [ ] map/set viewer
 - [ ] display data type
 - [ ] display object size
