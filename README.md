@@ -80,11 +80,13 @@ Every theme has a dark mode.
 
 ![Theme](theme.png)
 
-## Custom styles
-Here are the default theme codes, you can freely change color variables, such as `--json-property`, or others.
+## Custom themes
+
+Below are the default theme variables that you can easily customize to fit your needs.
+
 ```css
 .json-view {
-	display: block;
+	color: #4d4d4d;
 	--json-property: #009033;
 	--json-index: #676dff;
 	--json-number: #676dff;
@@ -117,7 +119,7 @@ react-json-view does not support React 18.
 - [ ] custom icon
 - [ ] more usability/scenarios
 - [ ] gif guide
-- [ ] more color themes(dark) **<=**
+- [x] more color themes(dark)
 - [ ] map/set viewer
 - [ ] display data type
 - [ ] display object size

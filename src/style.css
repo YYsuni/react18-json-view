@@ -117,3 +117,12 @@
 	--json-boolean: #0184bc;
 	--json-null: #0184bc;
 }
+.json-view_winter-is-coming {
+	color: #0431fa;
+	--json-property: #3a9685;
+	--json-index: #ae408b;
+	--json-number: #ae408b;
+	--json-string: #8123a9;
+	--json-boolean: #0184bc;
+	--json-null: #0184bc;
+}

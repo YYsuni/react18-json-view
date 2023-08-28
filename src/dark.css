@@ -16,7 +16,7 @@
 	--json-boolean: #ffa07a;
 	--json-null: #ffa07a;
 }
-:is(.dark .json-view_a11y, .dark.json-view_github) {
+:is(.dark .json-view_github, .dark.json-view_github) {
 	color: #79b8ff;
 	--json-property: #79b8ff;
 	--json-index: #79b8ff;
@@ -25,7 +25,7 @@
 	--json-boolean: #79b8ff;
 	--json-null: #79b8ff;
 }
-:is(.dark .json-view_a11y, .dark.json-view_vscode) {
+:is(.dark .json-view_vscode, .dark.json-view_vscode) {
 	color: #da70d6;
 	--json-property: #9cdcfe;
 	--json-index: #b5cea8;
@@ -34,7 +34,7 @@
 	--json-boolean: #569cd6;
 	--json-null: #569cd6;
 }
-:is(.dark .json-view_a11y, .dark.json-view_atom) {
+:is(.dark .json-view_atom, .dark.json-view_atom) {
 	color: #abb2bf;
 	--json-property: #e06c75;
 	--json-index: #d19a66;
@@ -42,4 +42,13 @@
 	--json-string: #98c379;
 	--json-boolean: #56b6c2;
 	--json-null: #56b6c2;
+}
+:is(.dark .json-view_winter-is-coming, .dark.json-view_winter-is-coming) {
+	color: #a7dbf7;
+	--json-property: #91dacd;
+	--json-index: #8dec95;
+	--json-number: #8dec95;
+	--json-string: #e0aff5;
+	--json-boolean: #f29fd8;
+	--json-null: #f29fd8;
 }

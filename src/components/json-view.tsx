@@ -51,7 +51,7 @@ interface Props {
 	onAdd?: OnAdd
 	onChange?: OnChange
 	dark?: boolean
-	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom'
+	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' |'winter-is-coming'
 }
 
 export default function JsonView({
