@@ -118,5 +118,9 @@ react-json-view does not support React 18.
 - [ ] more usability/scenarios
 - [ ] gif guide
 - [ ] more color themes(dark) **<=**
+- [ ] map/set viewer
+- [ ] display data type
+- [ ] display object size
+- [ ] handle circle loop
 
 * tree?
