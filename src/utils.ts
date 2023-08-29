@@ -25,3 +25,36 @@ export function stringifyForCopying(node: any, space?: string | number | undefin
 		return `${error.name}: ${error.message}` || 'JSON.stringify failed'
 	}
 }
+
+export function isCollapsed(
+	node: Record<string, any> | Array<any>,
+	depth: number,
+	indexOrName: number | string | undefined,
+	collapsed: Collapsed,
+	collapseObjectsAfterLength: number
+): boolean {
+	if (collapsed === true) return true
+	if (typeof collapsed === 'number' && depth > collapsed) return true
+
+	const size = Array.isArray(node) ? node.length : isObject(node) ? Object.keys(node).length : 0
+
+	if (typeof collapsed === 'function') {
+		const result = safeCall(collapsed, [{ node, depth, indexOrName, size }])
+		if (typeof result === 'boolean') return result
+		else {
+			console.warn('[react18-json-view collapsed]', 'The collapsed function does not return boolean correctly')
+			return false
+		}
+	}
+	if (Array.isArray(node) && size > collapseObjectsAfterLength) return true
+	if (isObject(node) && size > collapseObjectsAfterLength) return true
+	return false
+}
+
+export function safeCall(func: Function, params: any[]) {
+	try {
+		return func(...params)
+	} catch (event) {
+		reportError(event)
+	}
+}

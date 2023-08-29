@@ -53,13 +53,23 @@ import { stringify } from 'react18-json-view'
 | `dark`                       | `boolean`           | false   | Keep in dark mode (Don't forget to import `dark.css`)                                                                                                                                                  |
 | `theme`              | `default` \| `a11y` \| `github` \| `vscode` \| `atom`\|`winter-is-coming`     |'default'   | Color theme                                       |
 | `collapseStringsAfterLength` | `integer`           | 99      | When an integer value is assigned, strings longer than that length will be truncated and indicated by an ellipsis. To expand or collapse the string content, simply click on the string value. |
-| `collapseObjectsAfterLength` | `integer`           | 20      | When an integer value is assigned, the object and array will initially collapse.                                                                                                               |
+| `collapseObjectsAfterLength` | `integer`           | 99      | When an integer value is assigned, the object and array will initially collapse.                                                                                                               |
+| `collapsed`                  | `boolean` \| `integer` \| `function` | false   | When set to true, all nodes will be collapsed by default. When using an integer value, it will collapse at a specific depth. The collapsed also can be a function.                                                                            |
 | `enableClipboard`            | `boolean`           | true    | When `prop` is not `false`, users can copy objects and arrays to the clipboard by clicking on it.                                                                                              |
-| `collapsed`                  | `boolean`/`integer` | false   | When set to true, all nodes will be collapsed by default. Use an integer value to collapse at a specific depth.                                                                                |
 | `editable`                   | `boolean`           | false   | When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete.                                                                          |
 | `onAdd`                      | `function`          | -       | `(params: { indexOrName: string\| number, depth: number, src: any; parentType: 'object' \| 'array' }) => void`                                                                                 |
 | `onDelete`                   | `function`          | -       | `(params:{ value: any,indexOrName: string \| number,depth: number,src: any,parentType: 'object' \| 'array'}) => void`                                                                          |
 | `onEdit`                     | `function`          | -       | `(params: { newValue: any, oldValue: any, depth: number, src: any, indexOrName: string \| number, parentType: 'object' \| 'array'}) => void`                                                   |
+
+### collapsed function
+```ts
+(params: {
+    node: Record<string, any> | Array<any> // Object or array
+    indexOrName: number | string | undefined
+    depth: number
+    size: number // Object's size or array's length
+  }) => boolean
+```
 
 ## Editable
 

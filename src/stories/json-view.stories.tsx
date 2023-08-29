@@ -1,6 +1,7 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import JsonView from '../index'
+import { argTypes } from './share'
 
 type TYPE_FC = typeof JsonView
 
@@ -8,76 +9,7 @@ export default {
 	title: 'JSON View',
 	component: JsonView,
 
-	argTypes: {
-		src: {
-			description: 'Array | Object'
-		},
-		dark: {
-			control: 'boolean',
-			description: 'Boolean',
-			table: {
-				defaultValue: { summary: false }
-			}
-		},
-		collapseStringsAfterLength: {
-			control: 'number',
-			description:
-				'When an integer value is assigned, strings longer than that length will be truncated and indicated by an ellipsis. To expand or collapse the string content, simply click on the string value.',
-			table: {
-				defaultValue: { summary: 99 }
-			}
-		},
-		collapseObjectsAfterLength: {
-			control: 'number',
-			description: 'When an integer value is assigned, the object and array will initially collapse.',
-			table: {
-				defaultValue: { summary: 20 }
-			}
-		},
-		enableClipboard: {
-			control: 'boolean',
-			description: 'Boolean',
-			table: {
-				defaultValue: { summary: false }
-			}
-		},
-		collapsed: {
-			description:
-				'When set to true, all nodes will be collapsed by default. Use an integer value to collapse at a specific depth.',
-			table: {
-				defaultValue: { summary: false }
-			}
-		},
-		editable: {
-			table: {
-				defaultValue: { summary: false }
-			},
-			description:
-				'When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete.'
-		},
-		onAdd: {
-			description: `(params: { indexOrName: string | number, depth: number, src: any; parentType: 'object' | 'array' }) => void`
-		},
-		onDelete: {
-			description: `(params: {
-				value: any,
-				indexOrName: string | number,
-				depth: number,
-				src: any,
-				parentType: 'object' | 'array'
-			}) => void`
-		},
-		onEdit: {
-			description: `(params: {
-				newValue: any,
-				oldValue: any,
-				depth: number,
-				src: any,
-				indexOrName: string | number,
-				parentType: 'object' | 'array'
-			}) => void`
-		}
-	},
+	argTypes,
 	decorators: [
 		Story => (
 			<div
@@ -399,6 +331,41 @@ export const Collapsed_Number: StoryObj<TYPE_FC> = {
 			arr: ['string', 123456, false, null, [123, 123, 123, [123, 123, 123]]]
 		},
 		collapsed: 2
+	},
+	decorators: [
+		Story => (
+			<div style={{ minWidth: 300 }}>
+				<Story />
+			</div>
+		)
+	]
+}
+
+export const Collapsed_Function: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			boolean: false,
+			null: null,
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false,
+				k4: {
+					k: {
+						k: {
+							k: 'k5'
+						}
+					}
+				}
+			},
+			arr: ['string', 123456, false, null, [123, 123, 123, [123, 123, 123]]],
+			arr2: [1, 2]
+		},
+		collapsed: params => {
+			if (params.depth > 3) return true
+			if (params.depth > 1 && params.size > 4) return true
+			else return false
+		}
 	},
 	decorators: [
 		Story => (

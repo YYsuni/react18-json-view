@@ -3,3 +3,13 @@ declare module '*.svg' {
 	export default src
 	export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>
 }
+
+declare type Collapsed =
+	| number
+	| boolean
+	| ((params: {
+			node: Record<string, any> | Array<any>
+			indexOrName: number | string | undefined
+			depth: number
+			size: number
+	  }) => boolean)

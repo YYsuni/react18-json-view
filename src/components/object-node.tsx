@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import { isObject as _isObject, stringifyForCopying } from '../utils'
+import { isObject as _isObject, isCollapsed, stringifyForCopying } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
 import NameValue from './name-value'
@@ -32,25 +32,10 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 
 	const isObject = _isObject(node)
 
-	const [fold, setFold] = useState(
-		collapsed === true ||
-			(typeof collapsed === 'number' && depth > collapsed) ||
-			(Array.isArray(node) && node.length > collapseObjectsAfterLength) ||
-			(isObject && Object.keys(node).length > collapseObjectsAfterLength)
-			? true
-			: false
-	)
+	const [fold, setFold] = useState(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength))
 
 	useEffect(() => {
-		const originCollapsed =
-			(Array.isArray(node) && node.length > collapseObjectsAfterLength) ||
-			(isObject && Object.keys(node).length > collapseObjectsAfterLength)
-
-		if (typeof collapsed === 'boolean') {
-			setFold(collapsed || originCollapsed)
-		} else if (typeof collapsed === 'number') {
-			setFold(depth > collapsed || originCollapsed)
-		}
+		setFold(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength))
 	}, [collapsed, collapseObjectsAfterLength])
 
 	// Edit property

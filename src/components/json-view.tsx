@@ -29,7 +29,7 @@ export const JsonViewContext = createContext({
 	collapseStringsAfterLength: 99,
 	collapseObjectsAfterLength: 20,
 	enableClipboard: true,
-	collapsed: false as number | boolean,
+	collapsed: false as Collapsed,
 	editable: false,
 	src: undefined,
 	onEdit: (() => {}) as OnEdit | undefined,
@@ -43,21 +43,22 @@ interface Props {
 	src: any
 	collapseStringsAfterLength?: number
 	collapseObjectsAfterLength?: number
+	collapsed?: Collapsed
+
 	enableClipboard?: boolean
-	collapsed?: boolean | number
 	editable?: boolean
 	onEdit?: OnEdit
 	onDelete?: OnDelete
 	onAdd?: OnAdd
 	onChange?: OnChange
 	dark?: boolean
-	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' |'winter-is-coming'
+	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 }
 
 export default function JsonView({
 	src,
 	collapseStringsAfterLength = 99,
-	collapseObjectsAfterLength = 20,
+	collapseObjectsAfterLength = 99,
 	enableClipboard = true,
 	collapsed = false,
 	editable = false,
