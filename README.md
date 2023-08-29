@@ -61,7 +61,7 @@ import { stringify } from 'react18-json-view'
 | `onDelete`                   | `function`          | -       | `(params:{ value: any,indexOrName: string \| number,depth: number,src: any,parentType: 'object' \| 'array'}) => void`                                                                          |
 | `onEdit`                     | `function`          | -       | `(params: { newValue: any, oldValue: any, depth: number, src: any, indexOrName: string \| number, parentType: 'object' \| 'array'}) => void`                                                   |
 
-### collapsed function
+### collapsed function (canary)
 ```ts
 (params: {
     node: Record<string, any> | Array<any> // Object or array
