@@ -121,7 +121,7 @@ react-json-view does not support React 18.
 - [ ] gif guide
 - [x] more color themes(dark)
 - [ ] collapse objects callback
-- [ ] editable callback
+- [ ] editable options/callback
 - [ ] map/set viewer
 - [ ] display data type
 - [ ] display object size
