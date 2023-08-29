@@ -26,6 +26,11 @@ const config: StorybookConfig = {
 		return mergeConfig(config, {
 			plugins: [svgr()]
 		})
-	}
+	},
+	staticDirs: ['./public'],
+	managerHead: head => `
+	${head}
+	<link rel="shortcut icon" href="/favicon.ico">
+`
 }
 export default config
