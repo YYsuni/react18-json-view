@@ -86,7 +86,7 @@ This component does not perform any cloning operations, so every step of the ope
 * Includes the design of *Json View Online*
 
 ## Theme
-Every theme has a dark mode.
+Every theme has a dark mode. [preview](https://react18-json-view.vercel.app/?path=/docs/themes--docs)
 
 ![Theme](theme.png)
 
@@ -130,7 +130,7 @@ react-json-view does not support React 18.
 - [ ] more usability/scenarios
 - [ ] gif guide
 - [x] more color themes(dark)
-- [ ] collapse objects callback
+- [x] collapse objects callback
 - [ ] editable options/callback
 - [ ] map/set viewer
 - [ ] display data type
