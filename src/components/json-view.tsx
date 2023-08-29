@@ -30,7 +30,7 @@ export const JsonViewContext = createContext({
 	collapseObjectsAfterLength: 20,
 	enableClipboard: true,
 	collapsed: false as Collapsed,
-	editable: false,
+	editable: false as Editable,
 	src: undefined,
 	onEdit: (() => {}) as OnEdit | undefined,
 	onDelete: (() => {}) as OnDelete | undefined,
@@ -46,7 +46,7 @@ interface Props {
 	collapsed?: Collapsed
 
 	enableClipboard?: boolean
-	editable?: boolean
+	editable?: Editable
 	onEdit?: OnEdit
 	onDelete?: OnDelete
 	onAdd?: OnAdd

@@ -58,3 +58,16 @@ export function safeCall(func: Function, params: any[]) {
 		reportError(event)
 	}
 }
+
+export function editableAdd(editable: Editable) {
+	if (editable === true) return true
+	if (isObject(editable) && (editable as { add: boolean }).add === true) return true
+}
+export function editableEdit(editable: Editable) {
+	if (editable === true) return true
+	if (isObject(editable) && (editable as { edit: boolean }).edit === true) return true
+}
+export function editableDelete(editable: Editable) {
+	if (editable === true) return true
+	if (isObject(editable) && (editable as { delete: boolean }).delete === true) return true
+}

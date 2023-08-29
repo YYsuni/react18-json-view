@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import { isObject, stringifyForCopying } from '../utils'
+import { editableDelete, editableEdit, isObject, stringifyForCopying } from '../utils'
 import ObjectNode from './object-node'
 import LongString from './long-string'
 import CopyButton from './copy-button'
@@ -98,8 +98,8 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 				{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
 				{!isEditing && enableClipboard && <CopyButton text={stringifyForCopying(node)} />}
-				{!isEditing && editable && editHandle && <EditSVG className='json-view--edit' onClick={edit} />}
-				{!isEditing && editable && _deleteHandle && (
+				{!isEditing && editableEdit(editable) && editHandle && <EditSVG className='json-view--edit' onClick={edit} />}
+				{!isEditing && editableDelete(editable) && _deleteHandle && (
 					<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 				)}
 			</>

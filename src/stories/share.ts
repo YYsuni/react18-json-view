@@ -43,7 +43,7 @@ export const argTypes = {
 			defaultValue: { summary: false }
 		},
 		description:
-			'When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete.'
+			'When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete. Options is available.'
 	},
 	onAdd: {
 		description: `(params: { indexOrName: string | number, depth: number, src: any; parentType: 'object' | 'array' }) => void`

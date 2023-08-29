@@ -13,3 +13,11 @@ declare type Collapsed =
 			depth: number
 			size: number
 	  }) => boolean)
+
+declare type Editable =
+	| boolean
+	| {
+			add?: boolean
+			edit?: boolean
+			delete?: boolean
+	  }
