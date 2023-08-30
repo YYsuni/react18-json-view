@@ -9,6 +9,13 @@ export const argTypes = {
 			defaultValue: { summary: false }
 		}
 	},
+	theme: {
+		control: 'select',
+		options: ['default', 'a11y', 'github', 'vscode', 'atom', 'winter-is-coming'],
+		table: {
+			defaultValue: { summary: false }
+		}
+	},
 	collapseStringsAfterLength: {
 		control: 'number',
 		description:

@@ -363,8 +363,8 @@ export const Collapsed_Function: StoryObj<TYPE_FC> = {
 		},
 		collapsed: params => {
 			if (params.depth > 3) return true
-			if (params.depth > 1 && params.size > 4) return true
-			else return false
+			if (params.depth > 2 && params.size > 4) return true
+			return false
 		}
 	},
 	decorators: [
