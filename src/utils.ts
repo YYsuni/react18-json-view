@@ -1,4 +1,4 @@
-export function isObject(node: any) {
+export function isObject(node: any): node is Record<string, any> {
 	return Object.prototype.toString.call(node) === '[object Object]'
 }
 
@@ -33,7 +33,7 @@ export function isCollapsed(
 	collapsed: Collapsed,
 	collapseObjectsAfterLength: number
 ): boolean {
-	if (collapsed === true) return true
+	if (typeof collapsed === 'boolean') return collapsed
 	if (typeof collapsed === 'number' && depth > collapsed) return true
 
 	const size = Array.isArray(node) ? node.length : isObject(node) ? Object.keys(node).length : 0
@@ -51,7 +51,7 @@ export function isCollapsed(
 	return false
 }
 
-export function safeCall(func: Function, params: any[]) {
+export function safeCall<T extends (...args: any[]) => any>(func: T, params: Parameters<T>) {
 	try {
 		return func(...params)
 	} catch (event) {
@@ -70,4 +70,14 @@ export function editableEdit(editable: Editable) {
 export function editableDelete(editable: Editable) {
 	if (editable === true) return true
 	if (isObject(editable) && (editable as { delete: boolean }).delete === true) return true
+}
+
+function isFunctionComponent(component: any) {
+	return typeof component === 'function' && String(component).includes('createElement')
+}
+function isClassComponent(component: any) {
+	return typeof component === 'function' && !!component.prototype.isReactComponent
+}
+export function isReactComponent(component: any): component is (new () => React.Component<any, any>) | React.FC<any> {
+	return isClassComponent(component) || isFunctionComponent(component)
 }

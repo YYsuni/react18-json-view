@@ -32,11 +32,12 @@ export const JsonViewContext = createContext({
 	collapsed: false as Collapsed,
 	editable: false as Editable,
 	src: undefined,
-	onEdit: (() => {}) as OnEdit | undefined,
-	onDelete: (() => {}) as OnDelete | undefined,
-	onAdd: (() => {}) as OnAdd | undefined,
-	onChange: (() => {}) as OnChange | undefined,
-	forceUpdate: () => {}
+	onEdit: undefined as OnEdit | undefined,
+	onDelete: undefined as OnDelete | undefined,
+	onAdd: undefined as OnAdd | undefined,
+	onChange: undefined as OnChange | undefined,
+	forceUpdate: () => {},
+	customizeNode: undefined as CustomizeNode | undefined
 })
 
 interface Props {
@@ -46,11 +47,15 @@ interface Props {
 	collapsed?: Collapsed
 
 	enableClipboard?: boolean
+
 	editable?: Editable
 	onEdit?: OnEdit
 	onDelete?: OnDelete
 	onAdd?: OnAdd
 	onChange?: OnChange
+
+	customizeNode?: CustomizeNode
+
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 }
@@ -67,7 +72,8 @@ export default function JsonView({
 	onAdd,
 	onChange,
 	dark = false,
-	theme = 'default'
+	theme = 'default',
+	customizeNode
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = () => update(state => ++state)
@@ -85,7 +91,8 @@ export default function JsonView({
 				onDelete,
 				onAdd,
 				onChange,
-				forceUpdate
+				forceUpdate,
+				customizeNode
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '')}>

@@ -21,3 +21,16 @@ declare type Editable =
 			edit?: boolean
 			delete?: boolean
 	  }
+
+declare type CustomizeNode = (params: { node: any; indexOrName: number | string | undefined; depth: number }) =>
+	| {
+			add?: boolean
+			edit?: boolean
+			delete?: boolean
+			enableClipboard?: boolean
+			collapsed?: boolean
+			className?: string
+	  }
+	| React.FC
+	| typeof React.Component
+	| React.ReactElement<any, any>

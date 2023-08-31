@@ -1,6 +1,6 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useRef, useState, isValidElement } from 'react'
 import { JsonViewContext } from './json-view'
-import { editableDelete, editableEdit, isObject, stringifyForCopying } from '../utils'
+import { editableDelete, editableEdit, isObject, isReactComponent, safeCall, stringifyForCopying } from '../utils'
 import ObjectNode from './object-node'
 import LongString from './long-string'
 import CopyButton from './copy-button'
@@ -19,7 +19,17 @@ interface Props {
 }
 
 export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, name, parent, editHandle }: Props) {
-	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange } = useContext(JsonViewContext)
+	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode } =
+		useContext(JsonViewContext)
+
+	let customReturn: ReturnType<CustomizeNode> | undefined
+	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName: name }])
+
+	if (isValidElement(customReturn)) return customReturn
+	else if (isReactComponent(customReturn)) {
+		const CustomComponent = customReturn
+		return <CustomComponent node={node} depth={depth} indexOrName={name} />
+	}
 
 	if (Array.isArray(node) || isObject(node)) {
 		return <ObjectNode node={node} depth={depth} name={name} deleteHandle={_deleteHandle} />

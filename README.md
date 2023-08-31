@@ -54,7 +54,7 @@ import { stringify } from 'react18-json-view'
 | `theme`              | `default` \| `a11y` \| `github` \| `vscode` \| `atom`\|`winter-is-coming`     |'default'   | Color theme                                       |
 | `collapseStringsAfterLength` | `integer`           | 99      | When an integer value is assigned, strings longer than that length will be truncated and indicated by an ellipsis. To expand or collapse the string content, simply click on the string value. |
 | `collapseObjectsAfterLength` | `integer`           | 99      | When an integer value is assigned, the object and array will initially collapse.                                                                                                               |
-| `collapsed`                  | `boolean` \| `integer` \| `function` | false   | When set to true, all nodes will be collapsed by default. When using an integer value, it will collapse at a specific depth. The collapsed also can be a function.                                                                            |
+| `collapsed`                  | `boolean` \| `integer` \| `function` | false   | When set to true(false), all nodes will be (not) collapsed by default. When using an integer value, it will collapse at a specific depth. The collapsed also can be a function.                                                                            |
 | `enableClipboard`            | `boolean`           | true    | When `prop` is not `false`, users can copy objects and arrays to the clipboard by clicking on it.                                                                                              |
 | `editable`                   | `boolean` \| {add?: `boolean`, edit?: `boolean`, delete?: `boolean`}           | false   | When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete. Options is available.                                                                         |
 | `onAdd`                      | `function`          | -       | `(params: { indexOrName: string\| number, depth: number, src: any; parentType: 'object' \| 'array' }) => void`                                                                                 |
@@ -139,7 +139,8 @@ react-json-view does not support React 18.
 - [ ] gif guide
 - [x] more color themes(dark)
 - [x] collapse objects callback
-- [ ] editable options/callback
+- [x] editable option
+- [ ] advance customization **<=**
 - [ ] map/set viewer
 - [ ] display data type
 - [ ] display object size
