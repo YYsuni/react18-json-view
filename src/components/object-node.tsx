@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
 import {
-	isObject as _isObject,
+	isObject,
 	customAdd,
 	customCopy,
 	customDelete,
@@ -40,7 +40,7 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 		forceUpdate
 	} = useContext(JsonViewContext)
 
-	const isObject = _isObject(node)
+	const isPlainObject = isObject(node)
 
 	const [fold, setFold] = useState(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength, customOptions))
 
@@ -56,9 +56,16 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 			node[indexOrName] = newValue
 		}
 		if (onEdit)
-			onEdit({ newValue, oldValue, depth, src, indexOrName: indexOrName, parentType: isObject ? 'object' : 'array' })
+			onEdit({
+				newValue,
+				oldValue,
+				depth,
+				src,
+				indexOrName: indexOrName,
+				parentType: isPlainObject ? 'object' : 'array'
+			})
 		if (onChange)
-			onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isObject ? 'object' : 'array' })
+			onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' })
 		forceUpdate()
 	}
 
@@ -77,14 +84,15 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 	const deleteSelf = () => {
 		setDeleting(false)
 		if (_deleteSelf) _deleteSelf(name!)
-		if (onDelete) onDelete({ value: node, depth, src, indexOrName: name!, parentType: isObject ? 'object' : 'array' })
+		if (onDelete)
+			onDelete({ value: node, depth, src, indexOrName: name!, parentType: isPlainObject ? 'object' : 'array' })
 		if (onChange)
 			onChange({
 				type: 'delete',
 				depth,
 				src,
 				indexOrName: name!,
-				parentType: isObject ? 'object' : 'array'
+				parentType: isPlainObject ? 'object' : 'array'
 			})
 	}
 
@@ -92,7 +100,7 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 	const [adding, setAdding] = useState(false)
 	const inputRef = useRef<HTMLInputElement>(null)
 	const add = () => {
-		if (isObject) {
+		if (isPlainObject) {
 			const inputName = inputRef.current?.value
 
 			if (inputName) {
@@ -105,9 +113,10 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 				if (onChange) onChange({ type: 'add', indexOrName: inputName, depth, src, parentType: 'object' })
 			}
 		} else if (Array.isArray(node)) {
-			node.push(null)
-			if (onAdd) onAdd({ indexOrName: node.length - 1, depth, src, parentType: 'array' })
-			if (onChange) onChange({ type: 'add', indexOrName: node.length - 1, depth, src, parentType: 'array' })
+			const arr = node as unknown as any[]
+			arr.push(null)
+			if (onAdd) onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array' })
+			if (onChange) onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array' })
 		}
 		forceUpdate()
 	}
@@ -130,7 +139,7 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 		<>
 			{!fold && !isEditing && <AngleDownSVG onClick={() => setFold(true)} className='jv-chevron' />}
 
-			{adding && isObject && (
+			{adding && isPlainObject && (
 				<input className='json-view--input' placeholder='property' ref={inputRef} onKeyDown={handleAddKeyDown} />
 			)}
 
@@ -146,7 +155,7 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 				<AddSVG
 					className='json-view--edit'
 					onClick={() => {
-						if (isObject) {
+						if (isPlainObject) {
 							setAdding(true)
 							setTimeout(() => inputRef.current?.focus())
 						} else {
@@ -191,7 +200,7 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 				<span>{']'}</span>
 			</>
 		)
-	} else if (isObject) {
+	} else if (isPlainObject) {
 		return (
 			<>
 				<span>{'{'}</span>
