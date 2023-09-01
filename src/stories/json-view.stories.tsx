@@ -378,25 +378,31 @@ export const Collapsed_Function: StoryObj<TYPE_FC> = {
 
 export const CustomizeNode: StoryObj<TYPE_FC> = {
 	args: {
+		editable: true,
 		src: {
+			suni: 'suni',
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
 			boolean: false,
 			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
 			obj: {
 				k1: 123,
 				k2: '123',
-				k3: false,
-				k4: {
-					k: {
-						k: {
-							k: 'k5'
-						}
-					}
-				}
+				k3: false
 			},
-			arr: ['string', 123456, false, null, [123, 123, 123, [123, 123, 123]]],
-			arr2: [1, 2]
+			arr: ['string', 123456, false, null, [1, 2, 3]]
 		},
-		customizeNode: params => console.log(params)
+		customizeNode: params => {
+			if (params.node === 'suni') return () => <span className='underline'>suni</span>
+			if (params.indexOrName === 'obj') return { add: 1, delete: false, enableClipboard: false }
+			if (params.node === 'string') return { edit: true, enableClipboard: false, delete: false }
+			if (params.indexOrName === 'arr') return { collapsed: false }
+			if (params.depth > 2) return { collapsed: true }
+			if (params.indexOrName === 'func') return { className: 'underline' }
+		}
 	},
 	decorators: [
 		Story => (

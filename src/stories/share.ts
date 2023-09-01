@@ -73,5 +73,8 @@ export const argTypes = {
       indexOrName: string | number,
       parentType: 'object' | 'array',
     }) => void`
+	},
+	customizeNode: {
+		description: 'Highly customize every node.'
 	}
 }

@@ -60,6 +60,7 @@ import { stringify } from 'react18-json-view'
 | `onAdd`                      | `function`          | -       | `(params: { indexOrName: string\| number, depth: number, src: any; parentType: 'object' \| 'array' }) => void`                                                                                 |
 | `onDelete`                   | `function`          | -       | `(params:{ value: any,indexOrName: string \| number,depth: number,src: any,parentType: 'object' \| 'array'}) => void`                                                                          |
 | `onEdit`                     | `function`          | -       | `(params: { newValue: any, oldValue: any, depth: number, src: any, indexOrName: string \| number, parentType: 'object' \| 'array'}) => void`                                                   |
+| `customizeNode`(@canary)     | `ReactElement`\|`ReactComponent`\|`Options`  | -       | Highly customize every node.                                              |
 
 ### Collapsed function
 ```ts
@@ -77,6 +78,21 @@ import { stringify } from 'react18-json-view'
   edit?: boolean
   delete?: boolean
 }
+```
+### CustomizeNode
+```ts
+(params: { node: any; indexOrName: number | string | undefined; depth: number }) =>
+	| {
+			add?: boolean
+			edit?: boolean
+			delete?: boolean
+			enableClipboard?: boolean
+			collapsed?: boolean
+			className?: string
+	  }
+	| React.FC
+	| typeof React.Component
+	| React.ReactElement<any, any>
 ```
 
 ## Editable
@@ -140,10 +156,11 @@ react-json-view does not support React 18.
 - [x] more color themes(dark)
 - [x] collapse objects callback
 - [x] editable option
-- [ ] advance customization **<=**
+- [x] advance customization **<=**
 - [ ] map/set viewer
 - [ ] display data type
 - [ ] display object size
 - [ ] handle circle loop
+- [ ] redesign docs ★
 
 * tree?

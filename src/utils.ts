@@ -31,8 +31,10 @@ export function isCollapsed(
 	depth: number,
 	indexOrName: number | string | undefined,
 	collapsed: Collapsed,
-	collapseObjectsAfterLength: number
+	collapseObjectsAfterLength: number,
+	customOptions?: CustomizeOptions
 ): boolean {
+	if (customOptions && customOptions.collapsed !== undefined) return !!customOptions.collapsed
 	if (typeof collapsed === 'boolean') return collapsed
 	if (typeof collapsed === 'number' && depth > collapsed) return true
 
@@ -73,11 +75,24 @@ export function editableDelete(editable: Editable) {
 }
 
 function isFunctionComponent(component: any) {
-	return typeof component === 'function' && String(component).includes('createElement')
+	return typeof component === 'function' && /(createElement|jsx|jsxDEV)/.test(String(component))
 }
 function isClassComponent(component: any) {
-	return typeof component === 'function' && !!component.prototype.isReactComponent
+	return typeof component === 'function' && !!component.prototype?.isReactComponent
 }
 export function isReactComponent(component: any): component is (new () => React.Component<any, any>) | React.FC<any> {
-	return isClassComponent(component) || isFunctionComponent(component)
+	return isFunctionComponent(component) || isClassComponent(component)
+}
+
+export function customAdd(customOptions?: CustomizeOptions) {
+	return !customOptions || customOptions.add === undefined || !!customOptions.add
+}
+export function customEdit(customOptions?: CustomizeOptions) {
+	return !customOptions || customOptions.edit === undefined || !!customOptions.edit
+}
+export function customDelete(customOptions?: CustomizeOptions) {
+	return !customOptions || customOptions.delete === undefined || !!customOptions.delete
+}
+export function customCopy(customOptions?: CustomizeOptions) {
+	return !customOptions || customOptions.enableClipboard === undefined || !!customOptions.enableClipboard
 }

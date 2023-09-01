@@ -1,6 +1,15 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import { isObject as _isObject, editableAdd, editableDelete, isCollapsed, stringifyForCopying } from '../utils'
+import {
+	isObject as _isObject,
+	customAdd,
+	customCopy,
+	customDelete,
+	editableAdd,
+	editableDelete,
+	isCollapsed,
+	stringifyForCopying
+} from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
 import NameValue from './name-value'
@@ -14,9 +23,10 @@ interface Props {
 	depth: number
 	name?: number | string
 	deleteHandle?: (_: string | number) => void
+	customOptions?: CustomizeOptions
 }
 
-export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSelf }: Props) {
+export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSelf, customOptions }: Props) {
 	const {
 		collapsed,
 		enableClipboard,
@@ -32,10 +42,10 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 
 	const isObject = _isObject(node)
 
-	const [fold, setFold] = useState(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength))
+	const [fold, setFold] = useState(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength, customOptions))
 
 	useEffect(() => {
-		setFold(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength))
+		setFold(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength, customOptions))
 	}, [collapsed, collapseObjectsAfterLength])
 
 	// Edit property
@@ -129,8 +139,10 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 			)}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-			{!fold && !isEditing && enableClipboard && <CopyButton text={stringifyForCopying(node)} />}
-			{!fold && !isEditing && editableAdd(editable) && (
+			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && (
+				<CopyButton text={stringifyForCopying(node)} />
+			)}
+			{!fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (
 				<AddSVG
 					className='json-view--edit'
 					onClick={() => {
@@ -143,7 +155,7 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 					}}
 				/>
 			)}
-			{!fold && !isEditing && editableDelete(editable) && _deleteSelf && (
+			{!fold && !isEditing && editableDelete(editable) && customDelete(customOptions) && _deleteSelf && (
 				<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 			)}
 		</>
