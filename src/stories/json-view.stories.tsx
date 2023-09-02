@@ -397,6 +397,7 @@ export const CustomizeNode: StoryObj<TYPE_FC> = {
 		},
 		customizeNode: params => {
 			if (params.node === 'suni') return () => <span className='underline'>suni</span>
+			if (params.node === 123) return <b>123</b>
 			if (params.indexOrName === 'obj') return { add: 1, delete: false, enableClipboard: false }
 			if (params.node === 'string') return { edit: true, enableClipboard: false, delete: false }
 			if (params.indexOrName === 'arr') return { collapsed: false }
