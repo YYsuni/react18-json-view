@@ -74,14 +74,11 @@ export function editableDelete(editable: Editable) {
 	if (isObject(editable) && (editable as { delete: boolean }).delete === true) return true
 }
 
-function isFunctionComponent(component: any) {
-	return typeof component === 'function' && /(createElement|jsx|jsxDEV)/.test(String(component))
-}
 function isClassComponent(component: any) {
 	return typeof component === 'function' && !!component.prototype?.isReactComponent
 }
 export function isReactComponent(component: any): component is (new () => React.Component<any, any>) | React.FC<any> {
-	return isFunctionComponent(component) || isClassComponent(component)
+	return typeof component === 'function'
 }
 
 export function customAdd(customOptions?: CustomizeOptions) {
