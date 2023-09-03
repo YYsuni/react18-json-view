@@ -9,14 +9,15 @@
 	"brower": "dist/es/index.mjs",
 	"scripts": {
 		"dev": "npm run storybook",
-		"prepare": "husky install",
-		"prebuild": "npm run clean",
+		"dev:website": "turbo run dev --filter=website...",
 		"build": "rollup -c",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build",
+		"prepare": "husky install",
 		"clean": "rm -rf dist",
 		"format": "prettier --write .",
-		"prepublishOnly": "npm run build",
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"prebuild": "npm run clean",
+		"prepublishOnly": "npm run build"
 	},
 	"files": [
 		"src",
@@ -50,6 +51,7 @@
 		"rollup-plugin-typescript2": "^0.34.1",
 		"storybook": "^7.3.2",
 		"tailwindcss": "^3.3.2",
+		"turbo": "^1.10.13",
 		"typescript": "^5.0.4",
 		"vite-plugin-svgr": "^3.2.0"
 	},
