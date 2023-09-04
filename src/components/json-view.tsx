@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react'
 import JsonNode from './json-node'
+import { Collapsed, CustomizeNode, Editable } from '../types'
 
 type OnEdit = (params: {
 	newValue: any

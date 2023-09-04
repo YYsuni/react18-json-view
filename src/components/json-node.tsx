@@ -18,6 +18,7 @@ import { ReactComponent as EditSVG } from '../svgs/edit.svg'
 import { ReactComponent as DeleteSVG } from '../svgs/trash.svg'
 import { ReactComponent as DoneSVG } from '../svgs/done.svg'
 import { ReactComponent as CancelSVG } from '../svgs/cancel.svg'
+import { CustomizeNode, CustomizeOptions } from '../types'
 
 interface Props {
 	node: any

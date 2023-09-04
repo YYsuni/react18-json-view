@@ -77,6 +77,9 @@ importers:
       rollup:
         specifier: ^3.9.1
         version: 3.9.1
+      rollup-plugin-dts:
+        specifier: ^6.0.1
+        version: 6.0.1(rollup@3.9.1)(typescript@5.0.4)
       rollup-plugin-peer-deps-external:
         specifier: ^2.2.4
         version: 2.2.4(rollup@3.9.1)
@@ -125,6 +128,9 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
+      react18-json-view:
+        specifier: workspace:*
+        version: link:..
       tailwindcss:
         specifier: 3.3.3
         version: 3.3.3(ts-node@10.9.1)
@@ -8517,6 +8523,20 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: true
+
+  /rollup-plugin-dts@6.0.1(rollup@3.9.1)(typescript@5.0.4):
+    resolution: {integrity: sha512-XJbCldVrp4TLc2Hg4DfrRiJgzJ73uhZB0sPSDizgdlrhSJ1bsIkkRMkwRKNQYgkbfMz4CHLdbnFKVivHE0vsPA==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      rollup: ^3.25
+      typescript: ^4.5 || ^5.0
+    dependencies:
+      magic-string: 0.30.3
+      rollup: 3.9.1
+      typescript: 5.0.4
+    optionalDependencies:
+      '@babel/code-frame': 7.22.13
     dev: true
 
   /rollup-plugin-peer-deps-external@2.2.4(rollup@3.9.1):
