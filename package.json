@@ -8,7 +8,7 @@
 	"module": "dist/es/index.mjs",
 	"brower": "dist/es/index.mjs",
 	"scripts": {
-		"dev": "npm run storybook",
+		"dev": "rollup -cw",
 		"dev:website": "turbo run dev --filter=website...",
 		"build": "rollup -c",
 		"storybook": "storybook dev -p 6006",
@@ -47,6 +47,8 @@
 		"prettier-plugin-tailwindcss": "^0.2.7",
 		"react": "^18.2.0",
 		"rollup": "^3.9.1",
+		"rollup-plugin-copy": "^3.5.0",
+		"rollup-plugin-dts": "^6.0.1",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-typescript2": "^0.34.1",
 		"storybook": "^7.3.2",
