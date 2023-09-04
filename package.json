@@ -1,6 +1,6 @@
 {
 	"name": "react18-json-view",
-	"version": "0.2.4-canary.1",
+	"version": "0.2.4-canary.2",
 	"type": "module",
 	"description": "JSON viewer for react18",
 	"main": "dist/cjs/index.cjs",
@@ -47,8 +47,6 @@
 		"prettier-plugin-tailwindcss": "^0.2.7",
 		"react": "^18.2.0",
 		"rollup": "^3.9.1",
-		"rollup-plugin-copy": "^3.5.0",
-		"rollup-plugin-dts": "^6.0.1",
 		"rollup-plugin-peer-deps-external": "^2.2.4",
 		"rollup-plugin-typescript2": "^0.34.1",
 		"storybook": "^7.3.2",
