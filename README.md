@@ -1,4 +1,4 @@
-# React18 JSON View
+# [React18 JSON View](https://jv.yysuni.com/)
 
 <p >
   <a href="https://www.npmjs.com/package/react18-json-view" target="_blank">
@@ -14,7 +14,7 @@
 
 React function component for displaying javascript arrays and JSON objects. Supports all JS types.
 
-[**Storybook**](https://react18-json-view.vercel.app/), or [**Try it online**](https://jv.yysuni.com/) [(**Github**)](https://github.com/YYsuni/json-view-online).
+[**Storybook**](https://react18-json-view.vercel.app/)
 
 
 ![JSON View](sample.png "JSON View")
