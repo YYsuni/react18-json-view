@@ -30,7 +30,7 @@ const funcString = `(params) => {
   if (params.depth > 3) return true
   if (params.depth > 2 && params.size > 3) return true
   if (params.node && typeof params.node === 'object' && params.node.nest === 'over') return true
-	return false
+  return false
 }`
 
 export default function Collapsed() {
