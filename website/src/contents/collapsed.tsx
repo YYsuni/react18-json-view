@@ -54,7 +54,7 @@ export default function Collapsed() {
 					<li
 						key={item}
 						className={clsx(
-							'border rounded-lg cursor-pointer px-2 py-1',
+							'border rounded-lg cursor-pointer px-2 py-1 text-center min-w-[32px]',
 							selected === item && 'bg-slate-200 dark:bg-slate-700'
 						)}
 						onClick={() => setSelected(item)}>

@@ -75,16 +75,18 @@ export default function Themes() {
 				Recommend backgroundColor: {currentBgColor}
 			</blockquote>
 
-			<code className='my-3 flex items-center text-sm justify-between rounded-lg border bg-slate-50 p-4 dark:bg-slate-700'>
+			<div className='relative'>
 				<pre
+					className='my-3 text-sm rounded-lg border bg-slate-50 p-4 dark:bg-slate-700 overflow-auto'
 					dangerouslySetInnerHTML={{
 						__html: highlightedCode
 					}}
 				/>
-				<button onClick={copy} className='rounded-lg p-1'>
+
+				<button onClick={copy} className='rounded-lg p-1 absolute top-4 right-4 '>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
 				</button>
-			</code>
+			</div>
 
 			<div className='rounded-lg border p-4 text-sm mt-2' style={{ backgroundColor: currentBgColor }}>
 				<JsonView
