@@ -75,17 +75,17 @@ import 'react18-json-view/src/style.css'
 ### CustomizeNode
 ```ts
 (params: { node: any; indexOrName: number | string | undefined; depth: number }) =>
-	| {
-			add?: boolean
-			edit?: boolean
-			delete?: boolean
-			enableClipboard?: boolean
-			collapsed?: boolean
-			className?: string
-	  }
-	| React.FC
-	| typeof React.Component
-	| React.ReactElement<any, any>
+  | {
+    add?: boolean
+    edit?: boolean
+    delete?: boolean
+    enableClipboard?: boolean
+    collapsed?: boolean
+    className?: string
+  }
+  | React.FC
+  | typeof React.Component
+  | React.ReactElement<any, any>
 ```
 
 ## Editable
@@ -150,6 +150,6 @@ react-json-view does not support React 18.
 - [ ] display data type
 - [ ] display object size
 - [ ] handle circle loop
-- [x] redesign docs ★
+- [x] redesign docs
 
 * tree?

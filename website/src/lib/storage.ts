@@ -1,5 +1,5 @@
 export const setStorage = (key: string, value: string) => {
-	window.localStorage.setItem(key, value)
+	if (typeof window !== 'undefined') window.localStorage.setItem(key, value)
 }
 
 export const getStorage = (key: string) => {

@@ -31,11 +31,13 @@ export default function Themes() {
 	const [theme, setTheme] = useState(themes[0])
 	const { theme: glabalTheme } = useTheme()
 	const currentTheme =
-		glabalTheme === 'system'
-			? window.matchMedia('(prefers-color-scheme: dark)').matches
-				? 'dark'
-				: 'light'
-			: glabalTheme
+		typeof window !== 'undefined'
+			? glabalTheme === 'system'
+				? window.matchMedia('(prefers-color-scheme: dark)').matches
+					? 'dark'
+					: 'light'
+				: glabalTheme
+			: 'light'
 
 	const currentBgColor = currentTheme === 'light' ? bgColors[theme] : bgColors_dark[theme]
 
