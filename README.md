@@ -140,7 +140,7 @@ react-json-view does not support React 18.
   - [ ] onSelect
 - [x] dark mode
 - [ ] custom icon
-- [ ] more usability/scenarios
+- [x] more usability/scenarios
 - [ ] gif guide
 - [x] more color themes(dark)
 - [x] collapse objects callback
