@@ -1,6 +1,6 @@
 export default function Footer() {
 	return (
-		<footer className=' bg-gray-100'>
+		<footer className=' bg-gray-100 dark:bg-transparent dark:border-t border-gray-100/10'>
 			<div className='py-8 container flex items-center'>
 				<img src='https://avatars.githubusercontent.com/u/53907086?v=4' className='w-6 h-6 rounded-full mr-2' />
 				Made by

@@ -10,7 +10,7 @@ body {
 body {
 	background-image: linear-gradient(to bottom, #eef4f6 0, transparent 400px);
 	background-repeat: no-repeat;
-	@apply bg-[#fefefe] text-[#383a42] dark:bg-[#282C34] dark:text-white;
+	@apply bg-[#fefefe] text-[#383a42] dark:bg-[#272a34] dark:text-white;
 }
 
 .dark body {
