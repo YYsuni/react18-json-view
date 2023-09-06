@@ -70,7 +70,7 @@ export default function Theme() {
 		)
 	return (
 		<button className='border border-slate-300 h-8 w-8 flex justify-center items-center rounded-lg'>
-			<SingleLoading />
+			<SystemSVG className='w-4 h-4' />
 		</button>
 	)
 }
