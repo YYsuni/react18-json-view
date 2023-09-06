@@ -45,10 +45,6 @@ export function isCollapsed(
 	if (typeof collapsed === 'function') {
 		const result = safeCall(collapsed, [{ node, depth, indexOrName, size }])
 		if (typeof result === 'boolean') return result
-		else {
-			console.warn('[react18-json-view collapsed]', 'The collapsed function does not return boolean correctly')
-			return false
-		}
 	}
 	if (Array.isArray(node) && size > collapseObjectsAfterLength) return true
 	if (isObject(node) && size > collapseObjectsAfterLength) return true

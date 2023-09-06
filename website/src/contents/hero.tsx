@@ -7,7 +7,6 @@ export default function Hero() {
 		<>
 			<div className='mx-auto max-w-[600px] rounded-lg border bg-white p-4 text-sm dark:bg-[#0E0832]'>
 				<JsonView
-					editable
 					src={{
 						string: 'string',
 						number: 123456,

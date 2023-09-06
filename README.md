@@ -23,13 +23,6 @@ React function component for displaying javascript arrays and JSON objects. Supp
 ## Installation
 ```bash
 npm i react18-json-view
-# or pnpm i react18-json-view
-# or yarn i react18-json-view
-
-# canary
-# or npm i react18-json-view@canary
-# or pnpm i react18-json-view@canary
-# or yarn i react18-json-view@canary
 ```
 
 ## Usage
@@ -42,7 +35,7 @@ import 'react18-json-view/src/style.css'
 <JsonView src={my_json_object} />
 
 // If needed, you can use the internal stringify function.
-import { stringify } from 'react18-json-view'
+// import { stringify } from 'react18-json-view'
 
 ```
 
@@ -60,7 +53,7 @@ import { stringify } from 'react18-json-view'
 | `onAdd`                      | `function`          | -       | `(params: { indexOrName: string\| number, depth: number, src: any; parentType: 'object' \| 'array' }) => void`                                                                                 |
 | `onDelete`                   | `function`          | -       | `(params:{ value: any,indexOrName: string \| number,depth: number,src: any,parentType: 'object' \| 'array'}) => void`                                                                          |
 | `onEdit`                     | `function`          | -       | `(params: { newValue: any, oldValue: any, depth: number, src: any, indexOrName: string \| number, parentType: 'object' \| 'array'}) => void`                                                   |
-| `customizeNode`(@canary)     | `ReactElement`\|`ReactComponent`\|`Options`  | -       | Highly customize every node.                                              |
+| `customizeNode`    | `ReactElement`\|`ReactComponent`\|`Options`  | -       | Highly customize every node.                                              |
 
 ### Collapsed function
 ```ts
@@ -104,10 +97,6 @@ The editor uses `eval(<input-value>)`. While in edit mode, you can enter `({})` 
 ### How the editor works
 
 This component does not perform any cloning operations, so every step of the operation is carried out on the original object. If cloning is required, please handle it yourself.
-
-## Figma [link](https://www.figma.com/file/1XAkndYOprEcUZQU2KFFoT/Json-View?type=design&node-id=9%3A1570&mode=design&t=SQHDsbrSYStNeEOD-1)
-
-* Includes the design of *Json View Online*
 
 ## Theme
 Every theme has a dark mode. [preview](https://react18-json-view.vercel.app/?path=/docs/themes--docs)
@@ -156,11 +145,11 @@ react-json-view does not support React 18.
 - [x] more color themes(dark)
 - [x] collapse objects callback
 - [x] editable option
-- [x] advance customization **<=**
+- [x] advance customization
 - [ ] map/set viewer
 - [ ] display data type
 - [ ] display object size
 - [ ] handle circle loop
-- [ ] redesign docs ★
+- [x] redesign docs ★
 
 * tree?

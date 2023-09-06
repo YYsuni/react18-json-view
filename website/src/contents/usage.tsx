@@ -20,7 +20,7 @@ export default function Usage() {
 	const code = useMemo(() => hljs.highlight(CODE, { language: 'js' }).value, [])
 
 	const [copied, setCopied] = useState(false)
-	const copy = (e: any) => {
+	const copy = () => {
 		writeText(CODE)
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
@@ -33,7 +33,7 @@ export default function Usage() {
 			<div className='relative'>
 				<pre
 					dangerouslySetInnerHTML={{ __html: code }}
-					className=' block rounded-lg border bg-slate-50 p-4 dark:bg-slate-500 mt-3 overflow-auto text-sm font-mono'
+					className=' block rounded-lg border bg-slate-50 p-4 dark:bg-slate-700 mt-3 overflow-auto text-sm font-mono'
 				/>
 				<button onClick={copy} className='rounded-lg p-1 absolute right-4 top-4'>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}

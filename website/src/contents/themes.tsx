@@ -5,6 +5,8 @@ import { useTheme } from '@/hooks/useTheme'
 import { writeText } from '@/lib/clipboard'
 import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
+import '@/lib/hljs'
+import hljs from 'highlight.js/lib/core'
 
 type Theme = 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 const themes: Theme[] = ['default', 'a11y', 'github', 'vscode', 'atom', 'winter-is-coming']
@@ -39,11 +41,15 @@ export default function Themes() {
 
 	const [copied, setCopied] = useState(false)
 
-	const copy = (e: any) => {
-		writeText(`<JsonView src={json_object} theme="${theme}" />`)
+	const code = `<JsonView src={json_object} theme="${theme}" />`
+
+	const copy = () => {
+		writeText(code)
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
 	}
+
+	const highlightedCode = hljs.highlight(code, { language: 'js' }).value
 
 	return (
 		<>
@@ -55,7 +61,7 @@ export default function Themes() {
 						key={item}
 						className={clsx(
 							'border rounded-lg cursor-pointer px-2 py-1',
-							theme === item && 'bg-slate-200 dark:bg-slate-500'
+							theme === item && 'bg-slate-200 dark:bg-slate-700'
 						)}
 						onClick={() => setTheme(item)}>
 						{item}
@@ -63,15 +69,17 @@ export default function Themes() {
 				))}
 			</ul>
 
-			<blockquote className=' bg-slate-50 border-l-2 border-slate-400 my-3 px-4 py-2 italic text-sm dark:bg-slate-500'>
+			<blockquote className=' bg-slate-50 border-l-2 border-slate-400 my-3 px-4 py-2 italic text-sm dark:bg-slate-700'>
 				Recommend backgroundColor: {currentBgColor}
 			</blockquote>
 
-			<code
-				onClick={copy}
-				className='my-3 flex cursor-copy items-center text-sm justify-between rounded-lg border bg-slate-50 p-4 dark:bg-slate-500'>
-				<span>{`<JsonView src={json_object} theme="${theme}" />`}</span>
-				<button className='rounded-lg p-1'>
+			<code className='my-3 flex items-center text-sm justify-between rounded-lg border bg-slate-50 p-4 dark:bg-slate-700'>
+				<pre
+					dangerouslySetInnerHTML={{
+						__html: highlightedCode
+					}}
+				/>
+				<button onClick={copy} className='rounded-lg p-1'>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
 				</button>
 			</code>
