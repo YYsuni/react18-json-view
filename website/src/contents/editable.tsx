@@ -32,7 +32,7 @@ export default function Editable() {
 
 	return (
 		<>
-			<h2 className='mt-12 text-lg font-medium'>Editable</h2>
+			<h2 className='mt-20 text-lg font-medium'>Editable</h2>
 
 			<div className='relative'>
 				<code className='my-3 flex items-center text-sm justify-between rounded-lg border bg-slate-50 p-4 dark:bg-slate-700 overflow-auto'>

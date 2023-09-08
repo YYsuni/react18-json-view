@@ -104,13 +104,13 @@ Below are the default theme variables that you can easily customize to fit your 
 
 ```css
 .json-view {
-	color: #4d4d4d;
-	--json-property: #009033;
-	--json-index: #676dff;
-	--json-number: #676dff;
-	--json-string: #b2762e;
-	--json-boolean: #dc155e;
-	--json-null: #dc155e;
+  color: #4d4d4d;
+  --json-property: #009033;
+  --json-index: #676dff;
+  --json-number: #676dff;
+  --json-string: #b2762e;
+  --json-boolean: #dc155e;
+  --json-null: #dc155e;
 }
 .json-view .json-view--property { color: var(--json-property); }
 .json-view .json-view--index { color: var(--json-index); }

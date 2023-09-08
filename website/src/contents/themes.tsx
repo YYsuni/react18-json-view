@@ -64,7 +64,7 @@ export default function Themes() {
 
 	return (
 		<>
-			<h2 className='mt-12 text-lg font-medium'>Themes</h2>
+			<h2 className='mt-20 text-lg font-medium'>Themes</h2>
 
 			<ul className='mt-3 flex select-none flex-wrap gap-1'>
 				{themes.map(item => (

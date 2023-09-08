@@ -50,7 +50,7 @@ export default function Collapsed() {
 
 	return (
 		<>
-			<h2 className='mt-12 text-lg font-medium'>Collapsed</h2>
+			<h2 className='mt-20 text-lg font-medium'>Collapsed</h2>
 			<ul className='flex flex-wrap gap-1 mt-3 select-none'>
 				{options.map(item => (
 					<li
