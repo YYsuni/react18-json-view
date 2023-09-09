@@ -46,6 +46,7 @@ export function isCollapsed(
 		const result = safeCall(collapsed, [{ node, depth, indexOrName, size }])
 		if (typeof result === 'boolean') return result
 	}
+
 	if (Array.isArray(node) && size > collapseObjectsAfterLength) return true
 	if (isObject(node) && size > collapseObjectsAfterLength) return true
 	return false

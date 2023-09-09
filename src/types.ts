@@ -1,4 +1,5 @@
 export declare type Collapsed =
+	| undefined
 	| number
 	| boolean
 	| ((params: {
@@ -6,7 +7,7 @@ export declare type Collapsed =
 			indexOrName: number | string | undefined
 			depth: number
 			size: number
-	  }) => boolean)
+	  }) => boolean | void)
 
 export declare type Editable =
 	| boolean

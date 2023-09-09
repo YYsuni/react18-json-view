@@ -27,23 +27,33 @@ type OnChange = (params: {
 }) => void
 
 export const JsonViewContext = createContext({
+	src: undefined as any,
+
 	collapseStringsAfterLength: 99,
+	collapseStringMode: 'word' as 'directly' | 'word' | 'address',
+
 	collapseObjectsAfterLength: 20,
-	enableClipboard: true,
 	collapsed: false as Collapsed,
+
+	enableClipboard: true,
+
 	editable: false as Editable,
-	src: undefined,
 	onEdit: undefined as OnEdit | undefined,
 	onDelete: undefined as OnDelete | undefined,
 	onAdd: undefined as OnAdd | undefined,
 	onChange: undefined as OnChange | undefined,
+
 	forceUpdate: () => {},
+
 	customizeNode: undefined as CustomizeNode | undefined
 })
 
 interface Props {
 	src: any
+
 	collapseStringsAfterLength?: number
+	collapseStringMode?: 'directly' | 'word' | 'address'
+
 	collapseObjectsAfterLength?: number
 	collapsed?: Collapsed
 
@@ -63,17 +73,24 @@ interface Props {
 
 export default function JsonView({
 	src,
+
 	collapseStringsAfterLength = 99,
+	collapseStringMode = 'word',
+
 	collapseObjectsAfterLength = 99,
+	collapsed,
+
 	enableClipboard = true,
-	collapsed = false,
+
 	editable = false,
 	onEdit,
 	onDelete,
 	onAdd,
 	onChange,
+
 	dark = false,
 	theme = 'default',
+
 	customizeNode
 }: Props) {
 	const [_, update] = useState(0)
@@ -82,17 +99,24 @@ export default function JsonView({
 	return (
 		<JsonViewContext.Provider
 			value={{
-				collapseStringsAfterLength,
-				collapseObjectsAfterLength,
-				enableClipboard,
-				collapsed,
-				editable,
 				src,
+
+				collapseStringsAfterLength,
+				collapseStringMode,
+
+				collapseObjectsAfterLength,
+				collapsed,
+
+				enableClipboard,
+
+				editable,
 				onEdit,
 				onDelete,
 				onAdd,
 				onChange,
+
 				forceUpdate,
+
 				customizeNode
 			}}>
 			<code

@@ -24,6 +24,13 @@ export const argTypes = {
 			defaultValue: { summary: 99 }
 		}
 	},
+	collapseStringMode: {
+		control: 'select',
+		options: ['directly', 'word', 'address'],
+		table: {
+			defaultValue: { summary: 'word' }
+		}
+	},
 	collapseObjectsAfterLength: {
 		control: 'number',
 		description: 'When an integer value is assigned, the object and array will initially collapse.',
