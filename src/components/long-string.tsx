@@ -44,14 +44,11 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, han
 
 	if (collapseStringMode === 'word') {
 		let index_ahead = collapseStringsAfterLength
-		let index_behind = collapseStringsAfterLength
+		let index_behind = collapseStringsAfterLength + 1
 		let str_collapsed = str
-		let count = 0
+		let count = 1
 
 		while (true) {
-			count++
-			index_ahead--
-			index_behind++
 			if (/\W/.test(str[index_ahead])) {
 				str_collapsed = str.slice(0, index_ahead)
 				break
@@ -60,10 +57,14 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, han
 				str_collapsed = str.slice(0, index_behind)
 				break
 			}
-			if (count === 20) {
+			if (count === 6) {
 				str_collapsed = str.slice(0, collapseStringsAfterLength)
 				break
 			}
+
+			count++
+			index_ahead--
+			index_behind++
 		}
 
 		return (

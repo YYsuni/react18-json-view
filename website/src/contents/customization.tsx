@@ -62,7 +62,7 @@ export default function Customization() {
 						}}
 					/>
 				</code>
-				<button onClick={copy} className='rounded-lg p-1 absolute top-4 right-4'>
+				<button onClick={copy} className='rounded-lg p-1 absolute top-3 right-4 bg-white/50 border backdrop-blur'>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
 				</button>
 			</div>

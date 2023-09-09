@@ -10,6 +10,7 @@ import Themes from '@/contents/themes'
 import Collapsed from '@/contents/collapsed'
 import Editable from '@/contents/editable'
 import Customization from '@/contents/customization'
+import CollapseString from '@/contents/collapse-string'
 
 export default function Home() {
 	return (
@@ -23,6 +24,7 @@ export default function Home() {
 			<Themes />
 
 			<Collapsed />
+			<CollapseString />
 
 			<Editable />
 

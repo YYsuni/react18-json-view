@@ -30,7 +30,7 @@ export const JsonViewContext = createContext({
 	src: undefined as any,
 
 	collapseStringsAfterLength: 99,
-	collapseStringMode: 'word' as 'directly' | 'word' | 'address',
+	collapseStringMode: 'directly' as 'directly' | 'word' | 'address',
 
 	collapseObjectsAfterLength: 20,
 	collapsed: false as Collapsed,
@@ -75,7 +75,7 @@ export default function JsonView({
 	src,
 
 	collapseStringsAfterLength = 99,
-	collapseStringMode = 'word',
+	collapseStringMode = 'directly',
 
 	collapseObjectsAfterLength = 99,
 	collapsed,

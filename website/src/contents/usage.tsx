@@ -35,7 +35,7 @@ export default function Usage() {
 					dangerouslySetInnerHTML={{ __html: code }}
 					className=' block rounded-lg border bg-slate-50 p-4 dark:bg-slate-700 mt-3 overflow-auto text-sm font-mono'
 				/>
-				<button onClick={copy} className='rounded-lg p-1 absolute right-4 top-4'>
+				<button onClick={copy} className='rounded-lg p-1 absolute right-4 top-3 bg-white/50 border backdrop-blur'>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
 				</button>
 			</div>
