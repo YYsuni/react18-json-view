@@ -9,7 +9,8 @@ import {
 	isObject,
 	isReactComponent,
 	safeCall,
-	stringifyForCopying
+	stringifyForCopying,
+	resolveEvalFailedNewValue
 } from '../utils'
 import ObjectNode from './object-node'
 import LongString from './long-string'
@@ -68,6 +69,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 				valueRef.current?.focus()
 			})
 		}
+
 		const done = () => {
 			const newValue = valueRef.current!.innerText
 
@@ -76,7 +78,8 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 
 				if (editHandle) editHandle(name!, evalValue, node)
 			} catch (e) {
-				if (editHandle) editHandle(name!, newValue, node)
+				const trimmedStringValue = resolveEvalFailedNewValue(type, newValue);
+				if (editHandle) editHandle(name!, trimmedStringValue, node)
 			}
 
 			setEditing(false)
