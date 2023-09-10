@@ -35,7 +35,7 @@ export default function Editable() {
 			<h2 className='mt-20 text-lg font-medium'>Editable</h2>
 
 			<div className='relative'>
-				<code className='my-3 flex items-center justify-between overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-700'>
+				<code className='my-3 flex items-center justify-between overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-800 dark:text-white/80'>
 					<pre
 						dangerouslySetInnerHTML={{
 							__html: highlightedCode

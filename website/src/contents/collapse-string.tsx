@@ -36,7 +36,7 @@ export default function CollapseString() {
 							key={item}
 							className={clsx(
 								'min-w-[32px] cursor-pointer rounded-lg border px-2 py-1 text-center',
-								selected === item && 'bg-slate-200 dark:bg-slate-700'
+								selected === item && 'bg-slate-200 dark:bg-slate-600'
 							)}
 							onClick={() => setSelected(item)}>
 							{item}
@@ -58,7 +58,7 @@ export default function CollapseString() {
 			</div>
 
 			<div className='relative'>
-				<code className='my-3 flex items-center justify-between overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-700'>
+				<code className='my-3 flex items-center justify-between overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-800 dark:text-white/80'>
 					<pre
 						dangerouslySetInnerHTML={{
 							__html: highlightedCode

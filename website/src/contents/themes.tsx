@@ -72,7 +72,7 @@ export default function Themes() {
 						key={item}
 						className={clsx(
 							'cursor-pointer rounded-lg border px-2 py-1',
-							theme === item && 'bg-slate-200 dark:bg-slate-700'
+							theme === item && 'bg-slate-200 dark:bg-slate-600'
 						)}
 						onClick={() => setTheme(item)}>
 						{item}
@@ -80,13 +80,13 @@ export default function Themes() {
 				))}
 			</ul>
 
-			<blockquote className=' my-3 border-l-2 border-slate-400 bg-slate-50 px-4 py-2 text-sm italic dark:bg-slate-700'>
+			<blockquote className=' my-3 border-l-2 border-slate-400 bg-slate-50 px-4 py-2 text-sm italic dark:bg-slate-800 dark:text-white/80'>
 				Recommend backgroundColor: {currentBgColor}
 			</blockquote>
 
 			<div className='relative'>
 				<pre
-					className='my-3 overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-700'
+					className='my-3 overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-800 dark:text-white/80'
 					dangerouslySetInnerHTML={{
 						__html: highlightedCode
 					}}
