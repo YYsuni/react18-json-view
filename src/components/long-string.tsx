@@ -9,8 +9,10 @@ interface Props {
 }
 
 const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, handleKeyDown, className }, ref) => {
-	const { collapseStringMode, collapseStringsAfterLength } = useContext(JsonViewContext)
+	let { collapseStringMode, collapseStringsAfterLength } = useContext(JsonViewContext)
 	const [fold, setFold] = useState(true)
+
+	collapseStringsAfterLength = collapseStringsAfterLength > 0 ? collapseStringsAfterLength : 0
 
 	if (editing)
 		return (
