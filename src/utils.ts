@@ -95,7 +95,7 @@ export function customCopy(customOptions?: CustomizeOptions) {
 
 export function resolveEvalFailedNewValue(type: string, value: string) {
 	if (type === 'string') {
-		return value.trim().replace(/^\"([\s\S]+?)\"$/, '$1');
+		return value.trim().replace(/^\"([\s\S]+?)\"$/, '$1')
 	}
-	return value;
+	return value
 }

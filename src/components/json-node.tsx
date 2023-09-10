@@ -78,7 +78,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 
 				if (editHandle) editHandle(name!, evalValue, node)
 			} catch (e) {
-				const trimmedStringValue = resolveEvalFailedNewValue(type, newValue);
+				const trimmedStringValue = resolveEvalFailedNewValue(type, newValue)
 				if (editHandle) editHandle(name!, trimmedStringValue, node)
 			}
 

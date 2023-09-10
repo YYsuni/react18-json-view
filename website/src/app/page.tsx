@@ -14,7 +14,7 @@ import CollapseString from '@/contents/collapse-string'
 
 export default function Home() {
 	return (
-		<main className='container pt-12 max-sm:pt-4 pb-20'>
+		<main className='container pb-20 pt-12 max-sm:pt-4'>
 			<Hero />
 
 			<Installation />

@@ -35,19 +35,19 @@ export default function Editable() {
 			<h2 className='mt-20 text-lg font-medium'>Editable</h2>
 
 			<div className='relative'>
-				<code className='my-3 flex items-center text-sm justify-between rounded-lg border bg-slate-50 p-4 dark:bg-slate-700 overflow-auto'>
+				<code className='my-3 flex items-center justify-between overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-700'>
 					<pre
 						dangerouslySetInnerHTML={{
 							__html: highlightedCode
 						}}
 					/>
 				</code>
-				<button onClick={copy} className='rounded-lg p-1 absolute top-3 right-4 bg-white/50 border backdrop-blur'>
+				<button onClick={copy} className='absolute right-4 top-3 rounded-lg border bg-white/50 p-1 backdrop-blur'>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
 				</button>
 			</div>
 
-			<div className='rounded-lg border p-4 text-sm mt-2 bg-white dark:bg-[#0E0832]'>
+			<div className='mt-2 rounded-lg border bg-white p-4 text-sm dark:bg-[#0E0832]'>
 				<JsonView
 					editable
 					onAdd={params => {

@@ -58,19 +58,19 @@ export default function Theme() {
 						setTheme('light')
 					}
 				}}
-				className='border border-slate-300 h-8 w-8 flex justify-center items-center rounded-lg'>
+				className='flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300'>
 				{theme === 'light' ? (
-					<LightSVG className='w-4 h-4' />
+					<LightSVG className='h-4 w-4' />
 				) : theme === 'dark' ? (
-					<DarkSVG className='w-4 h-4' />
+					<DarkSVG className='h-4 w-4' />
 				) : (
-					<SystemSVG className='w-4 h-4' />
+					<SystemSVG className='h-4 w-4' />
 				)}
 			</button>
 		)
 	return (
-		<button className='border border-slate-300 h-8 w-8 flex justify-center items-center rounded-lg'>
-			<SystemSVG className='w-4 h-4' />
+		<button className='flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300'>
+			<SystemSVG className='h-4 w-4' />
 		</button>
 	)
 }
