@@ -1,6 +1,6 @@
 {
 	"name": "react18-json-view",
-	"version": "0.2.5-canary.1",
+	"version": "0.2.5-canary.2",
 	"type": "module",
 	"description": "JSON viewer for react18",
 	"main": "dist/cjs/index.cjs",
