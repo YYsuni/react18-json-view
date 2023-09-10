@@ -13,7 +13,7 @@ export default function CollapseString() {
 	const [selected, setSelected] = useState(options[0])
 	const [length, setLength] = useState(20)
 
-	const code = `<JsonView \n  src={json_object} \n  collapseStringMode="${selected}" \n  collapseStringsAfterLength={${length}}\n/>`
+	const code = `<JsonView \n  editable\n  src={json_object} \n  collapseStringMode="${selected}" \n  collapseStringsAfterLength={${length}}\n/>`
 
 	const [copied, setCopied] = useState(false)
 
@@ -74,6 +74,7 @@ export default function CollapseString() {
 				<JsonView
 					collapseStringMode={selected}
 					collapseStringsAfterLength={length}
+					editable
 					src={{
 						Interstellar:
 							'And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known. We count these moments as our proudest achievements.',
@@ -98,7 +99,8 @@ export default function CollapseString() {
                     $h‍_once.JSON(JSON),
                     $h‍_once.Map(Map),
                     $h‍_once.Math(Math),
-                    $h‍_once.Number(Number),`
+                    $h‍_once.Number(Number),`,
+						multiSpaces: '   		&nbsp 	 &nbsp  blank	 	tab  \f f\f '
 					}}
 				/>
 			</div>

@@ -13,6 +13,7 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, han
 	const [fold, setFold] = useState(true)
 
 	collapseStringsAfterLength = collapseStringsAfterLength > 0 ? collapseStringsAfterLength : 0
+	const str_show = str.replace(/\s+/, ' ')
 
 	if (editing)
 		return (
@@ -30,7 +31,7 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, han
 			<span className={className}>"{str}"</span>
 		) : (
 			<span onClick={() => setFold(!fold)} className={className + ' cursor-pointer'}>
-				"{fold ? str.slice(0, 6) + '...' + str.slice(-4) : str}"
+				"{fold ? str_show.slice(0, 6) + '...' + str_show.slice(-4) : str}"
 			</span>
 		)
 
@@ -39,7 +40,7 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, han
 	if (collapseStringMode === 'directly') {
 		return (
 			<span onClick={() => setFold(!fold)} className={className + ' cursor-pointer'}>
-				"{fold ? str.slice(0, collapseStringsAfterLength) + '...' : str}"
+				"{fold ? str_show.slice(0, collapseStringsAfterLength) + '...' : str}"
 			</span>
 		)
 	}
@@ -47,7 +48,7 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, han
 	if (collapseStringMode === 'word') {
 		let index_ahead = collapseStringsAfterLength
 		let index_behind = collapseStringsAfterLength + 1
-		let str_collapsed = str
+		let str_collapsed = str_show
 		let count = 1
 
 		while (true) {
