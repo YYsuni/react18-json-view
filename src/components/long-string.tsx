@@ -13,7 +13,7 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, editing, han
 	const [fold, setFold] = useState(true)
 
 	collapseStringsAfterLength = collapseStringsAfterLength > 0 ? collapseStringsAfterLength : 0
-	const str_show = str.replace(/\s+/, ' ')
+	const str_show = str.replace(/\s+/g, ' ')
 
 	if (editing)
 		return (
