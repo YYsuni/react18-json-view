@@ -46,7 +46,7 @@ export default function CollapseString() {
 
 				<input
 					value={length}
-					className='rounded-lg border bg-white px-2 py-1'
+					className='rounded-lg border bg-white px-2 py-1 dark:bg-transparent'
 					type='number'
 					onInput={e => {
 						const target = e.target as HTMLInputElement
@@ -65,7 +65,7 @@ export default function CollapseString() {
 						}}
 					/>
 				</code>
-				<button onClick={copy} className='absolute right-4 top-3 rounded-lg border bg-white/50 p-1 backdrop-blur'>
+				<button onClick={copy} className='absolute right-4 top-3 rounded-lg border bg-white/20 p-1 backdrop-blur'>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
 				</button>
 			</div>

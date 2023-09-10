@@ -21,7 +21,7 @@ export default function Installation() {
 				onClick={copy}
 				className='mt-3 flex cursor-copy items-center justify-between rounded-lg border bg-slate-50 p-4 dark:bg-slate-700 '>
 				<span>npm i react18-json-view</span>
-				<button className='rounded-lg border bg-white/50 p-1 backdrop-blur'>
+				<button className='rounded-lg border bg-white/20 p-1 backdrop-blur'>
 					{copied ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
 				</button>
 			</code>
