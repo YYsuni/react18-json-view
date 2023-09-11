@@ -120,6 +120,13 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 
 		const isEditing = editing || deleting
 
+		const ctrlClick =
+			!isEditing && editableEdit(editable) && customEdit(customReturn as CustomizeOptions | undefined) && editHandle
+				? (event: React.MouseEvent) => {
+						if (event.ctrlKey || event.metaKey) edit()
+				  }
+				: undefined
+
 		const Icons = (
 			<>
 				{isEditing && (
@@ -177,6 +184,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 							editing={editing}
 							handleKeyDown={handleKeyDown}
 							className={className}
+							ctrlClick={ctrlClick}
 						/>
 					) : editing ? (
 						<span
@@ -187,7 +195,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 							onKeyDown={handleKeyDown}
 						/>
 					) : (
-						<span className={className}>"{displayValue}"</span>
+						<span className={className} onClick={ctrlClick}>
+							"{displayValue}"
+						</span>
 					)}
 
 					{Icons}
@@ -205,7 +215,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 							onKeyDown={handleKeyDown}
 						/>
 					) : (
-						<span className={className}>{displayValue}</span>
+						<span className={className} onClick={ctrlClick}>
+							{displayValue}
+						</span>
 					)}
 
 					{Icons}
