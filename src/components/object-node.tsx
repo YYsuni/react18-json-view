@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
 import {
 	isObject,
@@ -52,25 +52,28 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 	}, [collapsed, collapseObjectsAfterLength])
 
 	// Edit property
-	const editHandle = (indexOrName: number | string, newValue: any, oldValue: any) => {
-		if (Array.isArray(node)) {
-			node[+indexOrName] = newValue
-		} else if (node) {
-			node[indexOrName] = newValue
-		}
-		if (onEdit)
-			onEdit({
-				newValue,
-				oldValue,
-				depth,
-				src,
-				indexOrName: indexOrName,
-				parentType: isPlainObject ? 'object' : 'array'
-			})
-		if (onChange)
-			onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' })
-		forceUpdate()
-	}
+	const editHandle = useCallback(
+		(indexOrName: number | string, newValue: any, oldValue: any) => {
+			if (Array.isArray(node)) {
+				node[+indexOrName] = newValue
+			} else if (node) {
+				node[indexOrName] = newValue
+			}
+			if (onEdit)
+				onEdit({
+					newValue,
+					oldValue,
+					depth,
+					src,
+					indexOrName: indexOrName,
+					parentType: isPlainObject ? 'object' : 'array'
+				})
+			if (onChange)
+				onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' })
+			forceUpdate()
+		},
+		[node, onEdit, onChange, forceUpdate]
+	)
 
 	// Delete property
 	const deleteHandle = (indexOrName: number | string) => {

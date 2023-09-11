@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, isValidElement } from 'react'
+import { useContext, useRef, useState, isValidElement, useMemo, useCallback } from 'react'
 import { JsonViewContext } from './json-view'
 import {
 	customCopy,
@@ -70,7 +70,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 			})
 		}
 
-		const done = () => {
+		const done = useCallback(() => {
 			const newValue = valueRef.current!.innerText
 
 			try {
@@ -83,7 +83,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 			}
 
 			setEditing(false)
-		}
+		}, [editHandle])
 		const cancel = () => {
 			setEditing(false)
 			setDeleting(false)
@@ -109,14 +109,17 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 				})
 		}
 
-		const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-			if (event.key === 'Enter') {
-				event.preventDefault()
-				done()
-			} else if (event.key === 'Escape') {
-				cancel()
-			}
-		}
+		const handleKeyDown = useCallback(
+			(event: React.KeyboardEvent<HTMLDivElement>) => {
+				if (event.key === 'Enter') {
+					event.preventDefault()
+					done()
+				} else if (event.key === 'Escape') {
+					cancel()
+				}
+			},
+			[done]
+		)
 
 		const isEditing = editing || deleting
 
@@ -174,14 +177,17 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 		let displayValue = String(node)
 		if (type === 'bigint') displayValue += 'n'
 
-		const EditingElement = (
-			<span
-				contentEditable
-				className={className}
-				dangerouslySetInnerHTML={{ __html: type === 'string' ? `"${displayValue}"` : displayValue }}
-				ref={valueRef}
-				onKeyDown={handleKeyDown}
-			/>
+		const EditingElement = useMemo(
+			() => (
+				<span
+					contentEditable
+					className={className}
+					dangerouslySetInnerHTML={{ __html: type === 'string' ? `"${displayValue}"` : displayValue }}
+					ref={valueRef}
+					onKeyDown={handleKeyDown}
+				/>
+			),
+			[displayValue, type, handleKeyDown]
 		)
 
 		if (type === 'string')
