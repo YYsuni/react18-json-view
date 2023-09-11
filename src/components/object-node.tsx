@@ -22,12 +22,12 @@ import type { CustomizeOptions } from '../types'
 interface Props {
 	node: Record<string, any> | Array<any>
 	depth: number
-	name?: number | string
+	indexOrName?: number | string
 	deleteHandle?: (_: string | number) => void
 	customOptions?: CustomizeOptions
 }
 
-export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSelf, customOptions }: Props) {
+export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
 	const {
 		collapsed,
 		enableClipboard,
@@ -43,10 +43,12 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 
 	const isPlainObject = isObject(node)
 
-	const [fold, setFold] = useState(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength, customOptions))
+	const [fold, setFold] = useState(
+		isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions)
+	)
 
 	useEffect(() => {
-		setFold(isCollapsed(node, depth, name, collapsed, collapseObjectsAfterLength, customOptions))
+		setFold(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
 	}, [collapsed, collapseObjectsAfterLength])
 
 	// Edit property
@@ -84,15 +86,15 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 	const [deleting, setDeleting] = useState(false)
 	const deleteSelf = () => {
 		setDeleting(false)
-		if (_deleteSelf) _deleteSelf(name!)
+		if (_deleteSelf) _deleteSelf(indexOrName!)
 		if (onDelete)
-			onDelete({ value: node, depth, src, indexOrName: name!, parentType: isPlainObject ? 'object' : 'array' })
+			onDelete({ value: node, depth, src, indexOrName: indexOrName!, parentType: isPlainObject ? 'object' : 'array' })
 		if (onChange)
 			onChange({
 				type: 'delete',
 				depth,
 				src,
-				indexOrName: name!,
+				indexOrName: indexOrName!,
 				parentType: isPlainObject ? 'object' : 'array'
 			})
 	}
@@ -149,9 +151,7 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 			)}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && (
-				<CopyButton text={stringifyForCopying(node)} />
-			)}
+			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && <CopyButton node={node} />}
 			{!fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (
 				<AddSVG
 					className='json-view--edit'
@@ -182,8 +182,8 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 					<div className='jv-indent'>
 						{node.map((n, i) => (
 							<NameValue
-								key={String(i) + String(n)}
-								name={i}
+								key={String(indexOrName) + String(i)}
+								indexOrName={i}
 								value={n}
 								depth={depth}
 								parent={node}
@@ -212,8 +212,8 @@ export default function ObjectNode({ node, depth, name, deleteHandle: _deleteSel
 					<div className='jv-indent'>
 						{Object.entries(node).map(([name, value]) => (
 							<NameValue
-								key={name + String(value)}
-								name={name}
+								key={String(indexOrName) + String(name)}
+								indexOrName={name}
 								value={value}
 								depth={depth}
 								parent={node}

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { ReactComponent as CopySVG } from '../svgs/copy.svg'
 import { ReactComponent as CopiedSVG } from '../svgs/copied.svg'
+import { stringifyForCopying } from '../utils'
 
-export default function CopyButton({ text }: { text: string }) {
+export default function CopyButton({ node }: { node: any }) {
 	const [copied, setCopied] = useState(false)
 
 	return copied ? (
@@ -10,8 +11,10 @@ export default function CopyButton({ text }: { text: string }) {
 	) : (
 		<CopySVG
 			onClick={event => {
+				const value = stringifyForCopying(node)
+
 				event.stopPropagation()
-				navigator.clipboard.writeText(text)
+				navigator.clipboard.writeText(value)
 				setCopied(true)
 				setTimeout(() => setCopied(false), 3000)
 			}}

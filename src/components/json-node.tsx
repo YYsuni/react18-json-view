@@ -26,22 +26,22 @@ interface Props {
 	depth: number
 	deleteHandle?: (indexOrName: string | number) => void
 	editHandle?: (indexOrName: string | number, newValue: any, oldValue: any) => void
-	name?: number | string
+	indexOrName?: number | string
 	parent?: Record<string, any> | Array<any>
 }
 
-export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, name, parent, editHandle }: Props) {
+export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
 	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode } =
 		useContext(JsonViewContext)
 
 	let customReturn: ReturnType<CustomizeNode> | undefined
-	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName: name }])
+	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName }])
 
 	if (customReturn) {
 		if (isValidElement(customReturn)) return customReturn
 		else if (isReactComponent(customReturn)) {
 			const CustomComponent = customReturn
-			return <CustomComponent node={node} depth={depth} indexOrName={name} />
+			return <CustomComponent node={node} depth={depth} indexOrName={indexOrName} />
 		}
 	}
 
@@ -50,7 +50,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			<ObjectNode
 				node={node}
 				depth={depth}
-				name={name}
+				indexOrName={indexOrName}
 				deleteHandle={_deleteHandle}
 				customOptions={typeof customReturn === 'object' ? (customReturn as CustomizeOptions) : undefined}
 			/>
@@ -76,10 +76,10 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			try {
 				const evalValue = eval(newValue)
 
-				if (editHandle) editHandle(name!, evalValue, node)
+				if (editHandle) editHandle(indexOrName!, evalValue, node)
 			} catch (e) {
 				const trimmedStringValue = resolveEvalFailedNewValue(type, newValue)
-				if (editHandle) editHandle(name!, trimmedStringValue, node)
+				if (editHandle) editHandle(indexOrName!, trimmedStringValue, node)
 			}
 
 			setEditing(false)
@@ -90,20 +90,20 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 		}
 		const deleteHandle = () => {
 			setDeleting(false)
-			if (_deleteHandle) _deleteHandle(name!)
+			if (_deleteHandle) _deleteHandle(indexOrName!)
 			if (onDelete)
 				onDelete({
 					value: node,
 					depth,
 					src,
-					indexOrName: name!,
+					indexOrName: indexOrName!,
 					parentType: Array.isArray(parent) ? 'array' : 'object'
 				})
 			if (onChange)
 				onChange({
 					depth,
 					src,
-					indexOrName: name!,
+					indexOrName: indexOrName!,
 					parentType: Array.isArray(parent) ? 'array' : 'object',
 					type: 'delete'
 				})
@@ -139,7 +139,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 				{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
 				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && (
-					<CopyButton text={stringifyForCopying(node)} />
+					<CopyButton node={node} />
 				)}
 				{!isEditing &&
 					editableEdit(editable) &&
@@ -174,26 +174,23 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 		let displayValue = String(node)
 		if (type === 'bigint') displayValue += 'n'
 
+		const EditingElement = (
+			<span
+				contentEditable
+				className={className}
+				dangerouslySetInnerHTML={{ __html: type === 'string' ? `"${displayValue}"` : displayValue }}
+				ref={valueRef}
+				onKeyDown={handleKeyDown}
+			/>
+		)
+
 		if (type === 'string')
 			return (
 				<>
-					{node.length > collapseStringsAfterLength ? (
-						<LongString
-							str={node}
-							ref={valueRef}
-							editing={editing}
-							handleKeyDown={handleKeyDown}
-							className={className}
-							ctrlClick={ctrlClick}
-						/>
-					) : editing ? (
-						<span
-							className={className}
-							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: `"${displayValue}"` }}
-							ref={valueRef}
-							onKeyDown={handleKeyDown}
-						/>
+					{editing ? (
+						EditingElement
+					) : node.length > collapseStringsAfterLength ? (
+						<LongString str={node} ref={valueRef} className={className} ctrlClick={ctrlClick} />
 					) : (
 						<span className={className} onClick={ctrlClick}>
 							"{displayValue}"
@@ -207,13 +204,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			return (
 				<>
 					{editing ? (
-						<span
-							className={className}
-							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: displayValue }}
-							ref={valueRef}
-							onKeyDown={handleKeyDown}
-						/>
+						EditingElement
 					) : (
 						<span className={className} onClick={ctrlClick}>
 							{displayValue}

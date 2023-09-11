@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 import JsonNode from './json-node'
 import type { Collapsed, CustomizeNode, Editable } from '../types'
 
@@ -94,7 +94,7 @@ export default function JsonView({
 	customizeNode
 }: Props) {
 	const [_, update] = useState(0)
-	const forceUpdate = () => update(state => ++state)
+	const forceUpdate = useCallback(() => update(state => ++state), [])
 
 	return (
 		<JsonViewContext.Provider
