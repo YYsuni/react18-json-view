@@ -101,7 +101,7 @@ This component does not perform any cloning operations, so every step of the ope
 
 ### Edit keyboard shortcuts
 When element is editable:
-* `Ctrl/Cmd+Click` => Edit Mode
+* `Ctrl/Cmd+Click` => Edit Mode (canary)
 * `Enter` =>  Submit
 
 ## Custom themes
