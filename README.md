@@ -99,6 +99,11 @@ The editor uses `eval(<input-value>)`. While in edit mode, you can enter `({})` 
 
 This component does not perform any cloning operations, so every step of the operation is carried out on the original object. If cloning is required, please handle it yourself.
 
+### Edit keyboard shortcuts
+When element is editable:
+* `Ctrl/Cmd+Click` => Edit Mode
+* `Enter` =>  Submit
+
 ## Custom themes
 
 Below are the default theme variables that you can easily customize to fit your needs.
