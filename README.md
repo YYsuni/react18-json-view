@@ -103,6 +103,7 @@ This component does not perform any cloning operations, so every step of the ope
 When element is editable:
 * `Ctrl/Cmd+Click` => Edit Mode (canary)
 * `Enter` =>  Submit
+* `Esc` =>  Cancel
 
 ## Custom themes
 
