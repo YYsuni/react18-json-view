@@ -100,7 +100,9 @@ export default function CollapseString() {
                     $h‍_once.Map(Map),
                     $h‍_once.Math(Math),
                     $h‍_once.Number(Number),`,
-						multiSpaces: '   		&nbsp 	 &nbsp  blank	 	tab  \f f\f '
+						multiSpaces: `   blank	 	tab		lf
+
+						`
 					}}
 				/>
 			</div>

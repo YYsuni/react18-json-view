@@ -40,6 +40,12 @@ export default function Hero() {
 					<GithubSVG className='mr-1 h-4 w-4' />
 					Github
 				</a>
+				<a
+					href='https://json-view-online.vercel.app/'
+					target='_blank'
+					className='flex h-8 items-center rounded-lg border px-2 text-sm'>
+					Demo
+				</a>
 				<Theme />
 			</div>
 		</>
