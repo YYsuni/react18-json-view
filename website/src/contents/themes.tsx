@@ -7,6 +7,17 @@ import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
 import '@/lib/hljs'
 import hljs from 'highlight.js/lib/core'
+import { useMemo } from 'react'
+
+const cssText = `.json-view {
+  color: #4d4d4d;
+  --json-property: #009033;
+  --json-index: #676dff;
+  --json-number: #676dff;
+  --json-string: #b2762e;
+  --json-boolean: #dc155e;
+  --json-null: #dc155e;
+}`
 
 type Theme = 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 const themes: Theme[] = ['default', 'a11y', 'github', 'vscode', 'atom', 'winter-is-coming']
@@ -61,6 +72,16 @@ export default function Themes() {
 
 		return window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', forceUpdate)
 	}, [])
+
+	const highlightedCSS = useMemo(() => {
+		return hljs.highlight(cssText, { language: 'css' }).value
+	}, [])
+	const [copiedCSS, setCopiedCSS] = useState(false)
+	const copyCSS = () => {
+		writeText(cssText)
+		setCopiedCSS(true)
+		setTimeout(() => setCopiedCSS(false), 2000)
+	}
 
 	return (
 		<>
@@ -120,6 +141,21 @@ export default function Themes() {
 						}
 					}}
 				/>
+			</div>
+
+			<h3 className='mt-8 text-lg font-medium'>Custom themes</h3>
+			<p>Below are the default theme variables that you can easily customize to fit your needs.</p>
+			<div className='relative'>
+				<pre
+					className='my-3 overflow-auto rounded-lg border bg-slate-50 p-4 text-sm dark:bg-slate-800 dark:text-white/80'
+					dangerouslySetInnerHTML={{
+						__html: highlightedCSS
+					}}
+				/>
+
+				<button onClick={copyCSS} className='absolute right-4 top-3 rounded-lg border bg-white/20 p-1 backdrop-blur'>
+					{copiedCSS ? <CopiedSVG className='h-5 w-5' /> : <CopySVG className='h-5 w-5' />}
+				</button>
 			</div>
 		</>
 	)

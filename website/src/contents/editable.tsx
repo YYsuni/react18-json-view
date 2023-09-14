@@ -75,6 +75,39 @@ export default function Editable() {
 					}}
 				/>
 			</div>
+
+			<h3 className='mt-8 text-lg font-medium'>How to generate object/array</h3>
+			<p>
+				The editor uses eval{' '}
+				<code className='mx-0.5 rounded bg-slate-200 px-1 py-0.5 font-mono text-sm dark:bg-slate-600'>
+					({`<input-value>`})
+				</code>
+				. While in edit mode, you can enter
+				<code className='mx-0.5 rounded bg-slate-200 px-1 py-0.5 font-mono text-sm dark:bg-slate-600'>{`({})`}</code> or{' '}
+				<code className='mx-0.5 rounded bg-slate-200 px-1 py-0.5 font-mono text-sm dark:bg-slate-600'>{`([])`}</code>,
+				which will cause the result of eval to become a new object or array.
+			</p>
+			<h3 className='mt-6 text-lg font-medium'>How the editor works</h3>
+			<p>
+				This component does not perform any cloning operations, so every step of the operation is carried out on the
+				original object. If cloning is required, please handle it yourself.
+			</p>
+			<h3 className='mt-6 text-lg font-medium'>Edit keyboard shortcuts</h3>
+			<p>When element is editable:</p>
+			<ul className='pl-6'>
+				<li className='list-disc'>
+					<code className='mx-0.5 rounded bg-slate-200 px-1 py-0.5 font-mono text-sm dark:bg-slate-600'>{`Ctrl/Cmd+Click`}</code>{' '}
+					{`=>`} Edit Mode
+				</li>
+				<li className='list-disc'>
+					<code className='mx-0.5 rounded bg-slate-200 px-1 py-0.5 font-mono text-sm dark:bg-slate-600'>Enter</code>{' '}
+					{`=>`} Submit
+				</li>
+				<li className='list-disc'>
+					<code className='mx-0.5 rounded bg-slate-200 px-1 py-0.5 font-mono text-sm dark:bg-slate-600'>Esc</code>{' '}
+					{`=>`} Cancel
+				</li>
+			</ul>
 		</>
 	)
 }
