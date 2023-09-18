@@ -36,7 +36,7 @@ const funcString = `(params) => {
 export default function DisplaySize() {
 	const [selected, setSelected] = useState(options[0])
 
-	const code = `<JsonView src={json_object} collapsed={${selected === 'function' ? funcString : selected}} />`
+	const code = `<JsonView src={json_object} displaySize={${selected === 'function' ? funcString : selected}} />`
 
 	const [copied, setCopied] = useState(false)
 
