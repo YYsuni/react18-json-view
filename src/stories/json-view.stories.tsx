@@ -43,7 +43,7 @@ export const Primary: StoryObj<TYPE_FC> = {
 	}
 }
 
-export const Copy: StoryObj<TYPE_FC> = {
+export const DisplaySize: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -55,11 +55,11 @@ export const Copy: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		displaySize: true
 	}
 }
 
-export const Copy_sm: StoryObj<TYPE_FC> = {
+export const SM: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -71,7 +71,8 @@ export const Copy_sm: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (
@@ -82,7 +83,7 @@ export const Copy_sm: StoryObj<TYPE_FC> = {
 	]
 }
 
-export const Copy_xs: StoryObj<TYPE_FC> = {
+export const XS: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -94,7 +95,8 @@ export const Copy_xs: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (
@@ -104,7 +106,7 @@ export const Copy_xs: StoryObj<TYPE_FC> = {
 		)
 	]
 }
-export const Copy_lg: StoryObj<TYPE_FC> = {
+export const LG: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -116,7 +118,8 @@ export const Copy_lg: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (
@@ -126,7 +129,7 @@ export const Copy_lg: StoryObj<TYPE_FC> = {
 		)
 	]
 }
-export const Copy_xl: StoryObj<TYPE_FC> = {
+export const XL: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -138,7 +141,8 @@ export const Copy_xl: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (

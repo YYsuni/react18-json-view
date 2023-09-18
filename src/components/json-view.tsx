@@ -45,7 +45,9 @@ export const JsonViewContext = createContext({
 
 	forceUpdate: () => {},
 
-	customizeNode: undefined as CustomizeNode | undefined
+	customizeNode: undefined as CustomizeNode | undefined,
+
+	displaySize: false
 })
 
 interface Props {
@@ -69,6 +71,8 @@ interface Props {
 
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
+
+	displaySize?: boolean
 }
 
 export default function JsonView({
@@ -91,7 +95,9 @@ export default function JsonView({
 	dark = false,
 	theme = 'default',
 
-	customizeNode
+	customizeNode,
+
+	displaySize = false
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -117,7 +123,9 @@ export default function JsonView({
 
 				forceUpdate,
 
-				customizeNode
+				customizeNode,
+
+				displaySize
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '')}>

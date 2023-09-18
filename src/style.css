@@ -27,36 +27,8 @@
 	color: var(--json-null);
 }
 
-.json-view :is(.json-view--copy, .json-view--edit) {
-	display: none;
-	width: 1em;
-	height: 1em;
-	margin-left: 4px;
-	cursor: pointer;
-}
-
-.json-view .json-view--deleting {
-	outline: 1px solid #da0000;
-	background-color: #da000011;
-	text-decoration-line: line-through;
-}
-.json-view .json-view--input {
-	width: 120px;
-	margin-left: 4px;
-	border-radius: 4px;
-	border: 1px solid currentColor;
-	padding: 0px 4px;
-	font-size: 87.5%;
-	line-height: 1.25;
-	background: transparent;
-}
-
-:is(.json-view:hover, .json-view--pair:hover) > :is(.json-view--copy, .json-view--edit) {
-	display: inline-block;
-}
-
 .json-view .jv-indent {
-	padding-left: 16px;
+	padding-left: 1em;
 }
 .json-view .jv-chevron {
 	display: inline-block;
@@ -66,8 +38,43 @@
 	width: 1em;
 	height: 1em;
 }
-.json-view .jv-chevron:hover {
+:is(.json-view .jv-chevron:hover, .json-view .jv-size:hover + .jv-chevron) {
 	opacity: 0.8;
+}
+.json-view .jv-size {
+	cursor: pointer;
+	opacity: 0.4;
+	font-size: 0.875em;
+	font-style: italic;
+	margin-left: 0.25em;
+}
+
+.json-view :is(.json-view--copy, .json-view--edit) {
+	display: none;
+	width: 1em;
+	height: 1em;
+	margin-left: 0.25em;
+	cursor: pointer;
+}
+
+.json-view .json-view--input {
+	width: 120px;
+	margin-left: 0.25em;
+	border-radius: 4px;
+	border: 1px solid currentColor;
+	padding: 0px 4px;
+	font-size: 87.5%;
+	line-height: 1.25;
+	background: transparent;
+}
+.json-view .json-view--deleting {
+	outline: 1px solid #da0000;
+	background-color: #da000011;
+	text-decoration-line: line-through;
+}
+
+:is(.json-view:hover, .json-view--pair:hover) > :is(.json-view--copy, .json-view--edit) {
+	display: inline-block;
 }
 
 .json-view .jv-button {

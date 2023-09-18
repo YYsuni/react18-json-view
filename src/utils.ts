@@ -4,6 +4,10 @@ export function isObject(node: any): node is Record<string, any> {
 	return Object.prototype.toString.call(node) === '[object Object]'
 }
 
+export function objectSize(node: Record<string, any> | Array<any>) {
+	return Array.isArray(node) ? node.length : isObject(node) ? Object.keys(node).length : 0
+}
+
 export function stringifyForCopying(node: any, space?: string | number | undefined) {
 	try {
 		return JSON.stringify(
@@ -40,7 +44,7 @@ export function isCollapsed(
 	if (typeof collapsed === 'boolean') return collapsed
 	if (typeof collapsed === 'number' && depth > collapsed) return true
 
-	const size = Array.isArray(node) ? node.length : isObject(node) ? Object.keys(node).length : 0
+	const size = objectSize(node)
 
 	if (typeof collapsed === 'function') {
 		const result = safeCall(collapsed, [{ node, depth, indexOrName, size }])

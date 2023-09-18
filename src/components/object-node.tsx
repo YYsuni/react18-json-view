@@ -8,7 +8,8 @@ import {
 	editableAdd,
 	editableDelete,
 	isCollapsed,
-	stringifyForCopying
+	stringifyForCopying,
+	objectSize
 } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
@@ -38,7 +39,8 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 		onAdd,
 		onEdit,
 		onChange,
-		forceUpdate
+		forceUpdate,
+		displaySize
 	} = useContext(JsonViewContext)
 
 	const isPlainObject = isObject(node)
@@ -143,7 +145,13 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 
 	const Icons = (
 		<>
-			{!fold && !isEditing && <AngleDownSVG onClick={() => setFold(true)} className='jv-chevron' />}
+			{!fold && !isEditing && (
+				<span onClick={() => setFold(true)}>
+					{displaySize && <span className='jv-size'>{objectSize(node)} Items</span>}
+
+					<AngleDownSVG className='jv-chevron' />
+				</span>
+			)}
 
 			{adding && isPlainObject && (
 				<input className='json-view--input' placeholder='property' ref={inputRef} onKeyDown={handleAddKeyDown} />
