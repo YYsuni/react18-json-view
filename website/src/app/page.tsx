@@ -11,6 +11,7 @@ import Collapsed from '@/contents/collapsed'
 import Editable from '@/contents/editable'
 import Customization from '@/contents/customization'
 import CollapseString from '@/contents/collapse-string'
+import DisplaySize from '@/contents/display-size'
 
 export default function Home() {
 	return (
@@ -25,6 +26,8 @@ export default function Home() {
 
 			<Collapsed />
 			<CollapseString />
+
+			<DisplaySize />
 
 			<Editable />
 
