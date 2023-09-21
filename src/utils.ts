@@ -1,4 +1,4 @@
-import type { Collapsed, CustomizeOptions, Editable } from './types'
+import type { Collapsed, CustomizeOptions, DisplaySize, Editable } from './types'
 
 export function isObject(node: any): node is Record<string, any> {
 	return Object.prototype.toString.call(node) === '[object Object]'
@@ -53,6 +53,12 @@ export function isCollapsed(
 
 	if (Array.isArray(node) && size > collapseObjectsAfterLength) return true
 	if (isObject(node) && size > collapseObjectsAfterLength) return true
+	return false
+}
+export function ifDisplay(displaySize: DisplaySize, depth: number) {
+	if (typeof displaySize === 'boolean') return displaySize
+	if (typeof displaySize === 'number' && depth > displaySize) return true
+
 	return false
 }
 

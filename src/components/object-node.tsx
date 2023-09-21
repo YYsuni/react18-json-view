@@ -9,7 +9,8 @@ import {
 	editableDelete,
 	isCollapsed,
 	stringifyForCopying,
-	objectSize
+	objectSize,
+	ifDisplay
 } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
@@ -147,7 +148,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 		<>
 			{!fold && !isEditing && (
 				<span onClick={() => setFold(true)}>
-					{displaySize && <span className='jv-size'>{objectSize(node)} Items</span>}
+					{ifDisplay(displaySize, depth) && <span className='jv-size'>{objectSize(node)} Items</span>}
 
 					<AngleDownSVG className='jv-chevron' />
 				</span>

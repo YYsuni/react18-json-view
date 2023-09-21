@@ -1,6 +1,6 @@
 import { createContext, useCallback, useState } from 'react'
 import JsonNode from './json-node'
-import type { Collapsed, CustomizeNode, Editable } from '../types'
+import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
 
 type OnEdit = (params: {
 	newValue: any
@@ -47,7 +47,7 @@ export const JsonViewContext = createContext({
 
 	customizeNode: undefined as CustomizeNode | undefined,
 
-	displaySize: false
+	displaySize: undefined as DisplaySize
 })
 
 interface Props {
@@ -72,7 +72,7 @@ interface Props {
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 
-	displaySize?: boolean
+	displaySize?: DisplaySize
 }
 
 export default function JsonView({
@@ -97,7 +97,7 @@ export default function JsonView({
 
 	customizeNode,
 
-	displaySize = false
+	displaySize
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])

@@ -7,7 +7,7 @@ import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
 
 type Option = '0' | '1' | '2' | '3' | 'true' | 'false' | 'function'
-const options: Option[] = ['true', 'false']
+const options: Option[] = ['true', 'false', '0', '1', '2', '3']
 
 const valueMap: Record<Option, any> = {
 	'0': 0,
@@ -93,9 +93,16 @@ export default function DisplaySize() {
 						obj: {
 							k1: 123,
 							k2: '123',
-							k3: false
+							k3: false,
+							nest: {
+								nest: {
+									nest: {
+										over: 'over'
+									}
+								}
+							}
 						},
-						arr: ['string', 123456, false, null]
+						arr: ['string', 123456, false, ['nest', ['over']]]
 					}}
 				/>
 			</div>

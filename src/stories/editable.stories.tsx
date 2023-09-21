@@ -68,9 +68,18 @@ export const DisplaySize: StoryObj<TYPE_FC> = {
 			null: null,
 			func: function () {},
 			Symbol: Symbol('JSON View'),
-			arr: ['string', 123456, false, null]
+			arr: ['string', 123456, false, null],
+			nest: {
+				nest: {
+					nest: {
+						nest: {
+							over: 'over'
+						}
+					}
+				}
+			}
 		},
-		displaySize: true
+		displaySize: 1
 	}
 }
 
