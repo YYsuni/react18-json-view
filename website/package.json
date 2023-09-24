@@ -1,0 +1,34 @@
+{
+	"name": "website",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"@types/node": "20.5.9",
+		"@types/react": "18.2.21",
+		"@types/react-dom": "18.2.7",
+		"autoprefixer": "10.4.15",
+		"clsx": "^2.0.0",
+		"highlight.js": "^11.8.0",
+		"hljs": "^6.2.3",
+		"next": "13.4.19",
+		"postcss": "8.4.29",
+		"prettier": "^2.8.2",
+		"prettier-plugin-tailwindcss": "^0.2.8",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"react18-json-view": "workspace:*",
+		"tailwindcss": "3.3.3",
+		"typescript": "5.2.2",
+		"zustand": "^4.4.1"
+	},
+	"devDependencies": {
+		"@svgr/webpack": "^8.1.0"
+	}
+}

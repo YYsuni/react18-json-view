@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, useEffect, isValidElement } from 'react'
+import { useContext, useRef, useState, isValidElement, useMemo, useCallback, useEffect } from 'react'
 import { JsonViewContext } from './json-view'
 import {
 	customCopy,
@@ -9,7 +9,8 @@ import {
 	isObject,
 	isReactComponent,
 	safeCall,
-	stringifyForCopying
+	stringifyForCopying,
+	resolveEvalFailedNewValue
 } from '../utils'
 import ObjectNode from './object-node'
 import LongString from './long-string'
@@ -18,28 +19,29 @@ import { ReactComponent as EditSVG } from '../svgs/edit.svg'
 import { ReactComponent as DeleteSVG } from '../svgs/trash.svg'
 import { ReactComponent as DoneSVG } from '../svgs/done.svg'
 import { ReactComponent as CancelSVG } from '../svgs/cancel.svg'
+import type { CustomizeNode, CustomizeOptions } from '../types'
 
 interface Props {
 	node: any
 	depth: number
 	deleteHandle?: (indexOrName: string | number) => void
 	editHandle?: (indexOrName: string | number, newValue: any, oldValue: any) => void
-	name?: number | string
+	indexOrName?: number | string
 	parent?: Record<string, any> | Array<any>
 }
 
-export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, name, parent, editHandle }: Props) {
+export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
 	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode } =
 		useContext(JsonViewContext)
 
 	let customReturn: ReturnType<CustomizeNode> | undefined
-	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName: name }])
+	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName }])
 
 	if (customReturn) {
 		if (isValidElement(customReturn)) return customReturn
 		else if (isReactComponent(customReturn)) {
 			const CustomComponent = customReturn
-			return <CustomComponent node={node} depth={depth} indexOrName={name} />
+			return <CustomComponent node={node} depth={depth} indexOrName={indexOrName} />
 		}
 	}
 
@@ -48,7 +50,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			<ObjectNode
 				node={node}
 				depth={depth}
-				name={name}
+				indexOrName={indexOrName}
 				deleteHandle={_deleteHandle}
 				customOptions={typeof customReturn === 'object' ? (customReturn as CustomizeOptions) : undefined}
 			/>
@@ -68,52 +70,57 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 				valueRef.current?.focus()
 			})
 		}
-		const done = () => {
+
+		const done = useCallback(() => {
 			const newValue = valueRef.current!.innerText
 
 			try {
 				const evalValue = eval(newValue)
 
-				if (editHandle) editHandle(name!, evalValue, node)
+				if (editHandle) editHandle(indexOrName!, evalValue, node)
 			} catch (e) {
-				if (editHandle) editHandle(name!, newValue, node)
+				const trimmedStringValue = resolveEvalFailedNewValue(type, newValue)
+				if (editHandle) editHandle(indexOrName!, trimmedStringValue, node)
 			}
 
 			setEditing(false)
-		}
+		}, [editHandle])
 		const cancel = () => {
 			setEditing(false)
 			setDeleting(false)
 		}
 		const deleteHandle = () => {
 			setDeleting(false)
-			if (_deleteHandle) _deleteHandle(name!)
+			if (_deleteHandle) _deleteHandle(indexOrName!)
 			if (onDelete)
 				onDelete({
 					value: node,
 					depth,
 					src,
-					indexOrName: name!,
+					indexOrName: indexOrName!,
 					parentType: Array.isArray(parent) ? 'array' : 'object'
 				})
 			if (onChange)
 				onChange({
 					depth,
 					src,
-					indexOrName: name!,
+					indexOrName: indexOrName!,
 					parentType: Array.isArray(parent) ? 'array' : 'object',
 					type: 'delete'
 				})
 		}
 
-		const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-			if (event.key === 'Enter') {
-				event.preventDefault()
-				done()
-			} else if (event.key === 'Escape') {
-				cancel()
-			}
-		}
+		const handleKeyDown = useCallback(
+			(event: React.KeyboardEvent<HTMLDivElement>) => {
+				if (event.key === 'Enter') {
+					event.preventDefault()
+					done()
+				} else if (event.key === 'Escape') {
+					cancel()
+				}
+			},
+			[done]
+		)
 
 		const makeStringClickable = (inputString: string) => {
 			const urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -133,6 +140,13 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 
 		const isEditing = editing || deleting
 
+		const ctrlClick =
+			!isEditing && editableEdit(editable) && customEdit(customReturn as CustomizeOptions | undefined) && editHandle
+				? (event: React.MouseEvent) => {
+						if (event.ctrlKey || event.metaKey) edit()
+				  }
+				: undefined
+
 		const Icons = (
 			<>
 				{isEditing && (
@@ -145,7 +159,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 				{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
 				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && (
-					<CopyButton text={stringifyForCopying(node)} />
+					<CopyButton node={node} />
 				)}
 				{!isEditing &&
 					editableEdit(editable) &&
@@ -179,27 +193,30 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 
 		if (type === 'bigint') setDisplayValue((v) => v += 'n')
 
+		const EditingElement = useMemo(
+			() => (
+				<span
+					contentEditable
+					className={className}
+					dangerouslySetInnerHTML={{ __html: type === 'string' ? `"${displayValue}"` : displayValue }}
+					ref={valueRef}
+					onKeyDown={handleKeyDown}
+				/>
+			),
+			[displayValue, type, handleKeyDown]
+		)
+
 		if (type === 'string')
 			return (
 				<>
-					{node.length > collapseStringsAfterLength ? (
-						<LongString
-							str={node}
-							ref={valueRef}
-							editing={editing}
-							handleKeyDown={handleKeyDown}
-							className={className}
-						/>
-					) : editing ? (
-						<span
-							className={className}
-							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: `"${displayValue}"` }}
-							ref={valueRef}
-							onKeyDown={handleKeyDown}
-						/>
+					{editing ? (
+						EditingElement
+					) : node.length > collapseStringsAfterLength ? (
+						<LongString str={node} ref={valueRef} className={className} ctrlClick={ctrlClick} />
 					) : (
-						<span className={className} dangerouslySetInnerHTML={{ __html: `"${displayValue}"` }}></span>
+						<span className={className} onClick={ctrlClick}>
+							"{displayValue}"
+						</span>
 					)}
 
 					{Icons}
@@ -209,15 +226,11 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			return (
 				<>
 					{editing ? (
-						<span
-							className={className}
-							contentEditable={editing}
-							dangerouslySetInnerHTML={{ __html: displayValue }}
-							ref={valueRef}
-							onKeyDown={handleKeyDown}
-						/>
+						EditingElement
 					) : (
-						<span className={className}>{displayValue}</span>
+						<span className={className} onClick={ctrlClick}>
+							{displayValue}
+						</span>
 					)}
 
 					{Icons}

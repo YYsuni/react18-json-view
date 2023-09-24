@@ -44,7 +44,7 @@ export const Primary: StoryObj<TYPE_FC> = {
 	}
 }
 
-export const Copy: StoryObj<TYPE_FC> = {
+export const DisplaySize: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -56,11 +56,11 @@ export const Copy: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		displaySize: true
 	}
 }
 
-export const Copy_sm: StoryObj<TYPE_FC> = {
+export const SM: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -72,7 +72,8 @@ export const Copy_sm: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (
@@ -83,7 +84,7 @@ export const Copy_sm: StoryObj<TYPE_FC> = {
 	]
 }
 
-export const Copy_xs: StoryObj<TYPE_FC> = {
+export const XS: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -95,7 +96,8 @@ export const Copy_xs: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (
@@ -105,7 +107,7 @@ export const Copy_xs: StoryObj<TYPE_FC> = {
 		)
 	]
 }
-export const Copy_lg: StoryObj<TYPE_FC> = {
+export const LG: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -117,7 +119,8 @@ export const Copy_lg: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (
@@ -127,7 +130,7 @@ export const Copy_lg: StoryObj<TYPE_FC> = {
 		)
 	]
 }
-export const Copy_xl: StoryObj<TYPE_FC> = {
+export const XL: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
@@ -139,7 +142,8 @@ export const Copy_xl: StoryObj<TYPE_FC> = {
 			Symbol: Symbol('JSON View'),
 			arr: ['string', 123456, false, null]
 		},
-		enableClipboard: true
+		enableClipboard: true,
+		displaySize: true
 	},
 	decorators: [
 		Story => (
@@ -194,7 +198,8 @@ export const BigObject: StoryObj<TYPE_FC> = {
 				abc28: 'abc',
 				abc29: 'abc'
 			}
-		}
+		},
+		collapseObjectsAfterLength: 20
 	}
 }
 
@@ -206,7 +211,8 @@ export const Array: StoryObj<TYPE_FC> = {
 			false,
 			null,
 			{ string: 'string', number: 123456, boolean: false, null: null, Date: new Date(), Symbol: Symbol('JSON View') }
-		]
+		],
+		collapsed: 1
 	}
 }
 
@@ -244,7 +250,8 @@ export const BigArray: StoryObj<TYPE_FC> = {
 				123456,
 				false
 			]
-		]
+		],
+		collapseObjectsAfterLength: 20
 	}
 }
 
@@ -256,7 +263,9 @@ export const String: StoryObj<TYPE_FC> = {
 
 export const LongString: StoryObj<TYPE_FC> = {
 	args: {
-		src: 'long string long string long string long string'
+		src: 'long string long string long string long string',
+		collapseStringsAfterLength: 20,
+		collapseStringMode: 'word'
 	}
 }
 
@@ -399,7 +408,7 @@ export const CustomizeNode: StoryObj<TYPE_FC> = {
 		customizeNode: params => {
 			if (params.node === 'suni') return () => <span className='underline'>suni</span>
 			if (params.node === 123) return <b>123</b>
-			if (params.indexOrName === 'obj') return { add: 1, delete: false, enableClipboard: false }
+			if (params.indexOrName === 'obj') return { add: false, delete: false, enableClipboard: false }
 			if (params.node === 'string') return { edit: true, enableClipboard: false, delete: false }
 			if (params.indexOrName === 'arr') return { collapsed: false }
 			if (params.depth > 2) return { collapsed: true }

@@ -1,5 +1,11 @@
+import type { Collapsed, CustomizeOptions, DisplaySize, Editable } from './types'
+
 export function isObject(node: any): node is Record<string, any> {
 	return Object.prototype.toString.call(node) === '[object Object]'
+}
+
+export function objectSize(node: Record<string, any> | Array<any>) {
+	return Array.isArray(node) ? node.length : isObject(node) ? Object.keys(node).length : 0
 }
 
 export function stringifyForCopying(node: any, space?: string | number | undefined) {
@@ -38,18 +44,21 @@ export function isCollapsed(
 	if (typeof collapsed === 'boolean') return collapsed
 	if (typeof collapsed === 'number' && depth > collapsed) return true
 
-	const size = Array.isArray(node) ? node.length : isObject(node) ? Object.keys(node).length : 0
+	const size = objectSize(node)
 
 	if (typeof collapsed === 'function') {
 		const result = safeCall(collapsed, [{ node, depth, indexOrName, size }])
 		if (typeof result === 'boolean') return result
-		else {
-			console.warn('[react18-json-view collapsed]', 'The collapsed function does not return boolean correctly')
-			return false
-		}
 	}
+
 	if (Array.isArray(node) && size > collapseObjectsAfterLength) return true
 	if (isObject(node) && size > collapseObjectsAfterLength) return true
+	return false
+}
+export function ifDisplay(displaySize: DisplaySize, depth: number) {
+	if (typeof displaySize === 'boolean') return displaySize
+	if (typeof displaySize === 'number' && depth > displaySize) return true
+
 	return false
 }
 
@@ -92,4 +101,11 @@ export function customDelete(customOptions?: CustomizeOptions) {
 }
 export function customCopy(customOptions?: CustomizeOptions) {
 	return !customOptions || customOptions.enableClipboard === undefined || !!customOptions.enableClipboard
+}
+
+export function resolveEvalFailedNewValue(type: string, value: string) {
+	if (type === 'string') {
+		return value.trim().replace(/^\"([\s\S]+?)\"$/, '$1')
+	}
+	return value
 }

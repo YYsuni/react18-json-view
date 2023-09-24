@@ -1,5 +1,6 @@
-import { createContext, useState } from 'react'
+import { createContext, useCallback, useState } from 'react'
 import JsonNode from './json-node'
+import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
 
 type OnEdit = (params: {
 	newValue: any
@@ -26,23 +27,35 @@ type OnChange = (params: {
 }) => void
 
 export const JsonViewContext = createContext({
+	src: undefined as any,
+
 	collapseStringsAfterLength: 99,
+	collapseStringMode: 'directly' as 'directly' | 'word' | 'address',
+
 	collapseObjectsAfterLength: 20,
-	enableClipboard: true,
 	collapsed: false as Collapsed,
+
+	enableClipboard: true,
+
 	editable: false as Editable,
-	src: undefined,
 	onEdit: undefined as OnEdit | undefined,
 	onDelete: undefined as OnDelete | undefined,
 	onAdd: undefined as OnAdd | undefined,
 	onChange: undefined as OnChange | undefined,
+
 	forceUpdate: () => {},
-	customizeNode: undefined as CustomizeNode | undefined
+
+	customizeNode: undefined as CustomizeNode | undefined,
+
+	displaySize: undefined as DisplaySize
 })
 
 interface Props {
 	src: any
+
 	collapseStringsAfterLength?: number
+	collapseStringMode?: 'directly' | 'word' | 'address'
+
 	collapseObjectsAfterLength?: number
 	collapsed?: Collapsed
 
@@ -58,41 +71,61 @@ interface Props {
 
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
+
+	displaySize?: DisplaySize
 }
 
 export default function JsonView({
 	src,
+
 	collapseStringsAfterLength = 99,
+	collapseStringMode = 'directly',
+
 	collapseObjectsAfterLength = 99,
+	collapsed,
+
 	enableClipboard = true,
-	collapsed = false,
+
 	editable = false,
 	onEdit,
 	onDelete,
 	onAdd,
 	onChange,
+
 	dark = false,
 	theme = 'default',
-	customizeNode
+
+	customizeNode,
+
+	displaySize
 }: Props) {
 	const [_, update] = useState(0)
-	const forceUpdate = () => update(state => ++state)
+	const forceUpdate = useCallback(() => update(state => ++state), [])
 
 	return (
 		<JsonViewContext.Provider
 			value={{
-				collapseStringsAfterLength,
-				collapseObjectsAfterLength,
-				enableClipboard,
-				collapsed,
-				editable,
 				src,
+
+				collapseStringsAfterLength,
+				collapseStringMode,
+
+				collapseObjectsAfterLength,
+				collapsed,
+
+				enableClipboard,
+
+				editable,
 				onEdit,
 				onDelete,
 				onAdd,
 				onChange,
+
 				forceUpdate,
-				customizeNode
+
+				customizeNode,
+
+				displaySize
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '')}>

@@ -58,7 +58,33 @@ export default {
 } as Meta<TYPE_FC>
 
 export const Primary: StoryObj<TYPE_FC> = {}
-export const xs: StoryObj<TYPE_FC> = {
+
+export const DisplaySize: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			arr: ['string', 123456, false, null],
+			nest: {
+				nest: {
+					nest: {
+						nest: {
+							over: 'over'
+						}
+					}
+				}
+			}
+		},
+		displaySize: 1
+	}
+}
+
+export const XS: StoryObj<TYPE_FC> = {
 	decorators: [
 		Story => (
 			<div className='text-xs'>
@@ -67,7 +93,7 @@ export const xs: StoryObj<TYPE_FC> = {
 		)
 	]
 }
-export const lg: StoryObj<TYPE_FC> = {
+export const LG: StoryObj<TYPE_FC> = {
 	decorators: [
 		Story => (
 			<div className='text-lg'>
@@ -76,7 +102,7 @@ export const lg: StoryObj<TYPE_FC> = {
 		)
 	]
 }
-export const xl: StoryObj<TYPE_FC> = {
+export const XL: StoryObj<TYPE_FC> = {
 	decorators: [
 		Story => (
 			<div className='text-xl'>
