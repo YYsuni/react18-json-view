@@ -22,6 +22,7 @@ export default {
 			func: function () {
 				console.log('Hello World')
 			},
+			link: "https://github.com/YYsuni/react18-json-view",
 			Symbol: Symbol('JSON View'),
 			obj: {
 				k1: 123,

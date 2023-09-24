@@ -1,4 +1,4 @@
-import { useContext, useRef, useState, isValidElement } from 'react'
+import { useContext, useRef, useState, useEffect, isValidElement } from 'react'
 import { JsonViewContext } from './json-view'
 import {
 	customCopy,
@@ -58,6 +58,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 
 		const [editing, setEditing] = useState(false)
 		const [deleting, setDeleting] = useState(false)
+		const [displayValue, setDisplayValue] = useState<string>(String(node));
 		const valueRef = useRef<HTMLSpanElement>(null)
 
 		const edit = () => {
@@ -114,6 +115,22 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 			}
 		}
 
+		const makeStringClickable = (inputString: string) => {
+			const urlRegex = /(https?:\/\/[^\s]+)/g;
+			const replacedString = inputString.replace(urlRegex, (url) => {
+				return `<a href="${url}" target="_blank">${url}</a>`;
+			});
+			return replacedString;
+		};
+
+		useEffect(() => {
+			if (typeof node === 'string') {
+				const modifiedString = makeStringClickable(node);
+				setDisplayValue(modifiedString);
+			}
+		}, [node]);
+
+
 		const isEditing = editing || deleting
 
 		const Icons = (
@@ -160,8 +177,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 		}
 		if (deleting) className += ' json-view--deleting'
 
-		let displayValue = String(node)
-		if (type === 'bigint') displayValue += 'n'
+		if (type === 'bigint') setDisplayValue((v) => v += 'n')
 
 		if (type === 'string')
 			return (
@@ -183,7 +199,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, nam
 							onKeyDown={handleKeyDown}
 						/>
 					) : (
-						<span className={className}>"{displayValue}"</span>
+						<span className={className} dangerouslySetInnerHTML={{ __html: `"${displayValue}"` }}></span>
 					)}
 
 					{Icons}

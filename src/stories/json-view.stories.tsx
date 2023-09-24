@@ -32,6 +32,7 @@ export const Primary: StoryObj<TYPE_FC> = {
 			boolean: false,
 			null: null,
 			func: function () {},
+			link: "https://github.com/YYsuni/react18-json-view",
 			Symbol: Symbol('JSON View'),
 			obj: {
 				k1: 123,
