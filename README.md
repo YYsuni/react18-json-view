@@ -24,6 +24,9 @@ React function component for displaying javascript arrays and JSON objects. Supp
 ```bash
 npm i react18-json-view
 ```
+```bash
+npm i react18-json-view@canary
+```
 
 ## Usage
 ```tsx
