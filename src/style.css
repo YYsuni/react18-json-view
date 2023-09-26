@@ -46,7 +46,7 @@
 	opacity: 0.4;
 	font-size: 0.875em;
 	font-style: italic;
-	margin-left: 0.25em;
+	margin-left: 0.5em;
 }
 
 .json-view :is(.json-view--copy, .json-view--edit) {
