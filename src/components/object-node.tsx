@@ -212,7 +212,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 
 				<span>{']'}</span>
 
-				{fold && ifDisplay(displaySize, depth) && <span className='jv-size'>{objectSize(node)} Items</span>}
+				{fold && ifDisplay(displaySize, depth) && <span onClick={() => setFold(false)} className='jv-size'>{objectSize(node)} Items</span>}
 			</>
 		)
 	} else if (isPlainObject) {
@@ -244,7 +244,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 
 				<span>{'}'}</span>
 
-				{fold && ifDisplay(displaySize, depth) && <span className='jv-size'>{objectSize(node)} Items</span>}
+				{fold && ifDisplay(displaySize, depth) && <span onClick={() => setFold(false)} className='jv-size'>{objectSize(node)} Items</span>}
 			</>
 		)
 	}
