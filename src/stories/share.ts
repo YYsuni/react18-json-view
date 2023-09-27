@@ -83,5 +83,12 @@ export const argTypes = {
 	},
 	customizeNode: {
 		description: 'Highly customize every node.'
+	},
+	displayArrayKey: {
+		control: 'boolean',
+		description: 'Sets whether to display the array key or not.',
+		table: {
+			defaultValue: { summary: true }
+		}
 	}
 }

@@ -59,6 +59,7 @@ import 'react18-json-view/src/style.css'
 | `onDelete`                   | `function`                                                                | -            | `(params:{ value: any,indexOrName: string \| number,depth: number,src: any,parentType: 'object' \| 'array'}) => void`                                                                          |
 | `onEdit`                     | `function`                                                                | -            | `(params: { newValue: any, oldValue: any, depth: number, src: any, indexOrName: string \| number, parentType: 'object' \| 'array'}) => void`                                                   |
 | `customizeNode`              | `ReactElement`\|`ReactComponent`\|`Options`                               | -            | Highly customize every node.                                                                                                                                                                   |
+| `displayArrayKey`            | `boolean`                                                                 | `true`       | Whether to display the index of `Array` or not.                                                                                                                                                |
 
 ### Collapsed function
 ```ts
