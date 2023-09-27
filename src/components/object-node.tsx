@@ -19,7 +19,7 @@ interface Props {
 	customOptions?: CustomizeOptions
 }
 
-export default function ObjectNode({ node, depth, displayArrayKey = true, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
+export default function ObjectNode({ node, depth, displayArrayKey, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
 	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize } =
 		useContext(JsonViewContext)
 

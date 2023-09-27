@@ -2,7 +2,7 @@ import JsonNode from './json-node'
 import NameKey from './name-key'
 
 interface Props {
-	displayArrayKey: boolean
+	displayArrayKey?: boolean
 	indexOrName: number | string
 	value: any
 	depth: number

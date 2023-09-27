@@ -1,5 +1,5 @@
 interface Props {
-	displayArrayKey: boolean
+	displayArrayKey?: boolean
 	indexOrName: number | string
 	parent?: Record<string, any> | Array<any>
 	children: React.ReactNode
