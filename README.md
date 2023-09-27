@@ -160,6 +160,7 @@ react-json-view does not support React 18.
 - [ ] handle circle loop
 - [x] redesign docs
 - [x] truncate long strings
+- [ ] custom `stringify`
 
 
 * tree?
