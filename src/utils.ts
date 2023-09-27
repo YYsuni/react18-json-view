@@ -55,9 +55,11 @@ export function isCollapsed(
 	if (isObject(node) && size > collapseObjectsAfterLength) return true
 	return false
 }
-export function ifDisplay(displaySize: DisplaySize, depth: number) {
+export function ifDisplay(displaySize: DisplaySize, depth: number, fold: boolean) {
 	if (typeof displaySize === 'boolean') return displaySize
 	if (typeof displaySize === 'number' && depth > displaySize) return true
+	if (displaySize === 'collapsed' && fold) return true
+	if (displaySize === 'expanded' && !fold) return true
 
 	return false
 }

@@ -9,7 +9,7 @@ export declare type Collapsed =
 			size: number
 	  }) => boolean | void)
 
-export type DisplaySize = undefined | number | boolean
+export type DisplaySize = undefined | number | boolean | 'collapsed' | 'expanded'
 
 export declare type Editable =
 	| boolean

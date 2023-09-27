@@ -6,8 +6,8 @@ import JsonView from 'react18-json-view'
 import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
 
-type Option = '0' | '1' | '2' | '3' | 'true' | 'false' | 'function'
-const options: Option[] = ['true', 'false', '0', '1', '2', '3']
+type Option = '0' | '1' | '2' | '3' | 'true' | 'false' | 'collapsed' | 'expanded' | 'function'
+const options: Option[] = ['true', 'false', '0', '1', '2', '3', 'collapsed', 'expanded']
 
 const valueMap: Record<Option, any> = {
 	'0': 0,
@@ -16,6 +16,9 @@ const valueMap: Record<Option, any> = {
 	'3': 3,
 	true: true,
 	false: false,
+	collapsed: 'collapsed',
+	expanded: 'expanded',
+
 	function: (params: any) => {
 		if (params.indexOrName === 'arr') return true
 		if (params.depth > 3) return true

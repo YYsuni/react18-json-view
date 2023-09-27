@@ -47,6 +47,8 @@
 	font-size: 0.875em;
 	font-style: italic;
 	margin-left: 0.5em;
+	vertical-align: -5%;
+	line-height: 1;
 }
 
 .json-view :is(.json-view--copy, .json-view--edit) {

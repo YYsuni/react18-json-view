@@ -79,7 +79,7 @@ export const DisplaySize: StoryObj<TYPE_FC> = {
 				}
 			}
 		},
-		displaySize: 1
+		displaySize: 'collapsed'
 	}
 }
 

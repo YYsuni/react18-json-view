@@ -1,17 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import {
-	isObject,
-	customAdd,
-	customCopy,
-	customDelete,
-	editableAdd,
-	editableDelete,
-	isCollapsed,
-	stringifyForCopying,
-	objectSize,
-	ifDisplay
-} from '../utils'
+import { isObject, customAdd, customCopy, customDelete, editableAdd, editableDelete, isCollapsed, stringifyForCopying, objectSize, ifDisplay } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
 import NameValue from './name-value'
@@ -30,25 +19,12 @@ interface Props {
 }
 
 export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
-	const {
-		collapsed,
-		enableClipboard,
-		collapseObjectsAfterLength,
-		editable,
-		onDelete,
-		src,
-		onAdd,
-		onEdit,
-		onChange,
-		forceUpdate,
-		displaySize
-	} = useContext(JsonViewContext)
+	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize } =
+		useContext(JsonViewContext)
 
 	const isPlainObject = isObject(node)
 
-	const [fold, setFold] = useState(
-		isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions)
-	)
+	const [fold, setFold] = useState(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
 
 	useEffect(() => {
 		setFold(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
@@ -71,8 +47,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 					indexOrName: indexOrName,
 					parentType: isPlainObject ? 'object' : 'array'
 				})
-			if (onChange)
-				onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' })
+			if (onChange) onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' })
 			forceUpdate()
 		},
 		[node, onEdit, onChange, forceUpdate]
@@ -93,8 +68,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 	const deleteSelf = () => {
 		setDeleting(false)
 		if (_deleteSelf) _deleteSelf(indexOrName!)
-		if (onDelete)
-			onDelete({ value: node, depth, src, indexOrName: indexOrName!, parentType: isPlainObject ? 'object' : 'array' })
+		if (onDelete) onDelete({ value: node, depth, src, indexOrName: indexOrName!, parentType: isPlainObject ? 'object' : 'array' })
 		if (onChange)
 			onChange({
 				type: 'delete',
@@ -148,19 +122,15 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 		<>
 			{!fold && !isEditing && (
 				<span onClick={() => setFold(true)}>
-					{ifDisplay(displaySize, depth) && <span className='jv-size'>{objectSize(node)} Items</span>}
+					{ifDisplay(displaySize, depth, fold) && <span className='jv-size'>{objectSize(node)} Items</span>}
 
 					<AngleDownSVG className='jv-chevron' />
 				</span>
 			)}
 
-			{adding && isPlainObject && (
-				<input className='json-view--input' placeholder='property' ref={inputRef} onKeyDown={handleAddKeyDown} />
-			)}
+			{adding && isPlainObject && <input className='json-view--input' placeholder='property' ref={inputRef} onKeyDown={handleAddKeyDown} />}
 
-			{isEditing && (
-				<DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={adding ? add : deleteSelf} />
-			)}
+			{isEditing && <DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={adding ? add : deleteSelf} />}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
 			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && <CopyButton node={node} />}
@@ -212,7 +182,11 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 
 				<span>{']'}</span>
 
-				{fold && ifDisplay(displaySize, depth) && <span onClick={() => setFold(false)} className='jv-size'>{objectSize(node)} Items</span>}
+				{fold && ifDisplay(displaySize, depth, fold) && (
+					<span onClick={() => setFold(false)} className='jv-size'>
+						{objectSize(node)} Items
+					</span>
+				)}
 			</>
 		)
 	} else if (isPlainObject) {
@@ -244,7 +218,11 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 
 				<span>{'}'}</span>
 
-				{fold && ifDisplay(displaySize, depth) && <span onClick={() => setFold(false)} className='jv-size'>{objectSize(node)} Items</span>}
+				{fold && ifDisplay(displaySize, depth, fold) && (
+					<span onClick={() => setFold(false)} className='jv-size'>
+						{objectSize(node)} Items
+					</span>
+				)}
 			</>
 		)
 	}
