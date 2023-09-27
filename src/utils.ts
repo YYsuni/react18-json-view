@@ -9,6 +9,11 @@ export function objectSize(node: Record<string, any> | Array<any>) {
 }
 
 export function stringifyForCopying(node: any, space?: string | number | undefined) {
+	// if node contains only one string value, return it
+	if (isObject(node) && Object.keys(node).length === 1 && typeof node[Object.keys(node)[0]] === 'string') {
+		return node[Object.keys(node)[0]]
+	}
+
 	try {
 		return JSON.stringify(
 			node,
