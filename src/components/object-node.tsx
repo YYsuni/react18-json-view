@@ -13,13 +13,12 @@ import type { CustomizeOptions } from '../types'
 interface Props {
 	node: Record<string, any> | Array<any>
 	depth: number
-	displayArrayKey?: boolean
 	indexOrName?: number | string
 	deleteHandle?: (_: string | number) => void
 	customOptions?: CustomizeOptions
 }
 
-export default function ObjectNode({ node, depth, displayArrayKey, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
+export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
 	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize } =
 		useContext(JsonViewContext)
 
@@ -166,7 +165,6 @@ export default function ObjectNode({ node, depth, displayArrayKey, indexOrName, 
 						{node.map((n, i) => (
 							<NameValue
 								key={String(indexOrName) + String(i)}
-								displayArrayKey={displayArrayKey}
 								indexOrName={i}
 								value={n}
 								depth={depth}
@@ -203,7 +201,6 @@ export default function ObjectNode({ node, depth, displayArrayKey, indexOrName, 
 						{Object.entries(node).map(([name, value]) => (
 							<NameValue
 								key={String(indexOrName) + String(name)}
-								displayArrayKey={displayArrayKey}
 								indexOrName={name}
 								value={value}
 								depth={depth}

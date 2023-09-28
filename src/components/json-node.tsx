@@ -31,7 +31,7 @@ interface Props {
 }
 
 export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
-	const { displayArrayKey, collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode } =
+	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode } =
 		useContext(JsonViewContext)
 
 	let customReturn: ReturnType<CustomizeNode> | undefined
@@ -50,7 +50,6 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 			<ObjectNode
 				node={node}
 				depth={depth}
-				displayArrayKey={displayArrayKey}
 				indexOrName={indexOrName}
 				deleteHandle={_deleteHandle}
 				customOptions={typeof customReturn === 'object' ? (customReturn as CustomizeOptions) : undefined}

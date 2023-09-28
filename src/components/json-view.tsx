@@ -1,30 +1,11 @@
 import { createContext, useCallback, useState } from 'react'
 import JsonNode from './json-node'
-import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
+import type { Collapsed, CustomizeNode, DisplaySize, Editable, ViewMode } from '../types'
 
-type OnEdit = (params: {
-	newValue: any
-	oldValue: any
-	depth: number
-	src: any
-	indexOrName: string | number
-	parentType: 'object' | 'array'
-}) => void
-type OnDelete = (params: {
-	value: any
-	indexOrName: string | number
-	depth: number
-	src: any
-	parentType: 'object' | 'array'
-}) => void
+type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' }) => void
+type OnDelete = (params: { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
 type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
-type OnChange = (params: {
-	indexOrName: string | number
-	depth: number
-	src: any
-	parentType: 'object' | 'array'
-	type: 'add' | 'edit' | 'delete'
-}) => void
+type OnChange = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array'; type: 'add' | 'edit' | 'delete' }) => void
 
 export const JsonViewContext = createContext({
 	src: undefined as any,
@@ -49,7 +30,8 @@ export const JsonViewContext = createContext({
 
 	displaySize: undefined as DisplaySize,
 
-	displayArrayKey: true
+	displayArrayKey: true,
+	viewMode: 'viewer' as ViewMode
 })
 
 interface Props {
@@ -76,6 +58,7 @@ interface Props {
 
 	displaySize?: DisplaySize
 	displayArrayKey?: boolean
+	viewMode?: ViewMode
 }
 
 export default function JsonView({
@@ -102,7 +85,8 @@ export default function JsonView({
 
 	displaySize,
 
-	displayArrayKey = true
+	displayArrayKey = true,
+	viewMode = 'viewer'
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -131,10 +115,11 @@ export default function JsonView({
 				customizeNode,
 
 				displaySize,
-				displayArrayKey
+
+				displayArrayKey,
+				viewMode
 			}}>
-			<code
-				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '')}>
+			<code className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '')}>
 				<JsonNode node={src} depth={1} />
 			</code>
 		</JsonViewContext.Provider>

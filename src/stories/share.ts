@@ -56,8 +56,7 @@ export const argTypes = {
 		table: {
 			defaultValue: { summary: false }
 		},
-		description:
-			'When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete. Options is available.'
+		description: 'When set to true, you can add, edit, or delete the property, and the actions will trigger onAdd, onEdit, or onDelete. Options is available.'
 	},
 	onAdd: {
 		description: `(params: { indexOrName: string | number, depth: number, src: any; parentType: 'object' | 'array' }) => void`
@@ -89,6 +88,14 @@ export const argTypes = {
 		description: 'Sets whether to display the array key or not.',
 		table: {
 			defaultValue: { summary: true }
+		}
+	},
+	viewMode: {
+		control: 'select',
+		options: ['viewer', 'json'],
+		description: 'Sets the viewer mode to viewer or json. With json mode, commas are displayed.',
+		table: {
+			defaultValue: { summary: 'viewer' }
 		}
 	}
 }
