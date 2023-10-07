@@ -2,12 +2,7 @@ export declare type Collapsed =
 	| undefined
 	| number
 	| boolean
-	| ((params: {
-			node: Record<string, any> | Array<any>
-			indexOrName: number | string | undefined
-			depth: number
-			size: number
-	  }) => boolean | void)
+	| ((params: { node: Record<string, any> | Array<any>; indexOrName: number | string | undefined; depth: number; size: number }) => boolean | void)
 
 export type DisplaySize = undefined | number | boolean | 'collapsed' | 'expanded'
 
@@ -32,3 +27,5 @@ export declare type CustomizeNode = (params: {
 	indexOrName: number | string | undefined
 	depth: number
 }) => CustomizeOptions | React.FC | React.Component | React.ReactElement<any, any> | undefined
+
+export declare type ViewMode = 'viewer' | 'json'
