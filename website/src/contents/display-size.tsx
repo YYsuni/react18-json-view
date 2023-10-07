@@ -6,10 +6,10 @@ import JsonView from 'react18-json-view'
 import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
 
-type Option = '0' | '1' | '2' | '3' | 'true' | 'false' | 'collapsed' | 'expanded' | 'function'
+type Option = '0' | '1' | '2' | '3' | 'true' | 'false' | 'collapsed' | 'expanded'
 const options: Option[] = ['true', 'false', '0', '1', '2', '3', 'collapsed', 'expanded']
 
-const valueMap: Record<Option, any> = {
+const valueMap: Record<Option, number | boolean | 'collapsed' | 'expanded'> = {
 	'0': 0,
 	'1': 1,
 	'2': 2,
@@ -17,29 +17,13 @@ const valueMap: Record<Option, any> = {
 	true: true,
 	false: false,
 	collapsed: 'collapsed',
-	expanded: 'expanded',
-
-	function: (params: any) => {
-		if (params.indexOrName === 'arr') return true
-		if (params.depth > 3) return true
-		if (params.depth > 2 && params.size > 3) return true
-		if (params.node && typeof params.node === 'object' && params.node.nest === 'over') return true
-		return false
-	}
+	expanded: 'expanded'
 }
-
-const funcString = `(params) => {
-  if (params.indexOrName === 'arr') return true
-  if (params.depth > 3) return true
-  if (params.depth > 2 && params.size > 3) return true
-  if (params.node && typeof params.node === 'object' && params.node.nest === 'over') return true
-  return false
-}`
 
 export default function DisplaySize() {
 	const [selected, setSelected] = useState(options[0])
 
-	const code = `<JsonView src={json_object} displaySize={${selected === 'function' ? funcString : selected}} />`
+	const code = `<JsonView src={json_object} displaySize={${selected}} />`
 
 	const [copied, setCopied] = useState(false)
 
@@ -53,9 +37,7 @@ export default function DisplaySize() {
 
 	return (
 		<>
-			<h2 className='mt-20 text-lg font-medium'>
-				Display Size <span className=' opacity-40'>(canary)</span>
-			</h2>
+			<h2 className='mt-20 text-lg font-medium'>Display Size</h2>
 			<ul className='mt-3 flex select-none flex-wrap gap-1'>
 				{options.map(item => (
 					<li
