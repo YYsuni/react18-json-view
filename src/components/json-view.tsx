@@ -134,7 +134,7 @@ export default function JsonView({
 				displaySize
 			}}>
 			<code
-				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + className && (' '+ className)}
+				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? (' '+ className) : '')}
 				style={style}
 				>
 				<JsonNode node={src} depth={1} />

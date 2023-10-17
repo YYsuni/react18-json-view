@@ -2,6 +2,14 @@ export const argTypes = {
 	src: {
 		description: 'Array | Object'
 	},
+	className: {
+		control: 'text',
+		description: 'String'
+	},
+	style: {
+		control: 'object',
+		description: 'Object'
+	},
 	dark: {
 		control: 'boolean',
 		description: 'Boolean',
