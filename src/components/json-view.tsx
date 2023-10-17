@@ -72,7 +72,10 @@ interface Props {
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 
-	displaySize?: DisplaySize
+	displaySize?: DisplaySize,
+
+	style?: React.CSSProperties,
+	className?: string
 }
 
 export default function JsonView({
@@ -97,7 +100,10 @@ export default function JsonView({
 
 	customizeNode,
 
-	displaySize
+	displaySize,
+
+	style,
+	className
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -128,7 +134,9 @@ export default function JsonView({
 				displaySize
 			}}>
 			<code
-				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '')}>
+				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + className && (' '+ className)}
+				style={style}
+				>
 				<JsonNode node={src} depth={1} />
 			</code>
 		</JsonViewContext.Provider>
