@@ -1,6 +1,7 @@
 .json-view {
 	display: block;
 	color: #4d4d4d;
+	text-align: left;
 	--json-property: #009033;
 	--json-index: #676dff;
 	--json-number: #676dff;
@@ -87,6 +88,13 @@
 }
 .json-view .cursor-pointer {
 	cursor: pointer;
+}
+
+.json-view svg {
+	vertical-align: -10%;
+}
+.jv-size-chevron ~ svg {
+	vertical-align: -16%;
 }
 
 /* Themes */

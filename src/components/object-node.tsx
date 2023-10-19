@@ -121,7 +121,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 	const Icons = (
 		<>
 			{!fold && !isEditing && (
-				<span onClick={() => setFold(true)}>
+				<span onClick={() => setFold(true)} className='jv-size-chevron'>
 					{ifDisplay(displaySize, depth, fold) && <span className='jv-size'>{objectSize(node)} Items</span>}
 
 					<AngleDownSVG className='jv-chevron' />
