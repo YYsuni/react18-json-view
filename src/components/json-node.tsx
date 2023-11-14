@@ -20,6 +20,7 @@ import { ReactComponent as EditSVG } from '../svgs/edit.svg'
 import { ReactComponent as DeleteSVG } from '../svgs/trash.svg'
 import { ReactComponent as DoneSVG } from '../svgs/done.svg'
 import { ReactComponent as CancelSVG } from '../svgs/cancel.svg'
+import { ReactComponent as LinkSVG } from '../svgs/link.svg'
 import type { CustomizeNode, CustomizeOptions } from '../types'
 
 interface Props {
@@ -137,7 +138,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 
 				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && <CopyButton node={node} />}
 				{!isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn as CustomizeOptions | undefined) && (
-					<span className='json-view--copy'>♣︎</span>
+					<a href={node} target='_blank' className='json-view--link'>
+						<LinkSVG />
+					</a>
 				)}
 
 				{!isEditing && editableEdit(editable) && customEdit(customReturn as CustomizeOptions | undefined) && editHandle && (

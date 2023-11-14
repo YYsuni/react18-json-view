@@ -421,7 +421,7 @@ export const MatchesURL: StoryObj<TYPE_FC> = {
 	args: {
 		src: {
 			string: 'string',
-			longString: 'long string long string long string long string long string long string',
+			link: 'https://www.google.com/',
 			number: 123456,
 			boolean: false,
 			null: null,

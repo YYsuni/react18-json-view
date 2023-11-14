@@ -238,3 +238,25 @@ export const Editable_Options: StoryObj<TYPE_FC> = {
 		)
 	]
 }
+
+export const MatchesURL: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			link: 'https://www.google.com/',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
+			arr: ['string', 123456, false, null]
+		},
+		matchesURL: true,
+		editable: true
+	}
+}

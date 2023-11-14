@@ -52,7 +52,8 @@
 	line-height: 1;
 }
 
-.json-view :is(.json-view--copy, .json-view--edit) {
+.json-view :is(.json-view--copy, .json-view--edit),
+.json-view .json-view--link svg {
 	display: none;
 	width: 1em;
 	height: 1em;
@@ -76,7 +77,8 @@
 	text-decoration-line: line-through;
 }
 
-:is(.json-view:hover, .json-view--pair:hover) > :is(.json-view--copy, .json-view--edit) {
+:is(.json-view:hover, .json-view--pair:hover) > :is(.json-view--copy, .json-view--edit),
+:is(.json-view:hover, .json-view--pair:hover) > .json-view--link svg {
 	display: inline-block;
 }
 
