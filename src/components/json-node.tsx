@@ -10,7 +10,8 @@ import {
 	isReactComponent,
 	safeCall,
 	stringifyForCopying,
-	resolveEvalFailedNewValue
+	resolveEvalFailedNewValue,
+	customMatchesURL
 } from '../utils'
 import ObjectNode from './object-node'
 import LongString from './long-string'
@@ -31,8 +32,7 @@ interface Props {
 }
 
 export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
-	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode } =
-		useContext(JsonViewContext)
+	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode, matchesURL, urlRegExp } = useContext(JsonViewContext)
 
 	let customReturn: ReturnType<CustomizeNode> | undefined
 	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName }])
@@ -132,33 +132,26 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 
 		const Icons = (
 			<>
-				{isEditing && (
-					<DoneSVG
-						className='json-view--edit'
-						style={{ display: 'inline-block' }}
-						onClick={deleting ? deleteHandle : done}
-					/>
-				)}
+				{isEditing && <DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={deleting ? deleteHandle : done} />}
 				{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && (
-					<CopyButton node={node} />
+				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && <CopyButton node={node} />}
+				{!isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn as CustomizeOptions | undefined) && (
+					<span className='json-view--copy'>♣︎</span>
 				)}
-				{!isEditing &&
-					editableEdit(editable) &&
-					customEdit(customReturn as CustomizeOptions | undefined) &&
-					editHandle && <EditSVG className='json-view--edit' onClick={edit} />}
-				{!isEditing &&
-					editableDelete(editable) &&
-					customDelete(customReturn as CustomizeOptions | undefined) &&
-					_deleteHandle && <DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />}
+
+				{!isEditing && editableEdit(editable) && customEdit(customReturn as CustomizeOptions | undefined) && editHandle && (
+					<EditSVG className='json-view--edit' onClick={edit} />
+				)}
+				{!isEditing && editableDelete(editable) && customDelete(customReturn as CustomizeOptions | undefined) && _deleteHandle && (
+					<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
+				)}
 			</>
 		)
 
 		let className = 'json-view--string'
 
-		if (typeof (customReturn as CustomizeOptions)?.className === 'string')
-			className += ' ' + (customReturn as CustomizeOptions).className
+		if (typeof (customReturn as CustomizeOptions)?.className === 'string') className += ' ' + (customReturn as CustomizeOptions).className
 
 		switch (type) {
 			case 'number':

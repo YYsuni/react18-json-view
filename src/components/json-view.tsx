@@ -2,29 +2,12 @@ import { createContext, useCallback, useState } from 'react'
 import JsonNode from './json-node'
 import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
 
-type OnEdit = (params: {
-	newValue: any
-	oldValue: any
-	depth: number
-	src: any
-	indexOrName: string | number
-	parentType: 'object' | 'array'
-}) => void
-type OnDelete = (params: {
-	value: any
-	indexOrName: string | number
-	depth: number
-	src: any
-	parentType: 'object' | 'array'
-}) => void
+type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' }) => void
+type OnDelete = (params: { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
 type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
-type OnChange = (params: {
-	indexOrName: string | number
-	depth: number
-	src: any
-	parentType: 'object' | 'array'
-	type: 'add' | 'edit' | 'delete'
-}) => void
+type OnChange = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array'; type: 'add' | 'edit' | 'delete' }) => void
+
+export const defaultURLRegExp = /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/
 
 export const JsonViewContext = createContext({
 	src: undefined as any,
@@ -47,7 +30,10 @@ export const JsonViewContext = createContext({
 
 	customizeNode: undefined as CustomizeNode | undefined,
 
-	displaySize: undefined as DisplaySize
+	displaySize: undefined as DisplaySize,
+
+	matchesURL: false,
+	urlRegExp: defaultURLRegExp
 })
 
 interface Props {
@@ -72,10 +58,13 @@ interface Props {
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 
-	displaySize?: DisplaySize,
+	displaySize?: DisplaySize
 
-	style?: React.CSSProperties,
+	style?: React.CSSProperties
 	className?: string
+
+	matchesURL?: boolean
+	urlRegExp?: RegExp
 }
 
 export default function JsonView({
@@ -103,7 +92,10 @@ export default function JsonView({
 	displaySize,
 
 	style,
-	className
+	className,
+
+	matchesURL = false,
+	urlRegExp = defaultURLRegExp
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -131,12 +123,14 @@ export default function JsonView({
 
 				customizeNode,
 
-				displaySize
+				displaySize,
+
+				matchesURL,
+				urlRegExp
 			}}>
 			<code
-				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? (' '+ className) : '')}
-				style={style}
-				>
+				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}
+				style={style}>
 				<JsonNode node={src} depth={1} />
 			</code>
 		</JsonViewContext.Provider>

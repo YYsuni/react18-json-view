@@ -204,13 +204,7 @@ export const BigObject: StoryObj<TYPE_FC> = {
 
 export const Array: StoryObj<TYPE_FC> = {
 	args: {
-		src: [
-			'string',
-			123456,
-			false,
-			null,
-			{ string: 'string', number: 123456, boolean: false, null: null, Date: new Date(), Symbol: Symbol('JSON View') }
-		],
+		src: ['string', 123456, false, null, { string: 'string', number: 123456, boolean: false, null: null, Date: new Date(), Symbol: Symbol('JSON View') }],
 		collapsed: 1
 	}
 }
@@ -421,4 +415,25 @@ export const CustomizeNode: StoryObj<TYPE_FC> = {
 			</div>
 		)
 	]
+}
+
+export const MatchesURL: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			longString: 'long string long string long string long string long string long string',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
+			arr: ['string', 123456, false, null]
+		},
+		matchesURL: true
+	}
 }

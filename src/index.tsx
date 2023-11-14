@@ -1,4 +1,11 @@
-import JsonView from './components/json-view'
+import JsonView, { defaultURLRegExp } from './components/json-view'
 import { stringifyForCopying as stringify } from './utils'
 
-export { JsonView as default, stringify }
+import { ReactComponent as EditSVG } from './svgs/edit.svg'
+import { ReactComponent as DeleteSVG } from './svgs/trash.svg'
+import { ReactComponent as DoneSVG } from './svgs/done.svg'
+import { ReactComponent as CancelSVG } from './svgs/cancel.svg'
+import { ReactComponent as CopySVG } from './svgs/copy.svg'
+import { ReactComponent as CopiedSVG } from './svgs/copied.svg'
+
+export { JsonView as default, stringify, defaultURLRegExp, EditSVG, DeleteSVG, DoneSVG, CancelSVG, CopySVG, CopiedSVG }

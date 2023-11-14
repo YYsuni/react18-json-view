@@ -109,6 +109,9 @@ export function customDelete(customOptions?: CustomizeOptions) {
 export function customCopy(customOptions?: CustomizeOptions) {
 	return !customOptions || customOptions.enableClipboard === undefined || !!customOptions.enableClipboard
 }
+export function customMatchesURL(customOptions?: CustomizeOptions) {
+	return !customOptions || customOptions.matchesURL === undefined || !!customOptions.matchesURL
+}
 
 export function resolveEvalFailedNewValue(type: string, value: string) {
 	if (type === 'string') {
