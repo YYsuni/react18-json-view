@@ -150,7 +150,7 @@ react-json-view does not support React 18.
   - [ ] onSelect
 - [x] dark mode
 - [ ] custom icon
-  - [ ] export default icons
+  - [x] export default icons
 - [x] more usability/scenarios
 - [ ] gif guide
 - [x] more color themes(dark)
