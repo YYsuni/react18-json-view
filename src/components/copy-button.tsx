@@ -11,7 +11,7 @@ export default function CopyButton({ node }: { node: any }) {
 	) : (
 		<CopySVG
 			onClick={event => {
-				const value = stringifyForCopying(node)
+				const value = stringifyForCopying(node, 4)
 
 				event.stopPropagation()
 				navigator.clipboard.writeText(value)
