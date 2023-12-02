@@ -2,6 +2,7 @@ import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import JsonView from '../index'
 import { argTypes } from './share'
+import { stringifyForCopying } from '../utils'
 
 type TYPE_FC = typeof JsonView
 
@@ -437,3 +438,25 @@ export const MatchesURL: StoryObj<TYPE_FC> = {
 		matchesURL: true
 	}
 }
+
+export const CustomizeCopy: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			string: 'string',
+			link: 'https://www.google.com/',
+			number: 123456,
+			boolean: false,
+			null: null,
+			func: function () {},
+			Symbol: Symbol('JSON View'),
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
+			arr: ['string', 123456, false, null]
+		},
+		customizeCopy: (node: any) => stringifyForCopying(node, 4)
+	}
+}
+

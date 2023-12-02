@@ -97,5 +97,8 @@ export const argTypes = {
 	},
 	customizeNode: {
 		description: 'Highly customize every node.'
+	},
+	customizeCopy: {
+		description: 'Customize copy behavior.'
 	}
 }

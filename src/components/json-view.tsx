@@ -1,6 +1,7 @@
 import { createContext, useCallback, useState } from 'react'
 import JsonNode from './json-node'
 import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
+import { stringifyForCopying } from '../utils'
 
 type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' }) => void
 type OnDelete = (params: { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
@@ -29,6 +30,7 @@ export const JsonViewContext = createContext({
 	forceUpdate: () => {},
 
 	customizeNode: undefined as CustomizeNode | undefined,
+	customizeCopy: (() => {}) as (node: any) => any,
 
 	displaySize: undefined as DisplaySize,
 
@@ -54,6 +56,7 @@ interface Props {
 	onChange?: OnChange
 
 	customizeNode?: CustomizeNode
+	customizeCopy?: (node: any) => any
 
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
@@ -88,6 +91,7 @@ export default function JsonView({
 	theme = 'default',
 
 	customizeNode,
+	customizeCopy = stringifyForCopying,
 
 	displaySize,
 
@@ -122,6 +126,7 @@ export default function JsonView({
 				forceUpdate,
 
 				customizeNode,
+				customizeCopy,
 
 				displaySize,
 
