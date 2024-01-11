@@ -92,5 +92,5 @@
 	"bugs": {
 		"url": "https://github.com/YYsuni/react18-json-view/issues"
 	},
-	"sideEffects": false
+	"sideEffects": ["*.css"]
 }
