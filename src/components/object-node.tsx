@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
-import { isObject, customAdd, customCopy, customDelete, editableAdd, editableDelete, isCollapsed, stringifyForCopying, objectSize, ifDisplay } from '../utils'
+import { isObject, customAdd, customCopy, customDelete, editableAdd, editableDelete, isCollapsed, objectSize, ifDisplay } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
 import NameValue from './name-value'
@@ -9,6 +9,7 @@ import { ReactComponent as AddSVG } from '../svgs/add-square.svg'
 import { ReactComponent as DoneSVG } from '../svgs/done.svg'
 import { ReactComponent as CancelSVG } from '../svgs/cancel.svg'
 import type { CustomizeOptions } from '../types'
+import LargeArray from './large-array'
 
 interface Props {
 	node: Record<string, any> | Array<any>
@@ -19,6 +20,10 @@ interface Props {
 }
 
 export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
+	if (Array.isArray(node) && node.length > 100) {
+		return <LargeArray node={node} depth={depth} indexOrName={indexOrName} deleteHandle={_deleteSelf} customOptions={customOptions} />
+	}
+
 	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize } =
 		useContext(JsonViewContext)
 

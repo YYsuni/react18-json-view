@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta, StoryObj } from '@storybook/react'
 import JsonView from '../index'
-import { argTypes } from './share'
+import { argTypes, largeArray } from './share'
 import { stringifyForCopying } from '../utils'
 
 type TYPE_FC = typeof JsonView
@@ -281,5 +281,20 @@ export const CustomizeCopy: StoryObj<TYPE_FC> = {
 		},
 		editable: true,
 		customizeCopy: (node: any) => stringifyForCopying(node, 4)
+	}
+}
+
+export const LargeArray: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			},
+			largeArray: largeArray
+		},
+		editable: true,
+		displaySize: true
 	}
 }

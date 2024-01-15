@@ -102,7 +102,8 @@ export default function Collapsed() {
 									}
 								}
 							}
-						}
+						},
+						largeArr: new Array(Math.trunc(Math.random() * 1000) + 800).fill((Math.random() * 10).toFixed(2))
 					}}
 				/>
 			</div>
