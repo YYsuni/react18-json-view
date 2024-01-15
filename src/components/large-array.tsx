@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import LargeArrayNode from './large-array-node'
 import { JsonViewContext } from './json-view'
 import { CustomizeOptions } from '../types'
@@ -28,6 +28,9 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 		useContext(JsonViewContext)
 
 	const [fold, setFold] = useState(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
+	useEffect(() => {
+		setFold(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
+	}, [collapsed, collapseObjectsAfterLength])
 
 	// Delete self
 	const [deleting, setDeleting] = useState(false)
