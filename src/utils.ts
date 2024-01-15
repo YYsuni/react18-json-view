@@ -60,6 +60,30 @@ export function isCollapsed(
 	if (isObject(node) && size > collapseObjectsAfterLength) return true
 	return false
 }
+export function isCollapsed_largeArray(
+	node: Record<string, any> | Array<any>,
+	depth: number,
+	indexOrName: number | string | undefined,
+	collapsed: Collapsed,
+	collapseObjectsAfterLength: number,
+	customOptions?: CustomizeOptions
+): boolean {
+	if (customOptions && customOptions.collapsed !== undefined) return !!customOptions.collapsed
+	if (typeof collapsed === 'boolean') return collapsed
+	if (typeof collapsed === 'number' && depth > collapsed) return true
+
+	const size = Math.ceil(node.length / 100)
+
+	if (typeof collapsed === 'function') {
+		const result = safeCall(collapsed, [{ node, depth, indexOrName, size }])
+		if (typeof result === 'boolean') return result
+	}
+
+	if (Array.isArray(node) && size > collapseObjectsAfterLength) return true
+	if (isObject(node) && size > collapseObjectsAfterLength) return true
+	return false
+}
+
 export function ifDisplay(displaySize: DisplaySize, depth: number, fold: boolean) {
 	if (typeof displaySize === 'boolean') return displaySize
 	if (typeof displaySize === 'number' && depth > displaySize) return true

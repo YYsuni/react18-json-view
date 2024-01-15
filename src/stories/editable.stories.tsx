@@ -49,7 +49,7 @@ export default {
 			<div
 				className='flex h-full items-center justify-center overflow-auto p-8'
 				style={{ backgroundImage: 'linear-gradient(140deg, rgb(165, 142, 251), rgb(233, 191, 248))' }}>
-				<div className='max-w-[600px] rounded-xl bg-white/90 p-6 font-mono shadow backdrop-blur'>
+				<div className='max-w-[600px] shrink-0 rounded-xl bg-white/90 p-6 font-mono shadow backdrop-blur'>
 					<Story />
 				</div>
 			</div>
@@ -295,6 +295,7 @@ export const LargeArray: StoryObj<TYPE_FC> = {
 			largeArray: largeArray
 		},
 		editable: true,
-		displaySize: true
+		displaySize: true,
+		collapsed: 2
 	}
 }

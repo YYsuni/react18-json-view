@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import LargeArrayNode from './large-array-node'
 import { JsonViewContext } from './json-view'
 import { CustomizeOptions } from '../types'
-import { customAdd, customCopy, customDelete, editableAdd, editableDelete, ifDisplay, isCollapsed } from '../utils'
+import { customAdd, customCopy, customDelete, editableAdd, editableDelete, ifDisplay, isCollapsed, isCollapsed_largeArray } from '../utils'
 import { ReactComponent as AngleDownSVG } from '../svgs/angle-down.svg'
 import CopyButton from './copy-button'
 import { ReactComponent as DeleteSVG } from '../svgs/trash.svg'
@@ -27,9 +27,9 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize } =
 		useContext(JsonViewContext)
 
-	const [fold, setFold] = useState(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
+	const [fold, setFold] = useState(isCollapsed_largeArray(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
 	useEffect(() => {
-		setFold(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
+		setFold(isCollapsed_largeArray(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
 	}, [collapsed, collapseObjectsAfterLength])
 
 	// Delete self
