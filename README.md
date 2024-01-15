@@ -166,6 +166,7 @@ react-json-view does not support React 18.
 - [x] redesign docs
 - [x] truncate long strings
 - [ ] custom `stringify`
+- [x] slpit large array
 
 
 * tree?
