@@ -35,8 +35,11 @@ const funcString = `(params) => {
 
 export default function Collapsed() {
 	const [selected, setSelected] = useState(options[1])
+	const [ignoreLargeArray, setIgnoreLargeArray] = useState(false)
 
-	const code = `<JsonView src={json_object} collapsed={${selected === 'function' ? funcString : selected}} />`
+	const code = `<JsonView src={json_object} collapsed={${selected === 'function' ? funcString : selected}} ${
+		ignoreLargeArray ? 'ignoreLargeArray collapseObjectsAfterLength={Infinity}' : ''
+	} />`
 
 	const [copied, setCopied] = useState(false)
 
@@ -63,6 +66,14 @@ export default function Collapsed() {
 						{item}
 					</li>
 				))}
+				<li
+					className={clsx(
+						'min-w-[32px] cursor-pointer rounded-lg border px-2 py-1 text-center',
+						ignoreLargeArray && 'bg-slate-200 dark:bg-slate-600'
+					)}
+					onClick={() => setIgnoreLargeArray(s => !s)}>
+					ignoreLargeArray
+				</li>
 			</ul>
 
 			<div className='relative'>
@@ -79,33 +90,65 @@ export default function Collapsed() {
 			</div>
 
 			<div className='mt-2 rounded-lg border bg-white p-4 text-sm dark:bg-[#0E0832]'>
-				<JsonView
-					collapsed={valueMap[selected]}
-					src={{
-						string: 'string',
-						number: 123456,
-						boolean: false,
-						null: null,
-						func: function () {},
-						Symbol: Symbol('JSON View'),
-						obj: {
-							k1: 123,
-							k2: '123',
-							k3: false
-						},
-						arr: ['string', 123456, false, null],
-						nest: {
+				{ignoreLargeArray ? (
+					<JsonView
+						collapsed={valueMap[selected]}
+						src={{
+							string: 'string',
+							number: 123456,
+							boolean: false,
+							null: null,
+							func: function () {},
+							Symbol: Symbol('JSON View'),
+							obj: {
+								k1: 123,
+								k2: '123',
+								k3: false
+							},
+							arr: ['string', 123456, false, null],
 							nest: {
 								nest: {
 									nest: {
-										nest: 'over'
+										nest: {
+											nest: 'over'
+										}
 									}
 								}
-							}
-						},
-						largeArr: new Array(Math.trunc(Math.random() * 1000) + 800).fill((Math.random() * 10).toFixed(2))
-					}}
-				/>
+							},
+							largeArr: new Array(699).fill('123.456')
+						}}
+						ignoreLargeArray
+						collapseObjectsAfterLength={Infinity}
+					/>
+				) : (
+					<JsonView
+						collapsed={valueMap[selected]}
+						src={{
+							string: 'string',
+							number: 123456,
+							boolean: false,
+							null: null,
+							func: function () {},
+							Symbol: Symbol('JSON View'),
+							obj: {
+								k1: 123,
+								k2: '123',
+								k3: false
+							},
+							arr: ['string', 123456, false, null],
+							nest: {
+								nest: {
+									nest: {
+										nest: {
+											nest: 'over'
+										}
+									}
+								}
+							},
+							largeArr: new Array(699).fill('123.456')
+						}}
+					/>
+				)}
 			</div>
 		</>
 	)

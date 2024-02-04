@@ -35,7 +35,9 @@ export const JsonViewContext = createContext({
 	displaySize: undefined as DisplaySize,
 
 	matchesURL: false,
-	urlRegExp: defaultURLRegExp
+	urlRegExp: defaultURLRegExp,
+
+	ignoreLargeArray: false
 })
 
 interface Props {
@@ -68,6 +70,8 @@ interface Props {
 
 	matchesURL?: boolean
 	urlRegExp?: RegExp
+
+	ignoreLargeArray?: boolean
 }
 
 export default function JsonView({
@@ -99,7 +103,9 @@ export default function JsonView({
 	className,
 
 	matchesURL = false,
-	urlRegExp = defaultURLRegExp
+	urlRegExp = defaultURLRegExp,
+
+	ignoreLargeArray = false
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -131,7 +137,9 @@ export default function JsonView({
 				displaySize,
 
 				matchesURL,
-				urlRegExp
+				urlRegExp,
+
+				ignoreLargeArray
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}

@@ -20,12 +20,24 @@ interface Props {
 }
 
 export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
-	if (Array.isArray(node) && node.length > 100) {
+	const {
+		collapsed,
+		enableClipboard,
+		ignoreLargeArray,
+		collapseObjectsAfterLength,
+		editable,
+		onDelete,
+		src,
+		onAdd,
+		onEdit,
+		onChange,
+		forceUpdate,
+		displaySize
+	} = useContext(JsonViewContext)
+
+	if (!ignoreLargeArray && Array.isArray(node) && node.length > 100) {
 		return <LargeArray node={node} depth={depth} indexOrName={indexOrName} deleteHandle={_deleteSelf} customOptions={customOptions} />
 	}
-
-	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize } =
-		useContext(JsonViewContext)
 
 	const isPlainObject = isObject(node)
 
