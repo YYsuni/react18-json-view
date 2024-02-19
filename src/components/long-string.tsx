@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { JsonViewContext } from './json-view'
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, className, ctrlClick }, ref) => {
 	let { collapseStringMode, collapseStringsAfterLength } = useContext(JsonViewContext)
 	const [truncated, setTruncated] = useState(true)
+	const strRef = useRef<HTMLSpanElement>(null)
 
 	collapseStringsAfterLength = collapseStringsAfterLength > 0 ? collapseStringsAfterLength : 0
 	const str_show = str.replace(/\s+/g, ' ')
@@ -18,31 +19,35 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, className, c
 		if ((event.ctrlKey || event.metaKey) && ctrlClick) {
 			ctrlClick(event)
 		} else {
+			const selection = window.getSelection()
+
+			if (selection && selection.anchorOffset !== selection.focusOffset && selection.anchorNode?.parentElement === strRef.current) return
+
 			setTruncated(!truncated)
 		}
 	}
 
 	if (str.length <= collapseStringsAfterLength)
 		return (
-			<span className={className} onClick={ctrlClick}>
+			<span ref={strRef} className={className} onClick={ctrlClick}>
 				"{str}"
 			</span>
 		)
 
 	if (collapseStringMode === 'address')
 		return str.length <= 10 ? (
-			<span className={className} onClick={ctrlClick}>
+			<span ref={strRef} className={className} onClick={ctrlClick}>
 				"{str}"
 			</span>
 		) : (
-			<span onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
+			<span ref={strRef} onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
 				"{truncated ? str_show.slice(0, 6) + '...' + str_show.slice(-4) : str}"
 			</span>
 		)
 
 	if (collapseStringMode === 'directly') {
 		return (
-			<span onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
+			<span ref={strRef} onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
 				"{truncated ? str_show.slice(0, collapseStringsAfterLength) + '...' : str}"
 			</span>
 		)
@@ -74,13 +79,17 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, className, c
 		}
 
 		return (
-			<span onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
+			<span ref={strRef} onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
 				"{truncated ? str_collapsed + '...' : str}"
 			</span>
 		)
 	}
 
-	return <span className={className}>"{str}"</span>
+	return (
+		<span ref={strRef} className={className}>
+			"{str}"
+		</span>
+	)
 })
 
 export default LongString
