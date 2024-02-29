@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 import JsonNode from './json-node'
 import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
 import { stringifyForCopying } from '../utils'
@@ -116,6 +116,7 @@ export default function JsonView({
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
 	const [src, setSrc] = useState(_src)
+	useEffect(() => setSrc(_src), [_src])
 
 	return (
 		<JsonViewContext.Provider
