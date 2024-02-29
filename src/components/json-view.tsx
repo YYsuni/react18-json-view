@@ -3,10 +3,16 @@ import JsonNode from './json-node'
 import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
 import { stringifyForCopying } from '../utils'
 
-type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' }) => void
+type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' | null }) => void
 type OnDelete = (params: { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
 type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
-type OnChange = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array'; type: 'add' | 'edit' | 'delete' }) => void
+type OnChange = (params: {
+	indexOrName: string | number
+	depth: number
+	src: any
+	parentType: 'object' | 'array' | null
+	type: 'add' | 'edit' | 'delete'
+}) => void
 
 export const defaultURLRegExp = /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/
 
@@ -75,7 +81,7 @@ interface Props {
 }
 
 export default function JsonView({
-	src,
+	src: _src,
 
 	collapseStringsAfterLength = 99,
 	collapseStringMode = 'directly',
@@ -109,6 +115,7 @@ export default function JsonView({
 }: Props) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
+	const [src, setSrc] = useState(_src)
 
 	return (
 		<JsonViewContext.Provider
@@ -144,7 +151,23 @@ export default function JsonView({
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}
 				style={style}>
-				<JsonNode node={src} depth={1} />
+				<JsonNode
+					node={src}
+					depth={1}
+					editHandle={(indexOrName: number | string, newValue: any, oldValue: any) => {
+						setSrc(newValue)
+						if (onEdit)
+							onEdit({
+								newValue,
+								oldValue,
+								depth: 1,
+								src,
+								indexOrName: indexOrName,
+								parentType: null
+							})
+						if (onChange) onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentType: null })
+					}}
+				/>
 			</code>
 		</JsonViewContext.Provider>
 	)
