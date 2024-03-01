@@ -88,6 +88,7 @@ export default function Editable() {
 				<code className='mx-0.5 rounded bg-slate-200 px-1 py-0.5 font-mono text-sm dark:bg-slate-600'>{`([])`}</code>,
 				which will cause the result of eval to become a new object or array.
 			</p>
+			<p>canary: `{}` and `[]` will be auto convert to `({})`,`([])`</p>
 			<h3 className='mt-6 text-lg font-medium'>How the editor works</h3>
 			<p>
 				This component does not perform any cloning operations, so every step of the operation is carried out on the
