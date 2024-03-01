@@ -4,7 +4,7 @@ import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
 import { stringifyForCopying } from '../utils'
 
 type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' | null }) => void
-type OnDelete = (params: { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
+type OnDelete = (params: { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' | null }) => void
 type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
 type OnChange = (params: {
 	indexOrName: string | number
@@ -167,6 +167,25 @@ export default function JsonView({
 								parentType: null
 							})
 						if (onChange) onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentType: null })
+					}}
+					deleteHandle={() => {
+						setSrc(undefined)
+						if (onDelete)
+							onDelete({
+								value: src,
+								depth: 1,
+								src,
+								indexOrName: '',
+								parentType: null
+							})
+						if (onChange)
+							onChange({
+								depth: 1,
+								src,
+								indexOrName: '',
+								parentType: null,
+								type: 'delete'
+							})
 					}}
 				/>
 			</code>

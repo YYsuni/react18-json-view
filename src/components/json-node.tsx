@@ -72,9 +72,10 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 		}
 
 		const done = useCallback(() => {
-			const newValue = valueRef.current!.innerText
+			let newValue = valueRef.current!.innerText
 
 			try {
+				if (newValue === '{}' || newValue === '[]') newValue = `(${newValue})`
 				const evalValue = eval(newValue)
 
 				if (editHandle) editHandle(indexOrName!, evalValue, node)
