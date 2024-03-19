@@ -263,6 +263,19 @@ export const LongString: StoryObj<TYPE_FC> = {
 	}
 }
 
+export const CustomizeCollapseStringUI: StoryObj<TYPE_FC> = {
+	args: {
+		src: 'long string long string long string long string',
+		collapseStringsAfterLength: 20,
+		collapseStringMode: 'word',
+		customizeCollapseStringUI: () => (
+			<>
+				... <button style={{ margin: '0 10px', padding: '5px', borderRadius: '5px', fontSize: '12px', color: 'black', background: '#dcdcdc' }}>expand</button>
+			</>
+		)
+	}
+}
+
 export const Number: StoryObj<TYPE_FC> = {
 	args: {
 		src: 12312312321

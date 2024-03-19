@@ -8,12 +8,14 @@ interface Props {
 }
 
 const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, className, ctrlClick }, ref) => {
-	let { collapseStringMode, collapseStringsAfterLength } = useContext(JsonViewContext)
+	let { collapseStringMode, collapseStringsAfterLength, customizeCollapseStringUI } = useContext(JsonViewContext)
 	const [truncated, setTruncated] = useState(true)
 	const strRef = useRef<HTMLSpanElement>(null)
 
 	collapseStringsAfterLength = collapseStringsAfterLength > 0 ? collapseStringsAfterLength : 0
+
 	const str_show = str.replace(/\s+/g, ' ')
+	const collapseStringUI = customizeCollapseStringUI ? customizeCollapseStringUI(str_show, truncated) : '...'
 
 	const clickToTruncateOrEdit = (event: React.MouseEvent) => {
 		if ((event.ctrlKey || event.metaKey) && ctrlClick) {
@@ -41,14 +43,14 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, className, c
 			</span>
 		) : (
 			<span ref={strRef} onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
-				"{truncated ? str_show.slice(0, 6) + '...' + str_show.slice(-4) : str}"
+				"{truncated ? [str_show.slice(0, 6), collapseStringUI, str_show.slice(-4)] : str}"
 			</span>
 		)
 
 	if (collapseStringMode === 'directly') {
 		return (
 			<span ref={strRef} onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
-				"{truncated ? str_show.slice(0, collapseStringsAfterLength) + '...' : str}"
+				"{truncated ? [str_show.slice(0, collapseStringsAfterLength), collapseStringUI] : str}"
 			</span>
 		)
 	}
@@ -80,7 +82,7 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, className, c
 
 		return (
 			<span ref={strRef} onClick={clickToTruncateOrEdit} className={className + ' cursor-pointer'}>
-				"{truncated ? str_collapsed + '...' : str}"
+				"{truncated ? [str_collapsed, collapseStringUI] : str}"
 			</span>
 		)
 	}

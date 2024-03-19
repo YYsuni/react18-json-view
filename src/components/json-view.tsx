@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react'
 import JsonNode from './json-node'
-import type { Collapsed, CustomizeNode, DisplaySize, Editable } from '../types'
+import type { Collapsed, CustomizeCollapseStringUI, CustomizeNode, DisplaySize, Editable } from '../types'
 import { stringifyForCopying } from '../utils'
 
 type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' | null }) => void
@@ -21,6 +21,7 @@ export const JsonViewContext = createContext({
 
 	collapseStringsAfterLength: 99,
 	collapseStringMode: 'directly' as 'directly' | 'word' | 'address',
+	customizeCollapseStringUI: undefined as CustomizeCollapseStringUI | undefined,
 
 	collapseObjectsAfterLength: 20,
 	collapsed: false as Collapsed,
@@ -46,11 +47,12 @@ export const JsonViewContext = createContext({
 	ignoreLargeArray: false
 })
 
-interface Props {
+export interface JsonViewProps {
 	src: any
 
 	collapseStringsAfterLength?: number
 	collapseStringMode?: 'directly' | 'word' | 'address'
+	customizeCollapseStringUI?: CustomizeCollapseStringUI
 
 	collapseObjectsAfterLength?: number
 	collapsed?: Collapsed
@@ -85,6 +87,7 @@ export default function JsonView({
 
 	collapseStringsAfterLength = 99,
 	collapseStringMode = 'directly',
+	customizeCollapseStringUI,
 
 	collapseObjectsAfterLength = 99,
 	collapsed,
@@ -112,7 +115,7 @@ export default function JsonView({
 	urlRegExp = defaultURLRegExp,
 
 	ignoreLargeArray = false
-}: Props) {
+}: JsonViewProps) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
 	const [src, setSrc] = useState(_src)
@@ -125,6 +128,7 @@ export default function JsonView({
 
 				collapseStringsAfterLength,
 				collapseStringMode,
+				customizeCollapseStringUI,
 
 				collapseObjectsAfterLength,
 				collapsed,
