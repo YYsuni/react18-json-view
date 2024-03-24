@@ -15,7 +15,12 @@ const LongString = React.forwardRef<HTMLSpanElement, Props>(({ str, className, c
 	collapseStringsAfterLength = collapseStringsAfterLength > 0 ? collapseStringsAfterLength : 0
 
 	const str_show = str.replace(/\s+/g, ' ')
-	const collapseStringUI = customizeCollapseStringUI ? customizeCollapseStringUI(str_show, truncated) : '...'
+	const collapseStringUI =
+		typeof customizeCollapseStringUI === 'function'
+			? customizeCollapseStringUI(str_show, truncated)
+			: typeof customizeCollapseStringUI === 'string'
+			? customizeCollapseStringUI
+			: '...'
 
 	const clickToTruncateOrEdit = (event: React.MouseEvent) => {
 		if ((event.ctrlKey || event.metaKey) && ctrlClick) {

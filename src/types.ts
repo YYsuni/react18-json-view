@@ -29,4 +29,4 @@ export declare type CustomizeNode = (params: {
 	depth: number
 }) => CustomizeOptions | React.FC | React.Component | React.ReactElement<any, any> | undefined
 
-export type CustomizeCollapseStringUI = (str_show: string, truncated: boolean) => JSX.Element
+export type CustomizeCollapseStringUI = ((str_show: string, truncated: boolean) => JSX.Element | string) | string
