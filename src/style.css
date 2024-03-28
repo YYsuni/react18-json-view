@@ -87,6 +87,7 @@
 	outline: none;
 	border: none;
 	cursor: pointer;
+	color: inherit;
 }
 .json-view .cursor-pointer {
 	cursor: pointer;
