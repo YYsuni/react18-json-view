@@ -8,7 +8,20 @@ import url from '@rollup/plugin-url'
 const plugins = [
 	external(),
 	url(),
-	svgr({ dimensions: false }),
+	svgr({
+		svgoConfig: {
+			plugins: [
+				{
+					name: 'preset-default',
+					params: {
+						overrides: {
+							removeViewBox: false
+						}
+					}
+				}
+			]
+		}
+	}),
 	typescript({ useTsconfigDeclarationDir: true }),
 	nodeResolve(),
 	commonjs()
