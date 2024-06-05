@@ -4,27 +4,32 @@ import { ReactComponent as CopiedSVG } from '../svgs/copied.svg'
 import { JsonViewContext } from './json-view'
 
 export default function CopyButton({ node }: { node: any }) {
-	const { customizeCopy } = useContext(JsonViewContext)
+	const { customizeCopy, CopyComponent, CopidComponent } = useContext(JsonViewContext)
 
 	const [copied, setCopied] = useState(false)
 
+	const copyHandler = (event: React.MouseEvent) => {
+		event.stopPropagation()
+
+		const value = customizeCopy(node)
+
+		if (typeof value === 'string' && value) {
+			navigator.clipboard.writeText(value)
+		}
+
+		setCopied(true)
+		setTimeout(() => setCopied(false), 3000)
+	}
+
 	return copied ? (
-		<CopiedSVG className='json-view--copy' style={{ display: 'inline-block' }} />
+		typeof CopidComponent === 'function' ? (
+			<CopidComponent className='json-view--copy' style={{ display: 'inline-block' }} />
+		) : (
+			<CopiedSVG className='json-view--copy' style={{ display: 'inline-block' }} />
+		)
+	) : typeof CopyComponent === 'function' ? (
+		<CopyComponent onClick={copyHandler} className='json-view--copy' />
 	) : (
-		<CopySVG
-			onClick={event => {
-				event.stopPropagation()
-
-				const value = customizeCopy(node)
-
-				if (typeof value === 'string' && value) {
-					navigator.clipboard.writeText(value)
-				}
-
-				setCopied(true)
-				setTimeout(() => setCopied(false), 3000)
-			}}
-			className='json-view--copy'
-		/>
+		<CopySVG onClick={copyHandler} className='json-view--copy' />
 	)
 }

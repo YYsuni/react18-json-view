@@ -486,3 +486,26 @@ export const LargeArray: StoryObj<TYPE_FC> = {
 		displaySize: true
 	}
 }
+
+export const CustomIcons: StoryObj<TYPE_FC> = {
+	args: {
+		src: {
+			obj: {
+				k1: 123,
+				k2: '123',
+				k3: false
+			}
+		},
+		displaySize: true,
+		CopyComponent: ({ onClick, className }) => (
+			<svg onClick={onClick} className={className} height='512' viewBox='0 0 24 24' width='512' xmlns='http://www.w3.org/2000/svg' data-name='Layer 1'>
+				<path d='m15 20h-10a5.006 5.006 0 0 1 -5-5v-10a5.006 5.006 0 0 1 5-5h10a5.006 5.006 0 0 1 5 5v10a5.006 5.006 0 0 1 -5 5zm9-1v-13a1 1 0 0 0 -2 0v13a3 3 0 0 1 -3 3h-13a1 1 0 0 0 0 2h13a5.006 5.006 0 0 0 5-5z' />
+			</svg>
+		),
+		CopidComponent: ({ className, style }) => (
+			<svg className={className} style={style} xmlns='http://www.w3.org/2000/svg' version='1.1' x='0px' y='0px' viewBox='0 0 512 512' width='512' height='512'>
+				<path d='M405.333,0H106.667C47.786,0.071,0.071,47.786,0,106.667v298.667C0.071,464.214,47.786,511.93,106.667,512h298.667   C464.214,511.93,511.93,464.214,512,405.333V106.667C511.93,47.786,464.214,0.071,405.333,0z M426.667,172.352L229.248,369.771   c-16.659,16.666-43.674,16.671-60.34,0.012c-0.004-0.004-0.008-0.008-0.012-0.012l-83.563-83.541   c-8.348-8.348-8.348-21.882,0-30.229s21.882-8.348,30.229,0l83.541,83.541l197.44-197.419c8.348-8.318,21.858-8.294,30.176,0.053   C435.038,150.524,435.014,164.034,426.667,172.352z' />
+			</svg>
+		)
+	}
+}

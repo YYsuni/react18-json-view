@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useState } from 'react'
+import { ReactElement, createContext, useCallback, useEffect, useState } from 'react'
 import JsonNode from './json-node'
 import type { Collapsed, CustomizeCollapseStringUI, CustomizeNode, DisplaySize, Editable } from '../types'
 import { stringifyForCopying } from '../utils'
@@ -44,7 +44,16 @@ export const JsonViewContext = createContext({
 	matchesURL: false,
 	urlRegExp: defaultURLRegExp,
 
-	ignoreLargeArray: false
+	ignoreLargeArray: false,
+
+	CopyComponent: undefined as
+		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
+		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
+		| undefined,
+	CopidComponent: undefined as
+		| React.FC<{ className: string; style: React.CSSProperties }>
+		| React.Component<{ className: string; style: React.CSSProperties }>
+		| undefined
 })
 
 export interface JsonViewProps {
@@ -80,6 +89,11 @@ export interface JsonViewProps {
 	urlRegExp?: RegExp
 
 	ignoreLargeArray?: boolean
+
+	CopyComponent?:
+		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
+		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
+	CopidComponent?: React.FC<{ className: string; style: React.CSSProperties }> | React.Component<{ className: string; style: React.CSSProperties }>
 }
 
 export default function JsonView({
@@ -114,7 +128,10 @@ export default function JsonView({
 	matchesURL = false,
 	urlRegExp = defaultURLRegExp,
 
-	ignoreLargeArray = false
+	ignoreLargeArray = false,
+
+	CopyComponent,
+	CopidComponent
 }: JsonViewProps) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -151,7 +168,10 @@ export default function JsonView({
 				matchesURL,
 				urlRegExp,
 
-				ignoreLargeArray
+				ignoreLargeArray,
+
+				CopyComponent,
+				CopidComponent
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}
