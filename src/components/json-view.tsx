@@ -13,6 +13,12 @@ type OnChange = (params: {
 	parentType: 'object' | 'array' | null
 	type: 'add' | 'edit' | 'delete'
 }) => void
+type OnCollapse = (params: { 
+	isCollapsing: boolean; 
+	node: Record<string, any> | Array<any>;
+	indexOrName: string | number | undefined; 
+	depth: number 
+}) => void
 
 export const defaultURLRegExp = /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/
 
@@ -25,7 +31,7 @@ export const JsonViewContext = createContext({
 
 	collapseObjectsAfterLength: 20,
 	collapsed: false as Collapsed,
-
+	onCollapse: undefined as OnCollapse | undefined,
 	enableClipboard: true,
 
 	editable: false as Editable,
@@ -65,6 +71,7 @@ export interface JsonViewProps {
 
 	collapseObjectsAfterLength?: number
 	collapsed?: Collapsed
+	onCollapse?: OnCollapse
 
 	enableClipboard?: boolean
 
@@ -105,6 +112,7 @@ export default function JsonView({
 
 	collapseObjectsAfterLength = 99,
 	collapsed,
+	onCollapse,
 
 	enableClipboard = true,
 
@@ -149,6 +157,7 @@ export default function JsonView({
 
 				collapseObjectsAfterLength,
 				collapsed,
+				onCollapse,
 
 				enableClipboard,
 
