@@ -22,6 +22,7 @@ interface Props {
 export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
 	const {
 		collapsed,
+		onCollapse,
 		enableClipboard,
 		ignoreLargeArray,
 		collapseObjectsAfterLength,
@@ -41,7 +42,12 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 
 	const isPlainObject = isObject(node)
 
-	const [fold, setFold] = useState(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
+	const [fold, _setFold] = useState(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
+
+	const setFold = (value: boolean) => {
+		onCollapse?.({ isCollapsing: !value, node, depth, indexOrName })
+		_setFold(value)
+	}
 
 	useEffect(() => {
 		setFold(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
