@@ -13,12 +13,7 @@ type OnChange = (params: {
 	parentType: 'object' | 'array' | null
 	type: 'add' | 'edit' | 'delete'
 }) => void
-type OnCollapse = (params: { 
-	isCollapsing: boolean; 
-	node: Record<string, any> | Array<any>;
-	indexOrName: string | number | undefined; 
-	depth: number 
-}) => void
+type OnCollapse = (params: { isCollapsing: boolean; node: Record<string, any> | Array<any>; indexOrName: string | number | undefined; depth: number }) => void
 
 export const defaultURLRegExp = /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/
 
@@ -56,7 +51,7 @@ export const JsonViewContext = createContext({
 		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
 		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
 		| undefined,
-	CopidComponent: undefined as
+	CopiedComponent: undefined as
 		| React.FC<{ className: string; style: React.CSSProperties }>
 		| React.Component<{ className: string; style: React.CSSProperties }>
 		| undefined
@@ -100,7 +95,7 @@ export interface JsonViewProps {
 	CopyComponent?:
 		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
 		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
-	CopidComponent?: React.FC<{ className: string; style: React.CSSProperties }> | React.Component<{ className: string; style: React.CSSProperties }>
+	CopiedComponent?: React.FC<{ className: string; style: React.CSSProperties }> | React.Component<{ className: string; style: React.CSSProperties }>
 }
 
 export default function JsonView({
@@ -139,7 +134,7 @@ export default function JsonView({
 	ignoreLargeArray = false,
 
 	CopyComponent,
-	CopidComponent
+	CopiedComponent
 }: JsonViewProps) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -180,7 +175,7 @@ export default function JsonView({
 				ignoreLargeArray,
 
 				CopyComponent,
-				CopidComponent
+				CopiedComponent
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}

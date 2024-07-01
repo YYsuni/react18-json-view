@@ -4,7 +4,7 @@ import { ReactComponent as CopiedSVG } from '../svgs/copied.svg'
 import { JsonViewContext } from './json-view'
 
 export default function CopyButton({ node }: { node: any }) {
-	const { customizeCopy, CopyComponent, CopidComponent } = useContext(JsonViewContext)
+	const { customizeCopy, CopyComponent, CopiedComponent } = useContext(JsonViewContext)
 
 	const [copied, setCopied] = useState(false)
 
@@ -22,8 +22,8 @@ export default function CopyButton({ node }: { node: any }) {
 	}
 
 	return copied ? (
-		typeof CopidComponent === 'function' ? (
-			<CopidComponent className='json-view--copy' style={{ display: 'inline-block' }} />
+		typeof CopiedComponent === 'function' ? (
+			<CopiedComponent className='json-view--copy' style={{ display: 'inline-block' }} />
 		) : (
 			<CopiedSVG className='json-view--copy' style={{ display: 'inline-block' }} />
 		)
