@@ -54,7 +54,19 @@ export const JsonViewContext = createContext({
 	CopiedComponent: undefined as
 		| React.FC<{ className: string; style: React.CSSProperties }>
 		| React.Component<{ className: string; style: React.CSSProperties }>
-		| undefined
+		| undefined,
+	EditComponent: undefined as
+	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
+	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
+	| undefined,	
+	CancelComponent: undefined as
+	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+	| undefined,
+	DoneComponent: undefined as
+	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+	| undefined,
 })
 
 export interface JsonViewProps {
@@ -96,6 +108,18 @@ export interface JsonViewProps {
 		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
 		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
 	CopiedComponent?: React.FC<{ className: string; style: React.CSSProperties }> | React.Component<{ className: string; style: React.CSSProperties }>
+
+	EditComponent:
+	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
+	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
+
+	CancelComponent:
+	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+
+	DoneComponent:
+	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 }
 
 export default function JsonView({
@@ -134,7 +158,11 @@ export default function JsonView({
 	ignoreLargeArray = false,
 
 	CopyComponent,
-	CopiedComponent
+	CopiedComponent,
+
+	EditComponent,
+	CancelComponent,
+	DoneComponent
 }: JsonViewProps) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -175,7 +203,10 @@ export default function JsonView({
 				ignoreLargeArray,
 
 				CopyComponent,
-				CopiedComponent
+				CopiedComponent,
+				EditComponent,
+				CancelComponent,
+				DoneComponent
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}
