@@ -109,15 +109,15 @@ export interface JsonViewProps {
 		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
 	CopiedComponent?: React.FC<{ className: string; style: React.CSSProperties }> | React.Component<{ className: string; style: React.CSSProperties }>
 
-	EditComponent:
+	EditComponent?:
 	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
 
-	CancelComponent:
+	CancelComponent?:
 	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 
-	DoneComponent:
+	DoneComponent?:
 	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 }
