@@ -109,9 +109,10 @@ import 'react18-json-view/src/style.css'
 
 The editor uses `eval(<input-value>)`. While in edit mode, you can enter `({})` or `([])`, which will cause the result of eval to become a new object or array.
 
+> `{}` and `[]` will be auto convert to `({})`,`([])`
+
 > canary: `eval` => `JSON.parse`
 
-> `{}` and `[]` will be auto convert to `({})`,`([])`
 ### How the editor works
 
 This component does not perform any cloning operations, so every step of the operation is carried out on the original object. If cloning is required, please handle it yourself.
