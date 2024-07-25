@@ -33,6 +33,7 @@ interface Props {
 }
 
 export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
+	// prettier-ignore
 	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode, matchesURL, urlRegExp, EditComponent, DoneComponent, CancelComponent } = useContext(JsonViewContext)
 
 	let customReturn: ReturnType<CustomizeNode> | undefined
@@ -75,10 +76,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 			let newValue = valueRef.current!.innerText
 
 			try {
-				if (newValue === '{}' || newValue === '[]') newValue = `(${newValue})`
-				const evalValue = eval(newValue)
+				const parsedValue = JSON.parse(newValue)
 
-				if (editHandle) editHandle(indexOrName!, evalValue, node)
+				if (editHandle) editHandle(indexOrName!, parsedValue, node)
 			} catch (e) {
 				const trimmedStringValue = resolveEvalFailedNewValue(type, newValue)
 				if (editHandle) editHandle(indexOrName!, trimmedStringValue, node)
@@ -134,8 +134,18 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 
 		const Icons = (
 			<>
-				{isEditing && (typeof DoneComponent === 'function' ? <DoneComponent className='json-view--edit' style={{ display: 'inline-block' }} onClick={deleting ? deleteHandle : done} /> : <DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={deleting ? deleteHandle : done} />)}
-				{isEditing && (typeof CancelComponent === 'function' ? <CancelComponent className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} /> : <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />)}
+				{isEditing &&
+					(typeof DoneComponent === 'function' ? (
+						<DoneComponent className='json-view--edit' style={{ display: 'inline-block' }} onClick={deleting ? deleteHandle : done} />
+					) : (
+						<DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={deleting ? deleteHandle : done} />
+					))}
+				{isEditing &&
+					(typeof CancelComponent === 'function' ? (
+						<CancelComponent className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />
+					) : (
+						<CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />
+					))}
 
 				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && <CopyButton node={node} />}
 				{!isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn as CustomizeOptions | undefined) && (
@@ -144,9 +154,15 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 					</a>
 				)}
 
-				{!isEditing && editableEdit(editable) && customEdit(customReturn as CustomizeOptions | undefined) && editHandle && ( typeof EditComponent === 'function' ?
-					<EditComponent className='json-view--edit' onClick={edit} /> : <EditSVG className='json-view--edit' onClick={edit} />
-				)}
+				{!isEditing &&
+					editableEdit(editable) &&
+					customEdit(customReturn as CustomizeOptions | undefined) &&
+					editHandle &&
+					(typeof EditComponent === 'function' ? (
+						<EditComponent className='json-view--edit' onClick={edit} />
+					) : (
+						<EditSVG className='json-view--edit' onClick={edit} />
+					))}
 				{!isEditing && editableDelete(editable) && customDelete(customReturn as CustomizeOptions | undefined) && _deleteHandle && (
 					<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 				)}
