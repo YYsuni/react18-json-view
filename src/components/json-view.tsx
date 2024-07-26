@@ -41,6 +41,7 @@ export const JsonViewContext = createContext({
 	customizeCopy: (() => {}) as (node: any) => any,
 
 	displaySize: undefined as DisplaySize,
+	displayArrayIndex: true,
 
 	matchesURL: false,
 	urlRegExp: defaultURLRegExp,
@@ -95,6 +96,7 @@ export interface JsonViewProps {
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
 
 	displaySize?: DisplaySize
+	displayArrayIndex?: boolean
 
 	style?: React.CSSProperties
 	className?: string
@@ -148,6 +150,7 @@ export default function JsonView({
 	customizeCopy = stringifyForCopying,
 
 	displaySize,
+	displayArrayIndex = true,
 
 	style,
 	className,
@@ -196,6 +199,7 @@ export default function JsonView({
 				customizeCopy,
 
 				displaySize,
+				displayArrayIndex,
 
 				matchesURL,
 				urlRegExp,
