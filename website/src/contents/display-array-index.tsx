@@ -31,7 +31,7 @@ export default function DisplayArrayIndex() {
 
 	return (
 		<>
-			<h2 className='mt-20 text-lg font-medium'>Display Array Index</h2>
+			<h2 className='mt-20 text-lg font-medium'>Display Array Index (Canary)</h2>
 			<ul className='mt-3 flex select-none flex-wrap gap-1'>
 				{options.map(item => (
 					<li
