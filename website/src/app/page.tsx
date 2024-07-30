@@ -12,6 +12,7 @@ import Editable from '@/contents/editable'
 import Customization from '@/contents/customization'
 import CollapseString from '@/contents/collapse-string'
 import DisplaySize from '@/contents/display-size'
+import DisplayArrayIndex from '@/contents/display-array-index'
 
 export default function Home() {
 	return (
@@ -28,6 +29,7 @@ export default function Home() {
 			<CollapseString />
 
 			<DisplaySize />
+			<DisplayArrayIndex />
 
 			<Editable />
 
