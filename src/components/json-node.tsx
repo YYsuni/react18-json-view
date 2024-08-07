@@ -170,9 +170,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 		)
 
 		let className = 'json-view--string'
-
-		if (typeof (customReturn as CustomizeOptions)?.className === 'string') className += ' ' + (customReturn as CustomizeOptions).className
-
+		
 		switch (type) {
 			case 'number':
 			case 'bigint':
@@ -185,6 +183,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 				className = 'json-view--null'
 				break
 		}
+		
+		if (typeof (customReturn as CustomizeOptions)?.className === 'string') className += ' ' + (customReturn as CustomizeOptions).className
+
 		if (deleting) className += ' json-view--deleting'
 
 		let displayValue = String(node)
