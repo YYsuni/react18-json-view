@@ -33,7 +33,8 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 		onEdit,
 		onChange,
 		forceUpdate,
-		displaySize
+		displaySize,
+		CustomOperation,
 	} = useContext(JsonViewContext)
 
 	if (!ignoreLargeArray && Array.isArray(node) && node.length > 100) {
@@ -173,6 +174,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 			{!fold && !isEditing && editableDelete(editable) && customDelete(customOptions) && _deleteSelf && (
 				<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 			)}
+			{ typeof CustomOperation === 'function' ?  <CustomOperation node={node}  /> : null }
 		</>
 	)
 

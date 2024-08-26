@@ -24,7 +24,7 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 		nestCollapsedArray.push(node.slice(i, i + 100))
 	}
 
-	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize } =
+	const { collapsed, enableClipboard, collapseObjectsAfterLength, editable, onDelete, src, onAdd, CustomOperation, onChange, forceUpdate, displaySize } =
 		useContext(JsonViewContext)
 
 	const [fold, setFold] = useState(isCollapsed_largeArray(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions))
@@ -89,6 +89,7 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 			{!fold && !isEditing && editableDelete(editable) && customDelete(customOptions) && _deleteSelf && (
 				<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 			)}
+			{ typeof CustomOperation === 'function' ?  <CustomOperation node={node}  /> : null }
 		</>
 	)
 

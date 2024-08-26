@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex }: Props) {
-	const { enableClipboard, src, onEdit, onChange, forceUpdate, displaySize } = useContext(JsonViewContext)
+	const { enableClipboard, src, onEdit, onChange, forceUpdate, displaySize, CustomOperation } = useContext(JsonViewContext)
 
 	const [fold, setFold] = useState(true)
 
@@ -57,6 +57,7 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 			)}
 
 			{!fold && enableClipboard && customCopy(customOptions) && <CopyButton node={node} />}
+			{ typeof CustomOperation === 'function' ?  <CustomOperation node={node}  /> : null }
 		</>
 	)
 

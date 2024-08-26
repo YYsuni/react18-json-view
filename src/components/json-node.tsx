@@ -34,7 +34,7 @@ interface Props {
 
 export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
 	// prettier-ignore
-	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode, matchesURL, urlRegExp, EditComponent, DoneComponent, CancelComponent } = useContext(JsonViewContext)
+	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode, matchesURL, urlRegExp, EditComponent, DoneComponent, CancelComponent, CustomOperation } = useContext(JsonViewContext)
 
 	let customReturn: ReturnType<CustomizeNode> | undefined
 	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName }])
@@ -124,14 +124,12 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 		)
 
 		const isEditing = editing || deleting
-
 		const ctrlClick =
 			!isEditing && editableEdit(editable) && customEdit(customReturn as CustomizeOptions | undefined) && editHandle
 				? (event: React.MouseEvent) => {
 						if (event.ctrlKey || event.metaKey) edit()
 				  }
 				: undefined
-
 		const Icons = (
 			<>
 				{isEditing &&
@@ -166,6 +164,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 				{!isEditing && editableDelete(editable) && customDelete(customReturn as CustomizeOptions | undefined) && _deleteHandle && (
 					<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 				)}
+				{ typeof CustomOperation === 'function' ?  <CustomOperation node={node}  /> : null }
 			</>
 		)
 
