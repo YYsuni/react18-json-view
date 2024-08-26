@@ -68,6 +68,10 @@ export const JsonViewContext = createContext({
 	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 	| undefined,
+	CustomOperation: undefined as
+	| React.FC<{ node: any }>
+	| React.Component<{ node: any }>
+	| undefined,
 })
 
 export interface JsonViewProps {
@@ -122,6 +126,10 @@ export interface JsonViewProps {
 	DoneComponent?:
 	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+
+	CustomOperation?:
+	| React.FC<{ node: any }>
+	| React.Component<{ node: any }>
 }
 
 export default function JsonView({
@@ -165,13 +173,13 @@ export default function JsonView({
 
 	EditComponent,
 	CancelComponent,
-	DoneComponent
+	DoneComponent,
+	CustomOperation,
 }: JsonViewProps) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
 	const [src, setSrc] = useState(_src)
 	useEffect(() => setSrc(_src), [_src])
-
 	return (
 		<JsonViewContext.Provider
 			value={{
@@ -210,7 +218,8 @@ export default function JsonView({
 				CopiedComponent,
 				EditComponent,
 				CancelComponent,
-				DoneComponent
+				DoneComponent,
+				CustomOperation,
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}
