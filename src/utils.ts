@@ -1,4 +1,5 @@
 import type { Collapsed, CustomizeOptions, DisplaySize, Editable } from './types'
+import copy from 'copy-to-clipboard'
 
 export function isObject(node: any): node is Record<string, any> {
 	return Object.prototype.toString.call(node) === '[object Object]'
@@ -34,6 +35,14 @@ export function stringifyForCopying(node: any, space?: string | number | undefin
 		)
 	} catch (error: any) {
 		return `${error.name}: ${error.message}` || 'JSON.stringify failed'
+	}
+}
+
+export async function writeClipboard(value: string) {
+	try {
+		await navigator.clipboard.writeText(value)
+	} catch (err) {
+		copy(value)
 	}
 }
 

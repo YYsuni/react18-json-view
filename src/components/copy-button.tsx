@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { ReactComponent as CopySVG } from '../svgs/copy.svg'
 import { ReactComponent as CopiedSVG } from '../svgs/copied.svg'
 import { JsonViewContext } from './json-view'
+import { writeClipboard } from 'src/utils'
 
 export default function CopyButton({ node }: { node: any }) {
 	const { customizeCopy, CopyComponent, CopiedComponent } = useContext(JsonViewContext)
@@ -14,7 +15,7 @@ export default function CopyButton({ node }: { node: any }) {
 		const value = customizeCopy(node)
 
 		if (typeof value === 'string' && value) {
-			navigator.clipboard.writeText(value)
+			writeClipboard(value)
 		}
 
 		setCopied(true)
