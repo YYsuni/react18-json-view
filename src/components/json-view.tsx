@@ -5,11 +5,12 @@ import { stringifyForCopying } from '../utils'
 
 type OnEdit = (params: { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' | null }) => void
 type OnDelete = (params: { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' | null }) => void
-type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }) => void
+type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array', parentPath: any[] }) => void
 type OnChange = (params: {
 	indexOrName: string | number
 	depth: number
 	src: any
+	parentPath: any[]
 	parentType: 'object' | 'array' | null
 	type: 'add' | 'edit' | 'delete'
 }) => void
@@ -59,7 +60,7 @@ export const JsonViewContext = createContext({
 	EditComponent: undefined as
 	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string }>
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string }>
-	| undefined,	
+	| undefined,
 	CancelComponent: undefined as
 	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
@@ -225,6 +226,7 @@ export default function JsonView({
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}
 				style={style}>
 				<JsonNode
+					parentPath={[]}
 					node={src}
 					depth={1}
 					editHandle={(indexOrName: number | string, newValue: any, oldValue: any) => {
@@ -238,7 +240,7 @@ export default function JsonView({
 								indexOrName: indexOrName,
 								parentType: null
 							})
-						if (onChange) onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentType: null })
+						if (onChange) onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentPath: [], parentType: null })
 					}}
 					deleteHandle={() => {
 						setSrc(undefined)
@@ -255,6 +257,7 @@ export default function JsonView({
 								depth: 1,
 								src,
 								indexOrName: '',
+								parentPath: [],
 								parentType: null,
 								type: 'delete'
 							})

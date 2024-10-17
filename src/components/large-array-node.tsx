@@ -10,13 +10,14 @@ interface Props {
 	originNode: Array<any>
 	node: Array<any>
 	depth: number
+	parentPath: any[]
 	index: number
 	deleteHandle?: (_: string | number) => void
 	customOptions?: CustomizeOptions
 	startIndex: number
 }
 
-export default function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex }: Props) {
+export default function LargeArrayNode({ originNode, parentPath, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex }: Props) {
 	const { enableClipboard, src, onEdit, onChange, forceUpdate, displaySize, CustomOperation } = useContext(JsonViewContext)
 
 	const [fold, setFold] = useState(true)
@@ -34,7 +35,7 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 					indexOrName,
 					parentType: 'array'
 				})
-			if (onChange) onChange({ type: 'edit', depth, src, indexOrName, parentType: 'array' })
+			if (onChange) onChange({ type: 'edit', depth, src, indexOrName, parentPath, parentType: 'array' })
 			forceUpdate()
 		},
 		[node, onEdit, onChange, forceUpdate]
@@ -71,6 +72,7 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 				<div className='jv-indent'>
 					{node.map((n, i) => (
 						<NameValue
+							parentPath={parentPath}
 							key={String(index) + String(i)}
 							indexOrName={i + startIndex}
 							value={n}

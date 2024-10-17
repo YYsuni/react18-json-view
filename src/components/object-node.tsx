@@ -14,12 +14,13 @@ import LargeArray from './large-array'
 interface Props {
 	node: Record<string, any> | Array<any>
 	depth: number
+	parentPath: any[]
 	indexOrName?: number | string
 	deleteHandle?: (_: string | number) => void
 	customOptions?: CustomizeOptions
 }
 
-export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
+export default function ObjectNode({ node, depth, parentPath, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
 	const {
 		collapsed,
 		onCollapse,
@@ -38,7 +39,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 	} = useContext(JsonViewContext)
 
 	if (!ignoreLargeArray && Array.isArray(node) && node.length > 100) {
-		return <LargeArray node={node} depth={depth} indexOrName={indexOrName} deleteHandle={_deleteSelf} customOptions={customOptions} />
+		return <LargeArray parentPath={parentPath} node={node} depth={depth} indexOrName={indexOrName} deleteHandle={_deleteSelf} customOptions={customOptions} />
 	}
 
 	const isPlainObject = isObject(node)
@@ -71,7 +72,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 					indexOrName: indexOrName,
 					parentType: isPlainObject ? 'object' : 'array'
 				})
-			if (onChange) onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' })
+			if (onChange) onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentPath, parentType: isPlainObject ? 'object' : 'array' })
 			forceUpdate()
 		},
 		[node, onEdit, onChange, forceUpdate]
@@ -99,6 +100,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 				depth,
 				src,
 				indexOrName: indexOrName!,
+				parentPath,
 				parentType: isPlainObject ? 'object' : 'array'
 			})
 	}
@@ -116,14 +118,14 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 				if (inputRef.current) inputRef.current.value = ''
 				setAdding(false)
 
-				if (onAdd) onAdd({ indexOrName: inputName, depth, src, parentType: 'object' })
-				if (onChange) onChange({ type: 'add', indexOrName: inputName, depth, src, parentType: 'object' })
+				if (onAdd) onAdd({ indexOrName: inputName, depth, src, parentType: 'object', parentPath })
+				if (onChange) onChange({ type: 'add', indexOrName: inputName, depth, src, parentPath, parentType: 'object' })
 			}
 		} else if (Array.isArray(node)) {
 			const arr = node as unknown as any[]
 			arr.push(null)
-			if (onAdd) onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array' })
-			if (onChange) onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array' })
+			if (onAdd) onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath })
+			if (onChange) onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentPath, parentType: 'array' })
 		}
 		forceUpdate()
 	}
@@ -189,6 +191,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 					<div className='jv-indent'>
 						{node.map((n, i) => (
 							<NameValue
+								parentPath={parentPath}
 								key={String(indexOrName) + String(i)}
 								indexOrName={i}
 								value={n}
@@ -225,6 +228,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 					<div className='jv-indent'>
 						{Object.entries(node).map(([name, value]) => (
 							<NameValue
+								parentPath={parentPath}
 								key={String(indexOrName) + String(name)}
 								indexOrName={name}
 								value={value}

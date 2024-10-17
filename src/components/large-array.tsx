@@ -13,12 +13,13 @@ import { ReactComponent as CancelSVG } from '../svgs/cancel.svg'
 interface Props {
 	node: Array<any>
 	depth: number
+	parentPath: any[]
 	indexOrName?: number | string
 	deleteHandle?: (_: string | number) => void
 	customOptions?: CustomizeOptions
 }
 
-export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, customOptions }: Props) {
+export default function LargeArray({ node, parentPath, depth, deleteHandle: _deleteSelf, indexOrName, customOptions }: Props) {
 	const nestCollapsedArray: any[] = []
 	for (let i = 0; i < node.length; i += 100) {
 		nestCollapsedArray.push(node.slice(i, i + 100))
@@ -44,6 +45,7 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 				depth,
 				src,
 				indexOrName: indexOrName!,
+				parentPath,
 				parentType: 'array'
 			})
 	}
@@ -53,8 +55,8 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 	const add = () => {
 		const arr = node as unknown as any[]
 		arr.push(null)
-		if (onAdd) onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array' })
-		if (onChange) onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array' })
+		if (onAdd) onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath })
+		if (onChange) onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentPath, parentType: 'array' })
 		forceUpdate()
 	}
 
@@ -102,7 +104,7 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 			{!fold ? (
 				<div className='jv-indent'>
 					{nestCollapsedArray.map((item, index) => (
-						<LargeArrayNode key={String(indexOrName) + String(index)} originNode={node} node={item} depth={depth} index={index} startIndex={index * 100} />
+						<LargeArrayNode parentPath={parentPath} key={String(indexOrName) + String(index)} originNode={node} node={item} depth={depth} index={index} startIndex={index * 100} />
 					))}
 				</div>
 			) : (
