@@ -24,6 +24,7 @@ export declare type CustomizeOptions = {
 	className?: string
 }
 export declare type CustomizeNode = (params: {
+	parentPath: any[]
 	node: any
 	indexOrName: number | string | undefined
 	depth: number

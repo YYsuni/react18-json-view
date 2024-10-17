@@ -26,18 +26,21 @@ import type { CustomizeNode, CustomizeOptions } from '../types'
 interface Props {
 	node: any
 	depth: number
+	parentPath: any[]
 	deleteHandle?: (indexOrName: string | number) => void
 	editHandle?: (indexOrName: string | number, newValue: any, oldValue: any) => void
 	indexOrName?: number | string
 	parent?: Record<string, any> | Array<any>
 }
 
-export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
+export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, parentPath, indexOrName, parent, editHandle }: Props) {
 	// prettier-ignore
 	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode, matchesURL, urlRegExp, EditComponent, DoneComponent, CancelComponent, CustomOperation } = useContext(JsonViewContext)
 
-	let customReturn: ReturnType<CustomizeNode> | undefined
-	if (typeof customizeNode === 'function') customReturn = safeCall(customizeNode, [{ node, depth, indexOrName }])
+	const customReturn: ReturnType<CustomizeNode> | undefined = useMemo(() => {
+		if (typeof customizeNode === 'function') return safeCall(customizeNode, [{ parentPath, node, depth, indexOrName }])
+		return undefined
+	}, []);
 
 	if (customReturn) {
 		if (isValidElement(customReturn)) return customReturn
@@ -50,6 +53,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 	if (Array.isArray(node) || isObject(node)) {
 		return (
 			<ObjectNode
+				parentPath={parentPath}
 				node={node}
 				depth={depth}
 				indexOrName={indexOrName}
@@ -106,6 +110,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 					depth,
 					src,
 					indexOrName: indexOrName!,
+					parentPath: parentPath,
 					parentType: Array.isArray(parent) ? 'array' : 'object',
 					type: 'delete'
 				})
@@ -169,7 +174,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 		)
 
 		let className = 'json-view--string'
-		
+
 		switch (type) {
 			case 'number':
 			case 'bigint':
@@ -182,7 +187,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 				className = 'json-view--null'
 				break
 		}
-		
+
 		if (typeof (customReturn as CustomizeOptions)?.className === 'string') className += ' ' + (customReturn as CustomizeOptions).className
 
 		if (deleting) className += ' json-view--deleting'
