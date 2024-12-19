@@ -89,6 +89,9 @@ import 'react18-json-view/src/style.css'
   delete?: boolean
 }
 ```
+
+> canary: onEdit, OnDelete, onAdd and OnChange add `parentPath` field, allow us to correctly indicate which field in the JSON is being edited.
+
 ### CustomizeNode
 ```ts
 (params: { node: any; indexOrName: number | string | undefined; depth: number }) =>
