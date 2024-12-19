@@ -8,11 +8,12 @@ interface Props {
 	value: any
 	depth: number
 	parent?: Record<string, any> | Array<any>
-	deleteHandle: (indexOrName: string | number) => void
-	editHandle: (indexOrName: string | number, newValue: any, oldValue: any) => void
+	parentPath: string[]
+	deleteHandle: (indexOrName: string | number, parentPath: string[]) => void
+	editHandle: (indexOrName: string | number, newValue: any, oldValue: any, parentPath: string[]) => void
 }
 
-export default function NameValue({ indexOrName, value, depth, parent, deleteHandle, editHandle }: Props) {
+export default function NameValue({ indexOrName, value, depth, parent, deleteHandle, editHandle, parentPath }: Props) {
 	const { displayArrayIndex } = useContext(JsonViewContext)
 	const isArray = Array.isArray(parent)
 
@@ -25,7 +26,15 @@ export default function NameValue({ indexOrName, value, depth, parent, deleteHan
 			) : (
 				<></>
 			)}
-			<JsonNode node={value} depth={depth + 1} deleteHandle={deleteHandle} editHandle={editHandle} parent={parent} indexOrName={indexOrName} />
+			<JsonNode
+				node={value}
+				depth={depth + 1}
+				deleteHandle={(indexOrName, parentPath) => deleteHandle(indexOrName, parentPath)}
+				editHandle={(indexOrName, newValue, oldValue, parentPath) => editHandle(indexOrName, newValue, oldValue, parentPath)}
+				parent={parent}
+				indexOrName={indexOrName}
+				parentPath={parentPath}
+			/>
 		</div>
 	)
 }

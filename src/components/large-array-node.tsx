@@ -11,12 +11,13 @@ interface Props {
 	node: Array<any>
 	depth: number
 	index: number
-	deleteHandle?: (_: string | number) => void
+	deleteHandle?: (_: string | number, currentPath: string[]) => void
 	customOptions?: CustomizeOptions
 	startIndex: number
+	parentPath: string[]
 }
 
-export default function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex }: Props) {
+export default function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex, parentPath }: Props) {
 	const { enableClipboard, src, onEdit, onChange, forceUpdate, displaySize, CustomOperation } = useContext(JsonViewContext)
 
 	const [fold, setFold] = useState(true)
@@ -32,9 +33,10 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 					depth,
 					src,
 					indexOrName,
-					parentType: 'array'
+					parentType: 'array',
+					parentPath
 				})
-			if (onChange) onChange({ type: 'edit', depth, src, indexOrName, parentType: 'array' })
+			if (onChange) onChange({ type: 'edit', depth, src, indexOrName, parentType: 'array', parentPath })
 			forceUpdate()
 		},
 		[node, onEdit, onChange, forceUpdate]
@@ -43,6 +45,7 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 	// Delete property
 	const deleteHandle = (index: number | string) => {
 		originNode.splice(index as number, 1)
+		if (_deleteSelf) _deleteSelf(index, parentPath)
 		forceUpdate()
 	}
 
@@ -57,7 +60,7 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 			)}
 
 			{!fold && enableClipboard && customCopy(customOptions) && <CopyButton node={node} />}
-			{ typeof CustomOperation === 'function' ?  <CustomOperation node={node}  /> : null }
+			{typeof CustomOperation === 'function' ? <CustomOperation node={node} /> : null}
 		</>
 	)
 
@@ -78,6 +81,7 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 							parent={node}
 							deleteHandle={deleteHandle}
 							editHandle={editHandle}
+							parentPath={parentPath}
 						/>
 					))}
 				</div>
@@ -88,12 +92,6 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 			)}
 
 			<span>{']'}</span>
-
-			{/* {fold && ifDisplay(displaySize, depth, fold) && (
-				<span onClick={() => setFold(false)} className='jv-size'>
-					{objectSize(node)} Items
-				</span>
-			)} */}
 		</div>
 	)
 }
