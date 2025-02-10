@@ -149,7 +149,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 						<CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />
 					))}
 
-				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && <CopyButton node={node} />}
+				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && (
+					<CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath }} />
+				)}
 				{!isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn as CustomizeOptions | undefined) && (
 					<a href={node} target='_blank' className='json-view--link'>
 						<LinkSVG />

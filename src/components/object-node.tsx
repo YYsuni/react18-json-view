@@ -162,7 +162,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 			{isEditing && <DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={adding ? add : deleteSelf} />}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && <CopyButton node={node} />}
+			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && <CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath }} />}
 			{!fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (
 				<AddSVG
 					className='json-view--edit'

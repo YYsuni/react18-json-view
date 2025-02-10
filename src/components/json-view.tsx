@@ -1,6 +1,6 @@
 import { ReactElement, createContext, useCallback, useEffect, useState } from 'react'
 import JsonNode from './json-node'
-import type { Collapsed, CustomizeCollapseStringUI, CustomizeNode, DisplaySize, Editable } from '../types'
+import type { Collapsed, CustomizeCollapseStringUI, CustomizeNode, DisplaySize, Editable, NodeMeta } from '../types'
 import { stringifyForCopying } from '../utils'
 
 type OnEdit = (params: {
@@ -54,7 +54,7 @@ export const JsonViewContext = createContext({
 	forceUpdate: () => {},
 
 	customizeNode: undefined as CustomizeNode | undefined,
-	customizeCopy: (() => {}) as (node: any) => any,
+	customizeCopy: (() => {}) as (node: any, nodeMeta?: NodeMeta) => any,
 
 	displaySize: undefined as DisplaySize,
 	displayArrayIndex: true,
@@ -107,7 +107,7 @@ export interface JsonViewProps {
 	onChange?: OnChange
 
 	customizeNode?: CustomizeNode
-	customizeCopy?: (node: any) => any
+	customizeCopy?: (node: any, nodeMeta?: NodeMeta) => any
 
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
@@ -166,7 +166,7 @@ export default function JsonView({
 	theme = 'default',
 
 	customizeNode,
-	customizeCopy = stringifyForCopying,
+	customizeCopy = node => stringifyForCopying(node),
 
 	displaySize,
 	displayArrayIndex = true,

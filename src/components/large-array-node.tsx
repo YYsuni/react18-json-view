@@ -59,7 +59,7 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 				</span>
 			)}
 
-			{!fold && enableClipboard && customCopy(customOptions) && <CopyButton node={node} />}
+			{!fold && enableClipboard && customCopy(customOptions) && <CopyButton node={node} nodeMeta={{ depth, indexOrName: index, parent, parentPath }} />}
 			{typeof CustomOperation === 'function' ? <CustomOperation node={node} /> : null}
 		</>
 	)

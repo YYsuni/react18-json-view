@@ -30,3 +30,5 @@ export declare type CustomizeNode = (params: {
 }) => CustomizeOptions | React.FC | React.Component | React.ReactElement<any, any> | undefined
 
 export type CustomizeCollapseStringUI = ((str_show: string, truncated: boolean) => JSX.Element | string) | string
+
+export type NodeMeta = { depth: number; indexOrName?: number | string; parent?: Record<string, any> | Array<any>; parentPath: string[] }
