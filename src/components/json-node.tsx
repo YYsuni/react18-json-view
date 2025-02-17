@@ -51,6 +51,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 	if (Array.isArray(node) || isObject(node)) {
 		return (
 			<ObjectNode
+				parent={parent}
 				node={node}
 				depth={depth}
 				indexOrName={indexOrName}
@@ -61,6 +62,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 		)
 	} else {
 		const type = typeof node
+		const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath
 
 		const [editing, setEditing] = useState(false)
 		const [deleting, setDeleting] = useState(false)
@@ -150,7 +152,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 					))}
 
 				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && (
-					<CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath }} />
+					<CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath, currentPath }} />
 				)}
 				{!isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn as CustomizeOptions | undefined) && (
 					<a href={node} target='_blank' className='json-view--link'>

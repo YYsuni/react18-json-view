@@ -31,4 +31,4 @@ export declare type CustomizeNode = (params: {
 
 export type CustomizeCollapseStringUI = ((str_show: string, truncated: boolean) => JSX.Element | string) | string
 
-export type NodeMeta = { depth: number; indexOrName?: number | string; parent?: Record<string, any> | Array<any>; parentPath: string[] }
+export type NodeMeta = { depth: number; indexOrName?: number | string; parent?: Record<string, any> | Array<any>; parentPath: string[], currentPath: string[] }

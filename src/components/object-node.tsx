@@ -17,10 +17,11 @@ interface Props {
 	indexOrName?: number | string
 	deleteHandle?: (_: string | number, currentPath: string[]) => void
 	customOptions?: CustomizeOptions
+	parent?: Record<string, any> | Array<any>
 	parentPath: string[]
 }
 
-export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions, parentPath }: Props) {
+export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions, parent, parentPath }: Props) {
 	const {
 		collapsed,
 		onCollapse,
@@ -38,7 +39,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 		CustomOperation
 	} = useContext(JsonViewContext)
 
-	const currentPath = [...parentPath, indexOrName ? String(indexOrName) : ''].filter(Boolean)
+	const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath
 
 	if (!ignoreLargeArray && Array.isArray(node) && node.length > 100) {
 		return <LargeArray node={node} depth={depth} indexOrName={indexOrName} deleteHandle={_deleteSelf} customOptions={customOptions} parentPath={currentPath} />
@@ -162,7 +163,9 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 			{isEditing && <DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={adding ? add : deleteSelf} />}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && <CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath }} />}
+			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && (
+				<CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath, currentPath }} />
+			)}
 			{!fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (
 				<AddSVG
 					className='json-view--edit'

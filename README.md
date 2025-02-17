@@ -108,9 +108,9 @@ import 'react18-json-view/src/style.css'
   | React.ReactElement<any, any>
 ```
 
-### NodeMeta
+### NodeMeta (Canary)
 ```ts
-{ depth: number; indexOrName?: number | string; parent?: Record<string, any> | Array<any>; parentPath: string[] }
+{ depth: number; indexOrName?: number | string; parent?: Record<string, any> | Array<any>; parentPath: string[], currentPath: string[] }
 ```
 
 ## Editable

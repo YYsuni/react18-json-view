@@ -13,7 +13,7 @@ interface Props {
 	editHandle: (indexOrName: string | number, newValue: any, oldValue: any, parentPath: string[]) => void
 }
 
-export default function NameValue({ indexOrName, value, depth, parent, deleteHandle, editHandle, parentPath }: Props) {
+export default function NameValue({ indexOrName, value, depth, deleteHandle, editHandle, parent, parentPath }: Props) {
 	const { displayArrayIndex } = useContext(JsonViewContext)
 	const isArray = Array.isArray(parent)
 

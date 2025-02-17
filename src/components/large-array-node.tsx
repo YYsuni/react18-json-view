@@ -14,11 +14,14 @@ interface Props {
 	deleteHandle?: (_: string | number, currentPath: string[]) => void
 	customOptions?: CustomizeOptions
 	startIndex: number
+	parent?: Record<string, any> | Array<any>
 	parentPath: string[]
 }
 
-export default function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex, parentPath }: Props) {
+export default function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex, parent, parentPath }: Props) {
 	const { enableClipboard, src, onEdit, onChange, forceUpdate, displaySize, CustomOperation } = useContext(JsonViewContext)
+
+	const currentPath = [...parentPath, String(index)]
 
 	const [fold, setFold] = useState(true)
 
@@ -59,7 +62,9 @@ export default function LargeArrayNode({ originNode, node, depth, index, deleteH
 				</span>
 			)}
 
-			{!fold && enableClipboard && customCopy(customOptions) && <CopyButton node={node} nodeMeta={{ depth, indexOrName: index, parent, parentPath }} />}
+			{!fold && enableClipboard && customCopy(customOptions) && (
+				<CopyButton node={node} nodeMeta={{ depth, indexOrName: index, parent, parentPath, currentPath }} />
+			)}
 			{typeof CustomOperation === 'function' ? <CustomOperation node={node} /> : null}
 		</>
 	)

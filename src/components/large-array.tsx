@@ -16,10 +16,13 @@ interface Props {
 	indexOrName?: number | string
 	deleteHandle?: (_: string | number, currentPath: string[]) => void
 	customOptions?: CustomizeOptions
+	parent?: Record<string, any> | Array<any>
 	parentPath: string[]
 }
 
-export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, customOptions, parentPath }: Props) {
+export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, customOptions, parent, parentPath }: Props) {
+	const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath
+
 	const nestCollapsedArray: any[] = []
 	for (let i = 0; i < node.length; i += 100) {
 		nestCollapsedArray.push(node.slice(i, i + 100))
@@ -79,7 +82,9 @@ export default function LargeArray({ node, depth, deleteHandle: _deleteSelf, ind
 			{isEditing && <DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={adding ? add : deleteSelf} />}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && <CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath }} />}
+			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && (
+				<CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath, currentPath }} />
+			)}
 			{!fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (
 				<AddSVG
 					className='json-view--edit'
