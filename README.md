@@ -36,7 +36,7 @@ import 'react18-json-view/src/style.css'
 // If dark mode is needed, import `dark.css`.
 // import 'react18-json-view/src/dark.css'
 
-;<JsonView src={my_json_object} />
+<JsonView src={my_json_object} />
 
 // If needed, you can use the internal stringify function.
 // import { stringify } from 'react18-json-view'
@@ -189,7 +189,7 @@ react-json-view does not support React 18.
   - [x] onChange
   - [ ] onSelect
 - [x] dark mode
-- [ ] custom icon
+- [x] custom icon
   - [x] export default icons
 - [x] more usability/scenarios
 - [ ] gif guide
@@ -204,7 +204,7 @@ react-json-view does not support React 18.
 - [ ] handle circle loop
 - [x] redesign docs
 - [x] truncate long strings
-- [ ] custom `stringify`
+- [x] custom `stringify`
 - [x] split large array
 
 * tree?

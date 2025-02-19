@@ -1,5 +1,6 @@
 node_modules
 package-lock.json
+README.md
 .next
 pnpm-lock.yaml
 dist
