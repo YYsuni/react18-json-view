@@ -19,12 +19,22 @@ export default function Hero() {
 							k2: '123',
 							k3: false
 						},
-						arr: ['string', 123456, false, null]
+						arr: ['string', 123456, false, null],
+						items: [
+							{ key: 'key0', value: 'value 0' },
+							{ key: 'key1', value: 'value 1' },
+							{ key: 'key2', value: 'value 2' }
+						]
 					}}
 					customizeNode={params => {
 						if (Array.isArray(params.node)) {
 							return { collapsed: true }
 						}
+					}}
+					customizeCopy={(node, nodeMeta) => {
+						console.log('[node]', node)
+						console.log('[nodeMeta]', nodeMeta)
+						return JSON.stringify(node)
 					}}
 				/>
 			</div>

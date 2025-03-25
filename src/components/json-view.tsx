@@ -1,17 +1,33 @@
 import { createContext, useCallback, useEffect, useState } from 'react'
 import JsonNode from './json-node'
-import type { AddProps, Collapsed, CustomizeCollapseStringUI, CustomizeNode, DeleteProps, DisplaySize, Editable, EditProps } from '../types'
+import type { Collapsed, CustomizeCollapseStringUI, CustomizeNode, DisplaySize, Editable, NodeMeta } from '../types'
 import { stringifyForCopying } from '../utils'
 
-export type OnEdit = (params: EditProps) => void
-export type OnDelete = (params: DeleteProps) => void
-export type OnAdd = (params: AddProps) => void
-export type OnChange = (params: {
+type OnEdit = (params: {
+	newValue: any
+	oldValue: any
+	depth: number
+	src: any
+	indexOrName: string | number
+	parentType: 'object' | 'array' | null
+	parentPath: string[]
+}) => void
+type OnDelete = (params: {
+	value: any
+	indexOrName: string | number
+	depth: number
+	src: any
+	parentType: 'object' | 'array' | null
+	parentPath: string[]
+}) => void
+type OnAdd = (params: { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array'; parentPath: string[] }) => void
+type OnChange = (params: {
 	indexOrName: string | number
 	depth: number
 	src: any
 	parentType: 'object' | 'array' | null
 	type: 'add' | 'edit' | 'delete'
+	parentPath: string[]
 }) => void
 type OnCollapse = (params: { isCollapsing: boolean; node: Record<string, any> | Array<any>; indexOrName: string | number | undefined; depth: number }) => void
 
@@ -38,7 +54,7 @@ export const JsonViewContext = createContext({
 	forceUpdate: () => {},
 
 	customizeNode: undefined as CustomizeNode | undefined,
-	customizeCopy: (() => {}) as (node: any) => any,
+	customizeCopy: (() => {}) as (node: any, nodeMeta?: NodeMeta) => any,
 
 	displaySize: undefined as DisplaySize,
 	displayArrayIndex: true,
@@ -61,17 +77,14 @@ export const JsonViewContext = createContext({
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string, editCustom: (newValue: string) => void, value: string | null }>
 	| undefined,	
 	CancelComponent: undefined as
-	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
-	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
-	| undefined,
+		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| undefined,
 	DoneComponent: undefined as
-	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
-	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
-	| undefined,
-	CustomOperation: undefined as
-	| React.FC<{ node: any }>
-	| React.Component<{ node: any }>
-	| undefined,
+		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| undefined,
+	CustomOperation: undefined as React.FC<{ node: any }> | React.Component<{ node: any }> | undefined
 })
 
 export interface JsonViewProps {
@@ -94,7 +107,7 @@ export interface JsonViewProps {
 	onChange?: OnChange
 
 	customizeNode?: CustomizeNode
-	customizeCopy?: (node: any) => any
+	customizeCopy?: (node: any, nodeMeta?: NodeMeta) => any
 
 	dark?: boolean
 	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
@@ -120,16 +133,14 @@ export interface JsonViewProps {
 	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string, editCustom: (newValue: string) => void, value: string | null }>
 
 	CancelComponent?:
-	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
-	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 
 	DoneComponent?:
-	| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
-	| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| React.FC<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
+		| React.Component<{ onClick: (event: React.MouseEvent) => void; className: string; style: React.CSSProperties }>
 
-	CustomOperation?:
-	| React.FC<{ node: any }>
-	| React.Component<{ node: any }>
+	CustomOperation?: React.FC<{ node: any }> | React.Component<{ node: any }>
 }
 
 export default function JsonView({
@@ -155,7 +166,7 @@ export default function JsonView({
 	theme = 'default',
 
 	customizeNode,
-	customizeCopy = stringifyForCopying,
+	customizeCopy = node => stringifyForCopying(node),
 
 	displaySize,
 	displayArrayIndex = true,
@@ -174,7 +185,7 @@ export default function JsonView({
 	EditComponent,
 	CancelComponent,
 	DoneComponent,
-	CustomOperation,
+	CustomOperation
 }: JsonViewProps) {
 	const [_, update] = useState(0)
 	const forceUpdate = useCallback(() => update(state => ++state), [])
@@ -219,7 +230,7 @@ export default function JsonView({
 				EditComponent,
 				CancelComponent,
 				DoneComponent,
-				CustomOperation,
+				CustomOperation
 			}}>
 			<code
 				className={'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : '')}
@@ -227,7 +238,7 @@ export default function JsonView({
 				<JsonNode
 					node={src}
 					depth={1}
-					editHandle={(indexOrName: number | string, newValue: any, oldValue: any) => {
+					editHandle={(indexOrName: number | string, newValue: any, oldValue: any, parentPath: string[]) => {
 						setSrc(newValue)
 						if (onEdit)
 							onEdit({
@@ -236,29 +247,33 @@ export default function JsonView({
 								depth: 1,
 								src,
 								indexOrName: indexOrName,
-								parentType: null
+								parentType: null,
+								parentPath: parentPath
 							})
-						if (onChange) onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentType: null })
+						if (onChange) onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentType: null, parentPath: parentPath })
 					}}
-					deleteHandle={() => {
-						setSrc({})
+					deleteHandle={(indexOrName: number | string, parentPath: string[]) => {
+						setSrc(undefined)
 						if (onDelete)
 							onDelete({
 								value: src,
 								depth: 1,
 								src,
-								indexOrName: '',
-								parentType: null
+								indexOrName: indexOrName,
+								parentType: null,
+								parentPath: parentPath
 							})
 						if (onChange)
 							onChange({
 								depth: 1,
 								src,
-								indexOrName: '',
+								indexOrName: indexOrName,
 								parentType: null,
-								type: 'delete'
+								type: 'delete',
+								parentPath: parentPath
 							})
 					}}
+					parentPath={[]}
 				/>
 			</code>
 		</JsonViewContext.Provider>

@@ -15,11 +15,13 @@ interface Props {
 	node: Record<string, any> | Array<any>
 	depth: number
 	indexOrName?: number | string
-	deleteHandle?: (_: string | number) => void
+	deleteHandle?: (_: string | number, currentPath: string[]) => void
 	customOptions?: CustomizeOptions
+	parent?: Record<string, any> | Array<any>
+	parentPath: string[]
 }
 
-export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }: Props) {
+export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions, parent, parentPath }: Props) {
 	const {
 		collapsed,
 		onCollapse,
@@ -34,11 +36,13 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 		onChange,
 		forceUpdate,
 		displaySize,
-		CustomOperation,
+		CustomOperation
 	} = useContext(JsonViewContext)
 
+	const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath
+
 	if (!ignoreLargeArray && Array.isArray(node) && node.length > 100) {
-		return <LargeArray node={node} depth={depth} indexOrName={indexOrName} deleteHandle={_deleteSelf} customOptions={customOptions} />
+		return <LargeArray node={node} depth={depth} indexOrName={indexOrName} deleteHandle={_deleteSelf} customOptions={customOptions} parentPath={currentPath} />
 	}
 
 	const isPlainObject = isObject(node)
@@ -69,9 +73,10 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 					depth,
 					src,
 					indexOrName: indexOrName,
-					parentType: isPlainObject ? 'object' : 'array'
+					parentType: isPlainObject ? 'object' : 'array',
+					parentPath: currentPath
 				})
-			if (onChange) onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' })
+			if (onChange) onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array', parentPath: currentPath })
 			forceUpdate()
 		},
 		[node, onEdit, onChange, forceUpdate]
@@ -91,15 +96,16 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 	const [deleting, setDeleting] = useState(false)
 	const deleteSelf = () => {
 		setDeleting(false)
-		if (_deleteSelf) _deleteSelf(indexOrName!)
-		if (onDelete) onDelete({ value: node, depth, src, indexOrName: indexOrName!, parentType: isPlainObject ? 'object' : 'array' })
+		if (_deleteSelf) _deleteSelf(indexOrName!, currentPath)
+		if (onDelete) onDelete({ value: node, depth, src, indexOrName: indexOrName!, parentType: isPlainObject ? 'object' : 'array', parentPath: currentPath })
 		if (onChange)
 			onChange({
 				type: 'delete',
 				depth,
 				src,
 				indexOrName: indexOrName!,
-				parentType: isPlainObject ? 'object' : 'array'
+				parentType: isPlainObject ? 'object' : 'array',
+				parentPath: currentPath
 			})
 	}
 
@@ -116,14 +122,14 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 				if (inputRef.current) inputRef.current.value = ''
 				setAdding(false)
 
-				if (onAdd) onAdd({ indexOrName: inputName, depth, src, parentType: 'object' })
-				if (onChange) onChange({ type: 'add', indexOrName: inputName, depth, src, parentType: 'object' })
+				if (onAdd) onAdd({ indexOrName: inputName, depth, src, parentType: 'object', parentPath: currentPath })
+				if (onChange) onChange({ type: 'add', indexOrName: inputName, depth, src, parentType: 'object', parentPath: currentPath })
 			}
 		} else if (Array.isArray(node)) {
 			const arr = node as unknown as any[]
 			arr.push(null)
-			if (onAdd) onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array' })
-			if (onChange) onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array' })
+			if (onAdd) onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath: currentPath })
+			if (onChange) onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath: currentPath })
 		}
 		forceUpdate()
 	}
@@ -157,7 +163,9 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 			{isEditing && <DoneSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={adding ? add : deleteSelf} />}
 			{isEditing && <CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />}
 
-			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && <CopyButton node={node} />}
+			{!fold && !isEditing && enableClipboard && customCopy(customOptions) && (
+				<CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath, currentPath }} />
+			)}
 			{!fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (
 				<AddSVG
 					className='json-view--edit'
@@ -174,7 +182,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 			{!fold && !isEditing && editableDelete(editable) && customDelete(customOptions) && _deleteSelf && (
 				<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 			)}
-			{ typeof CustomOperation === 'function' ?  <CustomOperation node={node}  /> : null }
+			{typeof CustomOperation === 'function' ? <CustomOperation node={node} /> : null}
 		</>
 	)
 
@@ -196,6 +204,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 								parent={node}
 								deleteHandle={deleteHandle}
 								editHandle={editHandle}
+								parentPath={currentPath}
 							/>
 						))}
 					</div>
@@ -232,6 +241,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 								parent={node}
 								deleteHandle={deleteHandle}
 								editHandle={editHandle}
+								parentPath={currentPath}
 							/>
 						))}
 					</div>
@@ -250,6 +260,7 @@ export default function ObjectNode({ node, depth, indexOrName, deleteHandle: _de
 				)}
 			</>
 		)
+	} else {
+		return <span>{String(node)}</span>
 	}
-	return null
 }

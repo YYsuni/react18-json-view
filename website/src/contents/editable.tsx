@@ -69,7 +69,10 @@ export default function Editable() {
 						obj: {
 							k1: 123,
 							k2: '123',
-							k3: false
+							k3: false,
+							nested: {
+								k4: 'nested'
+							}
 						},
 						arr: ['string', 123456, false, null],
 						largeArr: new Array(Math.trunc(Math.random() * 1000) + 800).fill((Math.random() * 10).toFixed(2))

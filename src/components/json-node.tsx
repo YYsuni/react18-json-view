@@ -26,13 +26,14 @@ import type { CustomizeNode, CustomizeOptions } from '../types'
 interface Props {
 	node: any
 	depth: number
-	deleteHandle?: (indexOrName: string | number) => void
-	editHandle?: (indexOrName: string | number, newValue: any, oldValue: any) => void
+	deleteHandle?: (indexOrName: string | number, parentPath: string[]) => void
+	editHandle?: (indexOrName: string | number, newValue: any, oldValue: any, parentPath: string[]) => void
 	indexOrName?: number | string
 	parent?: Record<string, any> | Array<any>
+	parentPath: string[]
 }
 
-export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }: Props) {
+export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle, parentPath }: Props) {
 	// prettier-ignore
 	const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode, matchesURL, urlRegExp, EditComponent, DoneComponent, CancelComponent, CustomOperation } = useContext(JsonViewContext)
 
@@ -54,15 +55,18 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 	if (Array.isArray(node) || isObject(node)) {
 		return (
 			<ObjectNode
+				parent={parent}
 				node={node}
 				depth={depth}
 				indexOrName={indexOrName}
 				deleteHandle={_deleteHandle}
+				parentPath={parentPath}
 				customOptions={typeof customReturn === 'object' ? (customReturn as CustomizeOptions) : undefined}
 			/>
 		)
 	} else {
 		const type = typeof node
+		const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath
 
 		const [editing, setEditing] = useState(false)
 		const [deleting, setDeleting] = useState(false)
@@ -82,28 +86,29 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 			try {
 				const parsedValue = JSON.parse(newValue)
 
-				if (editHandle) editHandle(indexOrName!, parsedValue, node)
+				if (editHandle) editHandle(indexOrName!, parsedValue, node, parentPath)
 			} catch (e) {
 				const trimmedStringValue = resolveEvalFailedNewValue(type, newValue)
-				if (editHandle) editHandle(indexOrName!, trimmedStringValue, node)
+				if (editHandle) editHandle(indexOrName!, trimmedStringValue, node, parentPath)
 			}
 
 			setEditing(false)
-		}, [editHandle])
+		}, [editHandle, indexOrName, node, parentPath, type])
 		const cancel = () => {
 			setEditing(false)
 			setDeleting(false)
 		}
 		const deleteHandle = () => {
 			setDeleting(false)
-			if (_deleteHandle) _deleteHandle(indexOrName!)
+			if (_deleteHandle) _deleteHandle(indexOrName!, parentPath)
 			if (onDelete)
 				onDelete({
 					value: node,
 					depth,
 					src,
 					indexOrName: indexOrName!,
-					parentType: Array.isArray(parent) ? 'array' : 'object'
+					parentType: Array.isArray(parent) ? 'array' : 'object',
+					parentPath
 				})
 			if (onChange)
 				onChange({
@@ -111,7 +116,8 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 					src,
 					indexOrName: indexOrName!,
 					parentType: Array.isArray(parent) ? 'array' : 'object',
-					type: 'delete'
+					type: 'delete',
+					parentPath
 				})
 		}
 
@@ -149,7 +155,9 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 						<CancelSVG className='json-view--edit' style={{ display: 'inline-block' }} onClick={cancel} />
 					))}
 
-				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && <CopyButton node={node} />}
+				{!isEditing && enableClipboard && customCopy(customReturn as CustomizeOptions | undefined) && (
+					<CopyButton node={node} nodeMeta={{ depth, indexOrName, parent, parentPath, currentPath }} />
+				)}
 				{!isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn as CustomizeOptions | undefined) && (
 					<a href={node} target='_blank' className='json-view--link'>
 						<LinkSVG />
@@ -168,12 +176,12 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 				{!isEditing && editableDelete(editable) && customDelete(customReturn as CustomizeOptions | undefined) && _deleteHandle && (
 					<DeleteSVG className='json-view--edit' onClick={() => setDeleting(true)} />
 				)}
-				{ typeof CustomOperation === 'function' ?  <CustomOperation node={node}  /> : null }
+				{typeof CustomOperation === 'function' ? <CustomOperation node={node} /> : null}
 			</>
 		)
 
 		let className = 'json-view--string'
-		
+
 		switch (type) {
 			case 'number':
 			case 'bigint':
@@ -186,7 +194,7 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 				className = 'json-view--null'
 				break
 		}
-		
+
 		if (typeof (customReturn as CustomizeOptions)?.className === 'string') className += ' ' + (customReturn as CustomizeOptions).className
 
 		if (deleting) className += ' json-view--deleting'

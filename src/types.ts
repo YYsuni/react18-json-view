@@ -35,3 +35,4 @@ export type CustomizeCollapseStringUI = ((str_show: string, truncated: boolean) 
 export type EditProps = { newValue: any; oldValue: any; depth: number; src: any; indexOrName: string | number; parentType: 'object' | 'array' | null }
 export type AddProps = { indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' }
 export type DeleteProps = { value: any; indexOrName: string | number; depth: number; src: any; parentType: 'object' | 'array' | null }
+export type NodeMeta = { depth: number; indexOrName?: number | string; parent?: Record<string, any> | Array<any>; parentPath: string[], currentPath: string[] }

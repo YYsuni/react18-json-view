@@ -27,21 +27,24 @@ export default {
 			obj: {
 				k1: 123,
 				k2: '123',
-				k3: false
+				k3: false,
+				nested: {
+					k4: 'nested'
+				}
 			},
 			arr: ['string', 123456, false, null]
 		},
-		onEdit: ({ newValue, src, oldValue, indexOrName }) => {
-			console.log('[onEdit]', indexOrName, newValue, oldValue, src)
+		onEdit: ({ newValue, src, oldValue, indexOrName, parentPath }) => {
+			console.log('[onEdit]', indexOrName, newValue, oldValue, src, parentPath)
 		},
-		onDelete: ({ value, src, indexOrName }) => {
-			console.log('[onDelete]', indexOrName, value, src)
+		onDelete: ({ value, src, indexOrName, parentPath }) => {
+			console.log('[onDelete]', indexOrName, value, src, parentPath)
 		},
-		onAdd: ({ src, indexOrName }) => {
-			console.log('[onAdd]', indexOrName, src)
+		onAdd: ({ src, indexOrName, parentPath }) => {
+			console.log('[onAdd]', indexOrName, src, parentPath)
 		},
-		onChange: ({ src, indexOrName }) => {
-			console.log('[onChange]', indexOrName, src)
+		onChange: ({ src, indexOrName, parentPath }) => {
+			console.log('[onChange]', indexOrName, src, parentPath)
 		}
 	},
 	decorators: [
