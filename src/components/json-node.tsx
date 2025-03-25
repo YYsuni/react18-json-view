@@ -49,8 +49,8 @@ export default function JsonNode({ node, depth, deleteHandle: _deleteHandle, ind
 	}
 
     const editCustom = useCallback((newValue: string) => {
-        if (editHandle) editHandle(indexOrName!, newValue, node);
-    }, [editHandle, indexOrName, node]);
+        if (editHandle) editHandle(indexOrName!, newValue, node, parentPath);
+    }, [editHandle, indexOrName, node, parentPath]);
 
 	if (Array.isArray(node) || isObject(node)) {
 		return (

@@ -38,6 +38,8 @@ LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
 OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
+/* global Reflect, Promise, SuppressedError, Symbol, Iterator */
+
 
 function __awaiter(thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -53,6 +55,10 @@ typeof SuppressedError === "function" ? SuppressedError : function (error, suppr
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
 };
+
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
 
 var toggleSelection = function () {
   var selection = document.getSelection();
@@ -207,6 +213,8 @@ function copy(text, options) {
 
 var copyToClipboard = copy;
 
+var copy$1 = /*@__PURE__*/getDefaultExportFromCjs(copyToClipboard);
+
 function isObject(node) {
     return Object.prototype.toString.call(node) === '[object Object]';
 }
@@ -243,7 +251,7 @@ function writeClipboard(value) {
             yield navigator.clipboard.writeText(value);
         }
         catch (err) {
-            copyToClipboard(value);
+            copy$1(value);
         }
     });
 }
@@ -348,7 +356,7 @@ function resolveEvalFailedNewValue(type, value) {
 }
 
 var _path$8;
-function _extends$8() { _extends$8 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$8.apply(this, arguments); }
+function _extends$8() { return _extends$8 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$8.apply(null, arguments); }
 var SvgAngleDown = function SvgAngleDown(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$8({
     xmlns: "http://www.w3.org/2000/svg",
@@ -358,12 +366,12 @@ var SvgAngleDown = function SvgAngleDown(props) {
     viewBox: "0 0 16 16"
   }, props), _path$8 || (_path$8 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M12.473 5.806a.666.666 0 0 0-.946 0L8.473 8.86a.667.667 0 0 1-.946 0L4.473 5.806a.667.667 0 1 0-.946.94l3.06 3.06a2 2 0 0 0 2.826 0l3.06-3.06a.667.667 0 0 0 0-.94Z"
+    d: "M12.473 5.806a.666.666 0 0 0-.946 0L8.473 8.86a.667.667 0 0 1-.946 0L4.473 5.806a.667.667 0 1 0-.946.94l3.06 3.06a2 2 0 0 0 2.826 0l3.06-3.06a.667.667 0 0 0 0-.94"
   })));
 };
 
 var _path$7;
-function _extends$7() { _extends$7 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$7.apply(this, arguments); }
+function _extends$7() { return _extends$7 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$7.apply(null, arguments); }
 var SvgCopy = function SvgCopy(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$7({
     xmlns: "http://www.w3.org/2000/svg",
@@ -373,12 +381,12 @@ var SvgCopy = function SvgCopy(props) {
     viewBox: "0 0 24 24"
   }, props), _path$7 || (_path$7 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M17.542 2.5h-4.75a3.963 3.963 0 0 0-3.959 3.958v4.75a3.963 3.963 0 0 0 3.959 3.959h4.75a3.963 3.963 0 0 0 3.958-3.959v-4.75A3.963 3.963 0 0 0 17.542 2.5Zm2.375 8.708a2.378 2.378 0 0 1-2.375 2.375h-4.75a2.378 2.378 0 0 1-2.375-2.375v-4.75a2.378 2.378 0 0 1 2.375-2.375h4.75a2.378 2.378 0 0 1 2.375 2.375v4.75Zm-4.75 6.334a3.963 3.963 0 0 1-3.959 3.958h-4.75A3.963 3.963 0 0 1 2.5 17.542v-4.75a3.963 3.963 0 0 1 3.958-3.959.791.791 0 1 1 0 1.584 2.378 2.378 0 0 0-2.375 2.375v4.75a2.378 2.378 0 0 0 2.375 2.375h4.75a2.378 2.378 0 0 0 2.375-2.375.792.792 0 1 1 1.584 0Z"
+    d: "M17.542 2.5h-4.75a3.963 3.963 0 0 0-3.959 3.958v4.75a3.963 3.963 0 0 0 3.959 3.959h4.75a3.963 3.963 0 0 0 3.958-3.959v-4.75A3.963 3.963 0 0 0 17.542 2.5m2.375 8.708a2.38 2.38 0 0 1-2.375 2.375h-4.75a2.38 2.38 0 0 1-2.375-2.375v-4.75a2.38 2.38 0 0 1 2.375-2.375h4.75a2.38 2.38 0 0 1 2.375 2.375zm-4.75 6.334a3.963 3.963 0 0 1-3.959 3.958h-4.75A3.963 3.963 0 0 1 2.5 17.542v-4.75a3.963 3.963 0 0 1 3.958-3.959.791.791 0 1 1 0 1.584 2.38 2.38 0 0 0-2.375 2.375v4.75a2.38 2.38 0 0 0 2.375 2.375h4.75a2.38 2.38 0 0 0 2.375-2.375.792.792 0 1 1 1.584 0"
   })));
 };
 
 var _path$6, _path2$5;
-function _extends$6() { _extends$6 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$6.apply(this, arguments); }
+function _extends$6() { return _extends$6 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$6.apply(null, arguments); }
 var SvgCopied = function SvgCopied(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$6({
     xmlns: "http://www.w3.org/2000/svg",
@@ -388,19 +396,19 @@ var SvgCopied = function SvgCopied(props) {
     viewBox: "0 0 24 24"
   }, props), _path$6 || (_path$6 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M17.25 3H6.75A3.755 3.755 0 0 0 3 6.75v10.5A3.754 3.754 0 0 0 6.75 21h10.5A3.754 3.754 0 0 0 21 17.25V6.75A3.755 3.755 0 0 0 17.25 3Zm2.25 14.25a2.25 2.25 0 0 1-2.25 2.25H6.75a2.25 2.25 0 0 1-2.25-2.25V6.75A2.25 2.25 0 0 1 6.75 4.5h10.5a2.25 2.25 0 0 1 2.25 2.25v10.5Z"
+    d: "M17.25 3H6.75A3.755 3.755 0 0 0 3 6.75v10.5A3.754 3.754 0 0 0 6.75 21h10.5A3.754 3.754 0 0 0 21 17.25V6.75A3.755 3.755 0 0 0 17.25 3m2.25 14.25a2.25 2.25 0 0 1-2.25 2.25H6.75a2.25 2.25 0 0 1-2.25-2.25V6.75A2.25 2.25 0 0 1 6.75 4.5h10.5a2.25 2.25 0 0 1 2.25 2.25z"
   })), _path2$5 || (_path2$5 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "#14C786",
-    d: "M10.312 14.45 7.83 11.906a.625.625 0 0 0-.896 0 .659.659 0 0 0 0 .918l2.481 2.546a1.264 1.264 0 0 0 .896.381 1.237 1.237 0 0 0 .895-.38l5.858-6.011a.658.658 0 0 0 0-.919.625.625 0 0 0-.896 0l-5.857 6.01Z"
+    d: "M10.312 14.45 7.83 11.906a.625.625 0 0 0-.896 0 .66.66 0 0 0 0 .918l2.481 2.546a1.26 1.26 0 0 0 .896.381 1.24 1.24 0 0 0 .895-.38l5.858-6.011a.66.66 0 0 0 0-.919.625.625 0 0 0-.896 0z"
   })));
 };
 
-function CopyButton({ node }) {
+function CopyButton({ node, nodeMeta }) {
     const { customizeCopy, CopyComponent, CopiedComponent } = React.useContext(JsonViewContext);
     const [copied, setCopied] = React.useState(false);
     const copyHandler = (event) => {
         event.stopPropagation();
-        const value = customizeCopy(node);
+        const value = customizeCopy(node, nodeMeta);
         if (typeof value === 'string' && value) {
             writeClipboard(value);
         }
@@ -410,14 +418,14 @@ function CopyButton({ node }) {
     return copied ? (typeof CopiedComponent === 'function' ? (jsxRuntime.jsx(CopiedComponent, { className: 'json-view--copy', style: { display: 'inline-block' } })) : (jsxRuntime.jsx(SvgCopied, { className: 'json-view--copy', style: { display: 'inline-block' } }))) : typeof CopyComponent === 'function' ? (jsxRuntime.jsx(CopyComponent, { onClick: copyHandler, className: 'json-view--copy' })) : (jsxRuntime.jsx(SvgCopy, { onClick: copyHandler, className: 'json-view--copy' }));
 }
 
-function NameValue({ indexOrName, value, depth, parent, deleteHandle, editHandle }) {
+function NameValue({ indexOrName, value, depth, deleteHandle, editHandle, parent, parentPath }) {
     const { displayArrayIndex } = React.useContext(JsonViewContext);
     const isArray = Array.isArray(parent);
-    return (jsxRuntime.jsxs("div", Object.assign({ className: 'json-view--pair' }, { children: [!isArray || (isArray && displayArrayIndex) ? (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", Object.assign({ className: typeof indexOrName === 'number' ? 'json-view--index' : 'json-view--property' }, { children: indexOrName })), ":", ' '] })) : (jsxRuntime.jsx(jsxRuntime.Fragment, {})), jsxRuntime.jsx(JsonNode, { node: value, depth: depth + 1, deleteHandle: deleteHandle, editHandle: editHandle, parent: parent, indexOrName: indexOrName })] })));
+    return (jsxRuntime.jsxs("div", { className: 'json-view--pair', children: [!isArray || (isArray && displayArrayIndex) ? (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { className: typeof indexOrName === 'number' ? 'json-view--index' : 'json-view--property', children: indexOrName }), ":", ' '] })) : (jsxRuntime.jsx(jsxRuntime.Fragment, {})), jsxRuntime.jsx(JsonNode, { node: value, depth: depth + 1, deleteHandle: (indexOrName, parentPath) => deleteHandle(indexOrName, parentPath), editHandle: (indexOrName, newValue, oldValue, parentPath) => editHandle(indexOrName, newValue, oldValue, parentPath), parent: parent, indexOrName: indexOrName, parentPath: parentPath })] }));
 }
 
 var _path$5, _path2$4;
-function _extends$5() { _extends$5 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$5.apply(this, arguments); }
+function _extends$5() { return _extends$5 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$5.apply(null, arguments); }
 var SvgTrash = function SvgTrash(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$5({
     xmlns: "http://www.w3.org/2000/svg",
@@ -427,15 +435,15 @@ var SvgTrash = function SvgTrash(props) {
     viewBox: "0 0 24 24"
   }, props), _path$5 || (_path$5 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M18.75 6h-2.325a3.757 3.757 0 0 0-3.675-3h-1.5a3.757 3.757 0 0 0-3.675 3H5.25a.75.75 0 0 0 0 1.5H6v9.75A3.754 3.754 0 0 0 9.75 21h4.5A3.754 3.754 0 0 0 18 17.25V7.5h.75a.75.75 0 1 0 0-1.5Zm-7.5-1.5h1.5A2.255 2.255 0 0 1 14.872 6H9.128a2.255 2.255 0 0 1 2.122-1.5Zm5.25 12.75a2.25 2.25 0 0 1-2.25 2.25h-4.5a2.25 2.25 0 0 1-2.25-2.25V7.5h9v9.75Z"
+    d: "M18.75 6h-2.325a3.76 3.76 0 0 0-3.675-3h-1.5a3.76 3.76 0 0 0-3.675 3H5.25a.75.75 0 0 0 0 1.5H6v9.75A3.754 3.754 0 0 0 9.75 21h4.5A3.754 3.754 0 0 0 18 17.25V7.5h.75a.75.75 0 1 0 0-1.5m-7.5-1.5h1.5A2.255 2.255 0 0 1 14.872 6H9.128a2.255 2.255 0 0 1 2.122-1.5m5.25 12.75a2.25 2.25 0 0 1-2.25 2.25h-4.5a2.25 2.25 0 0 1-2.25-2.25V7.5h9z"
   })), _path2$4 || (_path2$4 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "#DA0000",
-    d: "M10.5 16.5a.75.75 0 0 0 .75-.75v-4.5a.75.75 0 1 0-1.5 0v4.5a.75.75 0 0 0 .75.75ZM13.5 16.5a.75.75 0 0 0 .75-.75v-4.5a.75.75 0 1 0-1.5 0v4.5a.75.75 0 0 0 .75.75Z"
+    d: "M10.5 16.5a.75.75 0 0 0 .75-.75v-4.5a.75.75 0 1 0-1.5 0v4.5a.75.75 0 0 0 .75.75M13.5 16.5a.75.75 0 0 0 .75-.75v-4.5a.75.75 0 1 0-1.5 0v4.5a.75.75 0 0 0 .75.75"
   })));
 };
 
 var _path$4, _path2$3;
-function _extends$4() { _extends$4 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$4.apply(this, arguments); }
+function _extends$4() { return _extends$4 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$4.apply(null, arguments); }
 var SvgAddSquare = function SvgAddSquare(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$4({
     xmlns: "http://www.w3.org/2000/svg",
@@ -445,15 +453,15 @@ var SvgAddSquare = function SvgAddSquare(props) {
     viewBox: "0 0 24 24"
   }, props), _path$4 || (_path$4 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M21 6.75v10.5A3.754 3.754 0 0 1 17.25 21H6.75A3.754 3.754 0 0 1 3 17.25V6.75A3.754 3.754 0 0 1 6.75 3h10.5A3.754 3.754 0 0 1 21 6.75Zm-1.5 0c0-1.24-1.01-2.25-2.25-2.25H6.75C5.51 4.5 4.5 5.51 4.5 6.75v10.5c0 1.24 1.01 2.25 2.25 2.25h10.5c1.24 0 2.25-1.01 2.25-2.25V6.75Z"
+    d: "M21 6.75v10.5A3.754 3.754 0 0 1 17.25 21H6.75A3.754 3.754 0 0 1 3 17.25V6.75A3.754 3.754 0 0 1 6.75 3h10.5A3.754 3.754 0 0 1 21 6.75m-1.5 0c0-1.24-1.01-2.25-2.25-2.25H6.75C5.51 4.5 4.5 5.51 4.5 6.75v10.5c0 1.24 1.01 2.25 2.25 2.25h10.5c1.24 0 2.25-1.01 2.25-2.25z"
   })), _path2$3 || (_path2$3 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "#14C786",
-    d: "M15 12.75a.75.75 0 1 0 0-1.5h-2.25V9a.75.75 0 1 0-1.5 0v2.25H9a.75.75 0 1 0 0 1.5h2.25V15a.75.75 0 1 0 1.5 0v-2.25H15Z"
+    d: "M15 12.75a.75.75 0 1 0 0-1.5h-2.25V9a.75.75 0 1 0-1.5 0v2.25H9a.75.75 0 1 0 0 1.5h2.25V15a.75.75 0 1 0 1.5 0v-2.25z"
   })));
 };
 
 var _path$3, _path2$2;
-function _extends$3() { _extends$3 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$3.apply(this, arguments); }
+function _extends$3() { return _extends$3 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$3.apply(null, arguments); }
 var SvgDone = function SvgDone(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$3({
     xmlns: "http://www.w3.org/2000/svg",
@@ -463,15 +471,15 @@ var SvgDone = function SvgDone(props) {
     viewBox: "0 0 24 24"
   }, props), _path$3 || (_path$3 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M12 3a9 9 0 1 0 9 9 9.01 9.01 0 0 0-9-9Zm0 16.5a7.5 7.5 0 1 1 7.5-7.5 7.509 7.509 0 0 1-7.5 7.5Z"
+    d: "M12 3a9 9 0 1 0 9 9 9.01 9.01 0 0 0-9-9m0 16.5a7.5 7.5 0 1 1 7.5-7.5 7.51 7.51 0 0 1-7.5 7.5"
   })), _path2$2 || (_path2$2 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "#14C786",
-    d: "m10.85 13.96-1.986-2.036a.5.5 0 0 0-.716 0 .527.527 0 0 0 0 .735l1.985 2.036a1.01 1.01 0 0 0 .717.305.99.99 0 0 0 .716-.305l4.686-4.808a.526.526 0 0 0 0-.735.5.5 0 0 0-.716 0l-4.687 4.809Z"
+    d: "m10.85 13.96-1.986-2.036a.5.5 0 0 0-.716 0 .527.527 0 0 0 0 .735l1.985 2.036a1 1 0 0 0 .717.305 1 1 0 0 0 .716-.305l4.686-4.808a.526.526 0 0 0 0-.735.5.5 0 0 0-.716 0z"
   })));
 };
 
 var _path$2, _path2$1;
-function _extends$2() { _extends$2 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$2.apply(this, arguments); }
+function _extends$2() { return _extends$2 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$2.apply(null, arguments); }
 var SvgCancel = function SvgCancel(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$2({
     xmlns: "http://www.w3.org/2000/svg",
@@ -481,15 +489,16 @@ var SvgCancel = function SvgCancel(props) {
     viewBox: "0 0 24 24"
   }, props), _path$2 || (_path$2 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "#DA0000",
-    d: "M15 9a.75.75 0 0 0-1.06 0L12 10.94 10.06 9A.75.75 0 0 0 9 10.06L10.94 12 9 13.94A.75.75 0 0 0 10.06 15L12 13.06 13.94 15A.75.75 0 0 0 15 13.94L13.06 12 15 10.06A.75.75 0 0 0 15 9Z"
+    d: "M15 9a.75.75 0 0 0-1.06 0L12 10.94 10.06 9A.75.75 0 0 0 9 10.06L10.94 12 9 13.94A.75.75 0 0 0 10.06 15L12 13.06 13.94 15A.75.75 0 0 0 15 13.94L13.06 12 15 10.06A.75.75 0 0 0 15 9"
   })), _path2$1 || (_path2$1 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M12 3a9 9 0 1 0 9 9 9.01 9.01 0 0 0-9-9Zm0 16.5a7.5 7.5 0 1 1 7.5-7.5 7.509 7.509 0 0 1-7.5 7.5Z"
+    d: "M12 3a9 9 0 1 0 9 9 9.01 9.01 0 0 0-9-9m0 16.5a7.5 7.5 0 1 1 7.5-7.5 7.51 7.51 0 0 1-7.5 7.5"
   })));
 };
 
-function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex }) {
+function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteSelf, customOptions, startIndex, parent, parentPath }) {
     const { enableClipboard, src, onEdit, onChange, forceUpdate, displaySize, CustomOperation } = React.useContext(JsonViewContext);
+    const currentPath = [...parentPath, String(index)];
     const [fold, setFold] = React.useState(true);
     // Edit property
     const editHandle = React.useCallback((indexOrName, newValue, oldValue) => {
@@ -501,22 +510,26 @@ function LargeArrayNode({ originNode, node, depth, index, deleteHandle: _deleteS
                 depth,
                 src,
                 indexOrName,
-                parentType: 'array'
+                parentType: 'array',
+                parentPath
             });
         if (onChange)
-            onChange({ type: 'edit', depth, src, indexOrName, parentType: 'array' });
+            onChange({ type: 'edit', depth, src, indexOrName, parentType: 'array', parentPath });
         forceUpdate();
     }, [node, onEdit, onChange, forceUpdate]);
     // Delete property
     const deleteHandle = (index) => {
         originNode.splice(index, 1);
+        if (_deleteSelf)
+            _deleteSelf(index, parentPath);
         forceUpdate();
     };
-    const Icons = (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [!fold && (jsxRuntime.jsxs("span", Object.assign({ onClick: () => setFold(true), className: 'jv-size-chevron' }, { children: [ifDisplay(displaySize, depth, fold) && jsxRuntime.jsxs("span", Object.assign({ className: 'jv-size' }, { children: [objectSize(node), " Items"] })), jsxRuntime.jsx(SvgAngleDown, { className: 'jv-chevron' })] }))), !fold && enableClipboard && customCopy(customOptions) && jsxRuntime.jsx(CopyButton, { node: node }), typeof CustomOperation === 'function' ? jsxRuntime.jsx(CustomOperation, { node: node }) : null] }));
-    return (jsxRuntime.jsxs("div", { children: [jsxRuntime.jsx("span", { children: '[' }), Icons, !fold ? (jsxRuntime.jsx("div", Object.assign({ className: 'jv-indent' }, { children: node.map((n, i) => (jsxRuntime.jsx(NameValue, { indexOrName: i + startIndex, value: n, depth: depth, parent: node, deleteHandle: deleteHandle, editHandle: editHandle }, String(index) + String(i)))) }))) : (jsxRuntime.jsxs("button", Object.assign({ onClick: () => setFold(false), className: 'jv-button' }, { children: [startIndex, " ... ", startIndex + node.length - 1] }))), jsxRuntime.jsx("span", { children: ']' })] }));
+    const Icons = (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [!fold && (jsxRuntime.jsxs("span", { onClick: () => setFold(true), className: 'jv-size-chevron', children: [ifDisplay(displaySize, depth, fold) && jsxRuntime.jsxs("span", { className: 'jv-size', children: [objectSize(node), " Items"] }), jsxRuntime.jsx(SvgAngleDown, { className: 'jv-chevron' })] })), !fold && enableClipboard && customCopy(customOptions) && (jsxRuntime.jsx(CopyButton, { node: node, nodeMeta: { depth, indexOrName: index, parent, parentPath, currentPath } })), typeof CustomOperation === 'function' ? jsxRuntime.jsx(CustomOperation, { node: node }) : null] }));
+    return (jsxRuntime.jsxs("div", { children: [jsxRuntime.jsx("span", { children: '[' }), Icons, !fold ? (jsxRuntime.jsx("div", { className: 'jv-indent', children: node.map((n, i) => (jsxRuntime.jsx(NameValue, { indexOrName: i + startIndex, value: n, depth: depth, parent: node, deleteHandle: deleteHandle, editHandle: editHandle, parentPath: parentPath }, String(index) + String(i)))) })) : (jsxRuntime.jsxs("button", { onClick: () => setFold(false), className: 'jv-button', children: [startIndex, " ... ", startIndex + node.length - 1] })), jsxRuntime.jsx("span", { children: ']' })] }));
 }
 
-function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, customOptions }) {
+function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, customOptions, parent, parentPath }) {
+    const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath;
     const nestCollapsedArray = [];
     for (let i = 0; i < node.length; i += 100) {
         nestCollapsedArray.push(node.slice(i, i + 100));
@@ -531,16 +544,17 @@ function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, custo
     const deleteSelf = () => {
         setDeleting(false);
         if (_deleteSelf)
-            _deleteSelf(indexOrName);
+            _deleteSelf(indexOrName, parentPath);
         if (onDelete)
-            onDelete({ value: node, depth, src, indexOrName: indexOrName, parentType: 'array' });
+            onDelete({ value: node, depth, src, indexOrName: indexOrName, parentType: 'array', parentPath });
         if (onChange)
             onChange({
                 type: 'delete',
                 depth,
                 src,
                 indexOrName: indexOrName,
-                parentType: 'array'
+                parentType: 'array',
+                parentPath
             });
     };
     // Add
@@ -549,9 +563,9 @@ function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, custo
         const arr = node;
         arr.push(null);
         if (onAdd)
-            onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array' });
+            onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath });
         if (onChange)
-            onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array' });
+            onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath });
         forceUpdate();
     };
     const isEditing = deleting || adding;
@@ -559,16 +573,17 @@ function LargeArray({ node, depth, deleteHandle: _deleteSelf, indexOrName, custo
         setDeleting(false);
         setAdding(false);
     };
-    const Icons = (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [!fold && !isEditing && (jsxRuntime.jsxs("span", Object.assign({ onClick: () => setFold(true), className: 'jv-size-chevron' }, { children: [ifDisplay(displaySize, depth, fold) && jsxRuntime.jsxs("span", Object.assign({ className: 'jv-size' }, { children: [node.length, " Items"] })), jsxRuntime.jsx(SvgAngleDown, { className: 'jv-chevron' })] }))), isEditing && jsxRuntime.jsx(SvgDone, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: adding ? add : deleteSelf }), isEditing && jsxRuntime.jsx(SvgCancel, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel }), !fold && !isEditing && enableClipboard && customCopy(customOptions) && jsxRuntime.jsx(CopyButton, { node: node }), !fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (jsxRuntime.jsx(SvgAddSquare, { className: 'json-view--edit', onClick: () => {
+    const Icons = (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [!fold && !isEditing && (jsxRuntime.jsxs("span", { onClick: () => setFold(true), className: 'jv-size-chevron', children: [ifDisplay(displaySize, depth, fold) && jsxRuntime.jsxs("span", { className: 'jv-size', children: [node.length, " Items"] }), jsxRuntime.jsx(SvgAngleDown, { className: 'jv-chevron' })] })), isEditing && jsxRuntime.jsx(SvgDone, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: adding ? add : deleteSelf }), isEditing && jsxRuntime.jsx(SvgCancel, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel }), !fold && !isEditing && enableClipboard && customCopy(customOptions) && (jsxRuntime.jsx(CopyButton, { node: node, nodeMeta: { depth, indexOrName, parent, parentPath, currentPath } })), !fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (jsxRuntime.jsx(SvgAddSquare, { className: 'json-view--edit', onClick: () => {
                     add();
                 } })), !fold && !isEditing && editableDelete(editable) && customDelete(customOptions) && _deleteSelf && (jsxRuntime.jsx(SvgTrash, { className: 'json-view--edit', onClick: () => setDeleting(true) })), typeof CustomOperation === 'function' ? jsxRuntime.jsx(CustomOperation, { node: node }) : null] }));
-    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { children: '[' }), Icons, !fold ? (jsxRuntime.jsx("div", Object.assign({ className: 'jv-indent' }, { children: nestCollapsedArray.map((item, index) => (jsxRuntime.jsx(LargeArrayNode, { originNode: node, node: item, depth: depth, index: index, startIndex: index * 100 }, String(indexOrName) + String(index)))) }))) : (jsxRuntime.jsx("button", Object.assign({ onClick: () => setFold(false), className: 'jv-button' }, { children: "..." }))), jsxRuntime.jsx("span", { children: ']' }), fold && ifDisplay(displaySize, depth, fold) && (jsxRuntime.jsxs("span", Object.assign({ onClick: () => setFold(false), className: 'jv-size' }, { children: [node.length, " Items"] })))] }));
+    return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { children: '[' }), Icons, !fold ? (jsxRuntime.jsx("div", { className: 'jv-indent', children: nestCollapsedArray.map((item, index) => (jsxRuntime.jsx(LargeArrayNode, { originNode: node, node: item, depth: depth, index: index, startIndex: index * 100, deleteHandle: _deleteSelf, customOptions: customOptions, parentPath: parentPath }, String(indexOrName) + String(index)))) })) : (jsxRuntime.jsx("button", { onClick: () => setFold(false), className: 'jv-button', children: "..." })), jsxRuntime.jsx("span", { children: ']' }), fold && ifDisplay(displaySize, depth, fold) && (jsxRuntime.jsxs("span", { onClick: () => setFold(false), className: 'jv-size', children: [node.length, " Items"] }))] }));
 }
 
-function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions }) {
-    const { collapsed, onCollapse, enableClipboard, ignoreLargeArray, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize, CustomOperation, } = React.useContext(JsonViewContext);
+function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, customOptions, parent, parentPath }) {
+    const { collapsed, onCollapse, enableClipboard, ignoreLargeArray, collapseObjectsAfterLength, editable, onDelete, src, onAdd, onEdit, onChange, forceUpdate, displaySize, CustomOperation } = React.useContext(JsonViewContext);
+    const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath;
     if (!ignoreLargeArray && Array.isArray(node) && node.length > 100) {
-        return jsxRuntime.jsx(LargeArray, { node: node, depth: depth, indexOrName: indexOrName, deleteHandle: _deleteSelf, customOptions: customOptions });
+        return jsxRuntime.jsx(LargeArray, { node: node, depth: depth, indexOrName: indexOrName, deleteHandle: _deleteSelf, customOptions: customOptions, parentPath: currentPath });
     }
     const isPlainObject = isObject(node);
     const [fold, _setFold] = React.useState(isCollapsed(node, depth, indexOrName, collapsed, collapseObjectsAfterLength, customOptions));
@@ -594,10 +609,11 @@ function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, custo
                 depth,
                 src,
                 indexOrName: indexOrName,
-                parentType: isPlainObject ? 'object' : 'array'
+                parentType: isPlainObject ? 'object' : 'array',
+                parentPath: currentPath
             });
         if (onChange)
-            onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' });
+            onChange({ type: 'edit', depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array', parentPath: currentPath });
         forceUpdate();
     }, [node, onEdit, onChange, forceUpdate]);
     // Delete property
@@ -615,16 +631,17 @@ function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, custo
     const deleteSelf = () => {
         setDeleting(false);
         if (_deleteSelf)
-            _deleteSelf(indexOrName);
+            _deleteSelf(indexOrName, currentPath);
         if (onDelete)
-            onDelete({ value: node, depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array' });
+            onDelete({ value: node, depth, src, indexOrName: indexOrName, parentType: isPlainObject ? 'object' : 'array', parentPath: currentPath });
         if (onChange)
             onChange({
                 type: 'delete',
                 depth,
                 src,
                 indexOrName: indexOrName,
-                parentType: isPlainObject ? 'object' : 'array'
+                parentType: isPlainObject ? 'object' : 'array',
+                parentPath: currentPath
             });
     };
     // Add
@@ -640,18 +657,18 @@ function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, custo
                     inputRef.current.value = '';
                 setAdding(false);
                 if (onAdd)
-                    onAdd({ indexOrName: inputName, depth, src, parentType: 'object' });
+                    onAdd({ indexOrName: inputName, depth, src, parentType: 'object', parentPath: currentPath });
                 if (onChange)
-                    onChange({ type: 'add', indexOrName: inputName, depth, src, parentType: 'object' });
+                    onChange({ type: 'add', indexOrName: inputName, depth, src, parentType: 'object', parentPath: currentPath });
             }
         }
         else if (Array.isArray(node)) {
             const arr = node;
             arr.push(null);
             if (onAdd)
-                onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array' });
+                onAdd({ indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath: currentPath });
             if (onChange)
-                onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array' });
+                onChange({ type: 'add', indexOrName: arr.length - 1, depth, src, parentType: 'array', parentPath: currentPath });
         }
         forceUpdate();
     };
@@ -669,7 +686,7 @@ function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, custo
         setDeleting(false);
         setAdding(false);
     };
-    const Icons = (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [!fold && !isEditing && (jsxRuntime.jsxs("span", Object.assign({ onClick: () => setFold(true), className: 'jv-size-chevron' }, { children: [ifDisplay(displaySize, depth, fold) && jsxRuntime.jsxs("span", Object.assign({ className: 'jv-size' }, { children: [objectSize(node), " Items"] })), jsxRuntime.jsx(SvgAngleDown, { className: 'jv-chevron' })] }))), adding && isPlainObject && jsxRuntime.jsx("input", { className: 'json-view--input', placeholder: 'property', ref: inputRef, onKeyDown: handleAddKeyDown }), isEditing && jsxRuntime.jsx(SvgDone, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: adding ? add : deleteSelf }), isEditing && jsxRuntime.jsx(SvgCancel, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel }), !fold && !isEditing && enableClipboard && customCopy(customOptions) && jsxRuntime.jsx(CopyButton, { node: node }), !fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (jsxRuntime.jsx(SvgAddSquare, { className: 'json-view--edit', onClick: () => {
+    const Icons = (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [!fold && !isEditing && (jsxRuntime.jsxs("span", { onClick: () => setFold(true), className: 'jv-size-chevron', children: [ifDisplay(displaySize, depth, fold) && jsxRuntime.jsxs("span", { className: 'jv-size', children: [objectSize(node), " Items"] }), jsxRuntime.jsx(SvgAngleDown, { className: 'jv-chevron' })] })), adding && isPlainObject && jsxRuntime.jsx("input", { className: 'json-view--input', placeholder: 'property', ref: inputRef, onKeyDown: handleAddKeyDown }), isEditing && jsxRuntime.jsx(SvgDone, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: adding ? add : deleteSelf }), isEditing && jsxRuntime.jsx(SvgCancel, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel }), !fold && !isEditing && enableClipboard && customCopy(customOptions) && (jsxRuntime.jsx(CopyButton, { node: node, nodeMeta: { depth, indexOrName, parent, parentPath, currentPath } })), !fold && !isEditing && editableAdd(editable) && customAdd(customOptions) && (jsxRuntime.jsx(SvgAddSquare, { className: 'json-view--edit', onClick: () => {
                     if (isPlainObject) {
                         setAdding(true);
                         setTimeout(() => { var _a; return (_a = inputRef.current) === null || _a === void 0 ? void 0 : _a.focus(); });
@@ -679,12 +696,14 @@ function ObjectNode({ node, depth, indexOrName, deleteHandle: _deleteSelf, custo
                     }
                 } })), !fold && !isEditing && editableDelete(editable) && customDelete(customOptions) && _deleteSelf && (jsxRuntime.jsx(SvgTrash, { className: 'json-view--edit', onClick: () => setDeleting(true) })), typeof CustomOperation === 'function' ? jsxRuntime.jsx(CustomOperation, { node: node }) : null] }));
     if (Array.isArray(node)) {
-        return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { children: '[' }), Icons, !fold ? (jsxRuntime.jsx("div", Object.assign({ className: 'jv-indent' }, { children: node.map((n, i) => (jsxRuntime.jsx(NameValue, { indexOrName: i, value: n, depth: depth, parent: node, deleteHandle: deleteHandle, editHandle: editHandle }, String(indexOrName) + String(i)))) }))) : (jsxRuntime.jsx("button", Object.assign({ onClick: () => setFold(false), className: 'jv-button' }, { children: "..." }))), jsxRuntime.jsx("span", { children: ']' }), fold && ifDisplay(displaySize, depth, fold) && (jsxRuntime.jsxs("span", Object.assign({ onClick: () => setFold(false), className: 'jv-size' }, { children: [objectSize(node), " Items"] })))] }));
+        return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { children: '[' }), Icons, !fold ? (jsxRuntime.jsx("div", { className: 'jv-indent', children: node.map((n, i) => (jsxRuntime.jsx(NameValue, { indexOrName: i, value: n, depth: depth, parent: node, deleteHandle: deleteHandle, editHandle: editHandle, parentPath: currentPath }, String(indexOrName) + String(i)))) })) : (jsxRuntime.jsx("button", { onClick: () => setFold(false), className: 'jv-button', children: "..." })), jsxRuntime.jsx("span", { children: ']' }), fold && ifDisplay(displaySize, depth, fold) && (jsxRuntime.jsxs("span", { onClick: () => setFold(false), className: 'jv-size', children: [objectSize(node), " Items"] }))] }));
     }
     else if (isPlainObject) {
-        return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { children: '{' }), Icons, !fold ? (jsxRuntime.jsx("div", Object.assign({ className: 'jv-indent' }, { children: Object.entries(node).map(([name, value]) => (jsxRuntime.jsx(NameValue, { indexOrName: name, value: value, depth: depth, parent: node, deleteHandle: deleteHandle, editHandle: editHandle }, String(indexOrName) + String(name)))) }))) : (jsxRuntime.jsx("button", Object.assign({ onClick: () => setFold(false), className: 'jv-button' }, { children: "..." }))), jsxRuntime.jsx("span", { children: '}' }), fold && ifDisplay(displaySize, depth, fold) && (jsxRuntime.jsxs("span", Object.assign({ onClick: () => setFold(false), className: 'jv-size' }, { children: [objectSize(node), " Items"] })))] }));
+        return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [jsxRuntime.jsx("span", { children: '{' }), Icons, !fold ? (jsxRuntime.jsx("div", { className: 'jv-indent', children: Object.entries(node).map(([name, value]) => (jsxRuntime.jsx(NameValue, { indexOrName: name, value: value, depth: depth, parent: node, deleteHandle: deleteHandle, editHandle: editHandle, parentPath: currentPath }, String(indexOrName) + String(name)))) })) : (jsxRuntime.jsx("button", { onClick: () => setFold(false), className: 'jv-button', children: "..." })), jsxRuntime.jsx("span", { children: '}' }), fold && ifDisplay(displaySize, depth, fold) && (jsxRuntime.jsxs("span", { onClick: () => setFold(false), className: 'jv-size', children: [objectSize(node), " Items"] }))] }));
     }
-    return null;
+    else {
+        return jsxRuntime.jsx("span", { children: String(node) });
+    }
 }
 
 const LongString = React.forwardRef(({ str, className, ctrlClick }, ref) => {
@@ -711,11 +730,11 @@ const LongString = React.forwardRef(({ str, className, ctrlClick }, ref) => {
         }
     };
     if (str.length <= collapseStringsAfterLength)
-        return (jsxRuntime.jsxs("span", Object.assign({ ref: strRef, className: className, onClick: ctrlClick }, { children: ["\"", str, "\""] })));
+        return (jsxRuntime.jsxs("span", { ref: strRef, className: className, onClick: ctrlClick, children: ["\"", str, "\""] }));
     if (collapseStringMode === 'address')
-        return str.length <= 10 ? (jsxRuntime.jsxs("span", Object.assign({ ref: strRef, className: className, onClick: ctrlClick }, { children: ["\"", str, "\""] }))) : (jsxRuntime.jsxs("span", Object.assign({ ref: strRef, onClick: clickToTruncateOrEdit, className: className + ' cursor-pointer' }, { children: ["\"", truncated ? [str_show.slice(0, 6), collapseStringUI, str_show.slice(-4)] : str, "\""] })));
+        return str.length <= 10 ? (jsxRuntime.jsxs("span", { ref: strRef, className: className, onClick: ctrlClick, children: ["\"", str, "\""] })) : (jsxRuntime.jsxs("span", { ref: strRef, onClick: clickToTruncateOrEdit, className: className + ' cursor-pointer', children: ["\"", truncated ? [str_show.slice(0, 6), collapseStringUI, str_show.slice(-4)] : str, "\""] }));
     if (collapseStringMode === 'directly') {
-        return (jsxRuntime.jsxs("span", Object.assign({ ref: strRef, onClick: clickToTruncateOrEdit, className: className + ' cursor-pointer' }, { children: ["\"", truncated ? [str_show.slice(0, collapseStringsAfterLength), collapseStringUI] : str, "\""] })));
+        return (jsxRuntime.jsxs("span", { ref: strRef, onClick: clickToTruncateOrEdit, className: className + ' cursor-pointer', children: ["\"", truncated ? [str_show.slice(0, collapseStringsAfterLength), collapseStringUI] : str, "\""] }));
     }
     if (collapseStringMode === 'word') {
         let index_ahead = collapseStringsAfterLength;
@@ -739,13 +758,13 @@ const LongString = React.forwardRef(({ str, className, ctrlClick }, ref) => {
             index_ahead--;
             index_behind++;
         }
-        return (jsxRuntime.jsxs("span", Object.assign({ ref: strRef, onClick: clickToTruncateOrEdit, className: className + ' cursor-pointer' }, { children: ["\"", truncated ? [str_collapsed, collapseStringUI] : str, "\""] })));
+        return (jsxRuntime.jsxs("span", { ref: strRef, onClick: clickToTruncateOrEdit, className: className + ' cursor-pointer', children: ["\"", truncated ? [str_collapsed, collapseStringUI] : str, "\""] }));
     }
-    return (jsxRuntime.jsxs("span", Object.assign({ ref: strRef, className: className }, { children: ["\"", str, "\""] })));
+    return (jsxRuntime.jsxs("span", { ref: strRef, className: className, children: ["\"", str, "\""] }));
 });
 
 var _path$1;
-function _extends$1() { _extends$1 = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends$1.apply(this, arguments); }
+function _extends$1() { return _extends$1 = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends$1.apply(null, arguments); }
 var SvgEdit = function SvgEdit(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends$1({
     xmlns: "http://www.w3.org/2000/svg",
@@ -755,12 +774,12 @@ var SvgEdit = function SvgEdit(props) {
     viewBox: "0 0 24 24"
   }, props), _path$1 || (_path$1 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M17.25 3H6.75A3.754 3.754 0 0 0 3 6.75v10.5A3.754 3.754 0 0 0 6.75 21h10.5A3.754 3.754 0 0 0 21 17.25V6.75A3.754 3.754 0 0 0 17.25 3Zm2.25 14.25c0 1.24-1.01 2.25-2.25 2.25H6.75c-1.24 0-2.25-1.01-2.25-2.25V6.75c0-1.24 1.01-2.25 2.25-2.25h10.5c1.24 0 2.25 1.01 2.25 2.25v10.5Zm-6.09-9.466-5.031 5.03a2.981 2.981 0 0 0-.879 2.121v1.19c0 .415.336.75.75.75h1.19c.8 0 1.554-.312 2.12-.879l5.03-5.03a2.252 2.252 0 0 0 0-3.182c-.85-.85-2.331-.85-3.18 0Zm-2.91 7.151c-.28.28-.666.44-1.06.44H9v-.44c0-.4.156-.777.44-1.06l3.187-3.188 1.06 1.061-3.187 3.188Zm5.03-5.03-.782.783-1.06-1.061.782-.782a.766.766 0 0 1 1.06 0 .75.75 0 0 1 0 1.06Z"
+    d: "M17.25 3H6.75A3.754 3.754 0 0 0 3 6.75v10.5A3.754 3.754 0 0 0 6.75 21h10.5A3.754 3.754 0 0 0 21 17.25V6.75A3.754 3.754 0 0 0 17.25 3m2.25 14.25c0 1.24-1.01 2.25-2.25 2.25H6.75c-1.24 0-2.25-1.01-2.25-2.25V6.75c0-1.24 1.01-2.25 2.25-2.25h10.5c1.24 0 2.25 1.01 2.25 2.25zm-6.09-9.466-5.031 5.03a2.98 2.98 0 0 0-.879 2.121v1.19c0 .415.336.75.75.75h1.19c.8 0 1.554-.312 2.12-.879l5.03-5.03a2.25 2.25 0 0 0 0-3.182c-.85-.85-2.331-.85-3.18 0m-2.91 7.151c-.28.28-.666.44-1.06.44H9v-.44c0-.4.156-.777.44-1.06l3.187-3.187 1.06 1.06zm5.03-5.03-.782.783-1.06-1.061.782-.782a.766.766 0 0 1 1.06 0 .75.75 0 0 1 0 1.06"
   })));
 };
 
 var _path, _path2;
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 var SvgLink = function SvgLink(props) {
   return /*#__PURE__*/React__namespace.createElement("svg", _extends({
     xmlns: "http://www.w3.org/2000/svg",
@@ -770,14 +789,14 @@ var SvgLink = function SvgLink(props) {
     viewBox: "0 0 24 24"
   }, props), _path || (_path = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M6.75 3h5.5v1.5h-5.5C5.51 4.5 4.5 5.51 4.5 6.75v10.5c0 1.24 1.01 2.25 2.25 2.25h10.5c1.24 0 2.25-1.01 2.25-2.25v-5.5H21v5.5A3.754 3.754 0 0 1 17.25 21H6.75A3.754 3.754 0 0 1 3 17.25V6.75A3.754 3.754 0 0 1 6.75 3Z"
+    d: "M6.75 3h5.5v1.5h-5.5C5.51 4.5 4.5 5.51 4.5 6.75v10.5c0 1.24 1.01 2.25 2.25 2.25h10.5c1.24 0 2.25-1.01 2.25-2.25v-5.5H21v5.5A3.754 3.754 0 0 1 17.25 21H6.75A3.754 3.754 0 0 1 3 17.25V6.75A3.754 3.754 0 0 1 6.75 3"
   })), _path2 || (_path2 = /*#__PURE__*/React__namespace.createElement("path", {
     fill: "currentColor",
-    d: "M20.013 3h-3.946a.987.987 0 0 0 0 1.973h1.564l-6.342 6.342a1.004 1.004 0 0 0 0 1.396 1.004 1.004 0 0 0 1.396 0l6.342-6.342v1.564a.987.987 0 0 0 1.973 0V3.987A.987.987 0 0 0 20.013 3Z"
+    d: "M20.013 3h-3.946a.987.987 0 0 0 0 1.973h1.564l-6.342 6.342a1.004 1.004 0 0 0 0 1.396 1.004 1.004 0 0 0 1.396 0l6.342-6.342v1.564a.987.987 0 0 0 1.973 0V3.987A.987.987 0 0 0 20.013 3"
   })));
 };
 
-function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle }) {
+function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, parent, editHandle, parentPath }) {
     // prettier-ignore
     const { collapseStringsAfterLength, enableClipboard, editable, src, onDelete, onChange, customizeNode, matchesURL, urlRegExp, EditComponent, DoneComponent, CancelComponent, CustomOperation } = React.useContext(JsonViewContext);
     let customReturn;
@@ -792,14 +811,24 @@ function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, paren
         }
     }
     const editCustom = React.useCallback((newValue) => {
-        if (editHandle)
-            editHandle(indexOrName, newValue, node);
+        try {
+            const parsedValue = JSON.parse(newValue);
+            if (editHandle)
+                editHandle(indexOrName, parsedValue, node, parentPath);
+        }
+        catch (e) {
+            const type = typeof node;
+            const trimmedStringValue = resolveEvalFailedNewValue(type, newValue);
+            if (editHandle)
+                editHandle(indexOrName, trimmedStringValue, node, parentPath);
+        }
     }, [editHandle, indexOrName, node]);
     if (Array.isArray(node) || isObject(node)) {
-        return (jsxRuntime.jsx(ObjectNode, { node: node, depth: depth, indexOrName: indexOrName, deleteHandle: _deleteHandle, customOptions: typeof customReturn === 'object' ? customReturn : undefined }));
+        return (jsxRuntime.jsx(ObjectNode, { parent: parent, node: node, depth: depth, indexOrName: indexOrName, deleteHandle: _deleteHandle, parentPath: parentPath, customOptions: typeof customReturn === 'object' ? customReturn : undefined }));
     }
     else {
         const type = typeof node;
+        const currentPath = typeof indexOrName !== 'undefined' ? [...parentPath, String(indexOrName)] : parentPath;
         const [editing, setEditing] = React.useState(false);
         const [deleting, setDeleting] = React.useState(false);
         const valueRef = React.useRef(null);
@@ -816,15 +845,15 @@ function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, paren
             try {
                 const parsedValue = JSON.parse(newValue);
                 if (editHandle)
-                    editHandle(indexOrName, parsedValue, node);
+                    editHandle(indexOrName, parsedValue, node, parentPath);
             }
             catch (e) {
                 const trimmedStringValue = resolveEvalFailedNewValue(type, newValue);
                 if (editHandle)
-                    editHandle(indexOrName, trimmedStringValue, node);
+                    editHandle(indexOrName, trimmedStringValue, node, parentPath);
             }
             setEditing(false);
-        }, [editHandle]);
+        }, [editHandle, indexOrName, node, parentPath, type]);
         const cancel = () => {
             setEditing(false);
             setDeleting(false);
@@ -832,14 +861,15 @@ function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, paren
         const deleteHandle = () => {
             setDeleting(false);
             if (_deleteHandle)
-                _deleteHandle(indexOrName);
+                _deleteHandle(indexOrName, parentPath);
             if (onDelete)
                 onDelete({
                     value: node,
                     depth,
                     src,
                     indexOrName: indexOrName,
-                    parentType: Array.isArray(parent) ? 'array' : 'object'
+                    parentType: Array.isArray(parent) ? 'array' : 'object',
+                    parentPath
                 });
             if (onChange)
                 onChange({
@@ -847,7 +877,8 @@ function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, paren
                     src,
                     indexOrName: indexOrName,
                     parentType: Array.isArray(parent) ? 'array' : 'object',
-                    type: 'delete'
+                    type: 'delete',
+                    parentPath
                 });
         };
         const handleKeyDown = React.useCallback((event) => {
@@ -868,7 +899,7 @@ function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, paren
             : undefined;
         const Icons = (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [isEditing &&
                     (typeof DoneComponent === 'function' ? (jsxRuntime.jsx(DoneComponent, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: deleting ? deleteHandle : done })) : (jsxRuntime.jsx(SvgDone, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: deleting ? deleteHandle : done }))), isEditing &&
-                    (typeof CancelComponent === 'function' ? (jsxRuntime.jsx(CancelComponent, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel })) : (jsxRuntime.jsx(SvgCancel, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel }))), !isEditing && enableClipboard && customCopy(customReturn) && jsxRuntime.jsx(CopyButton, { node: node }), !isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn) && (jsxRuntime.jsx("a", Object.assign({ href: node, target: '_blank', className: 'json-view--link' }, { children: jsxRuntime.jsx(SvgLink, {}) }))), !isEditing &&
+                    (typeof CancelComponent === 'function' ? (jsxRuntime.jsx(CancelComponent, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel })) : (jsxRuntime.jsx(SvgCancel, { className: 'json-view--edit', style: { display: 'inline-block' }, onClick: cancel }))), !isEditing && enableClipboard && customCopy(customReturn) && (jsxRuntime.jsx(CopyButton, { node: node, nodeMeta: { depth, indexOrName, parent, parentPath, currentPath } })), !isEditing && matchesURL && type === 'string' && urlRegExp.test(node) && customMatchesURL(customReturn) && (jsxRuntime.jsx("a", { href: node, target: '_blank', className: 'json-view--link', children: jsxRuntime.jsx(SvgLink, {}) })), !isEditing &&
                     editableEdit(editable) &&
                     customEdit(customReturn) &&
                     editHandle &&
@@ -895,9 +926,9 @@ function JsonNode({ node, depth, deleteHandle: _deleteHandle, indexOrName, paren
             displayValue += 'n';
         const EditingElement = React.useMemo(() => (jsxRuntime.jsx("span", { contentEditable: true, className: className, dangerouslySetInnerHTML: { __html: type === 'string' ? `"${displayValue}"` : displayValue }, ref: valueRef, onKeyDown: handleKeyDown })), [displayValue, type, handleKeyDown]);
         if (type === 'string')
-            return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [editing ? (EditingElement) : node.length > collapseStringsAfterLength ? (jsxRuntime.jsx(LongString, { str: node, ref: valueRef, className: className, ctrlClick: ctrlClick })) : (jsxRuntime.jsxs("span", Object.assign({ className: className, onClick: ctrlClick }, { children: ["\"", displayValue, "\""] }))), Icons] }));
+            return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [editing ? (EditingElement) : node.length > collapseStringsAfterLength ? (jsxRuntime.jsx(LongString, { str: node, ref: valueRef, className: className, ctrlClick: ctrlClick })) : (jsxRuntime.jsxs("span", { className: className, onClick: ctrlClick, children: ["\"", displayValue, "\""] })), Icons] }));
         else {
-            return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [editing ? (EditingElement) : (jsxRuntime.jsx("span", Object.assign({ className: className, onClick: ctrlClick }, { children: displayValue }))), Icons] }));
+            return (jsxRuntime.jsxs(jsxRuntime.Fragment, { children: [editing ? (EditingElement) : (jsxRuntime.jsx("span", { className: className, onClick: ctrlClick, children: displayValue })), Icons] }));
         }
     }
 }
@@ -930,14 +961,14 @@ const JsonViewContext = React.createContext({
     EditComponent: undefined,
     CancelComponent: undefined,
     DoneComponent: undefined,
-    CustomOperation: undefined,
+    CustomOperation: undefined
 });
-function JsonView({ src: _src, collapseStringsAfterLength = 99, collapseStringMode = 'directly', customizeCollapseStringUI, collapseObjectsAfterLength = 99, collapsed, onCollapse, enableClipboard = true, editable = false, onEdit, onDelete, onAdd, onChange, dark = false, theme = 'default', customizeNode, customizeCopy = stringifyForCopying, displaySize, displayArrayIndex = true, style, className, matchesURL = false, urlRegExp = defaultURLRegExp, ignoreLargeArray = false, CopyComponent, CopiedComponent, EditComponent, CancelComponent, DoneComponent, CustomOperation, }) {
+function JsonView({ src: _src, collapseStringsAfterLength = 99, collapseStringMode = 'directly', customizeCollapseStringUI, collapseObjectsAfterLength = 99, collapsed, onCollapse, enableClipboard = true, editable = false, onEdit, onDelete, onAdd, onChange, dark = false, theme = 'default', customizeNode, customizeCopy = node => stringifyForCopying(node), displaySize, displayArrayIndex = true, style, className, matchesURL = false, urlRegExp = defaultURLRegExp, ignoreLargeArray = false, CopyComponent, CopiedComponent, EditComponent, CancelComponent, DoneComponent, CustomOperation }) {
     const [_, update] = React.useState(0);
     const forceUpdate = React.useCallback(() => update(state => ++state), []);
     const [src, setSrc] = React.useState(_src);
     React.useEffect(() => setSrc(_src), [_src]);
-    return (jsxRuntime.jsx(JsonViewContext.Provider, Object.assign({ value: {
+    return (jsxRuntime.jsx(JsonViewContext.Provider, { value: {
             src,
             collapseStringsAfterLength,
             collapseStringMode,
@@ -964,8 +995,8 @@ function JsonView({ src: _src, collapseStringsAfterLength = 99, collapseStringMo
             EditComponent,
             CancelComponent,
             DoneComponent,
-            CustomOperation,
-        } }, { children: jsxRuntime.jsx("code", Object.assign({ className: 'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : ''), style: style }, { children: jsxRuntime.jsx(JsonNode, { node: src, depth: 1, editHandle: (indexOrName, newValue, oldValue) => {
+            CustomOperation
+        }, children: jsxRuntime.jsx("code", { className: 'json-view' + (dark ? ' dark' : '') + (theme && theme !== 'default' ? ' json-view_' + theme : '') + (className ? ' ' + className : ''), style: style, children: jsxRuntime.jsx(JsonNode, { node: src, depth: 1, editHandle: (indexOrName, newValue, oldValue, parentPath) => {
                     setSrc(newValue);
                     if (onEdit)
                         onEdit({
@@ -974,29 +1005,32 @@ function JsonView({ src: _src, collapseStringsAfterLength = 99, collapseStringMo
                             depth: 1,
                             src,
                             indexOrName: indexOrName,
-                            parentType: null
+                            parentType: null,
+                            parentPath: parentPath
                         });
                     if (onChange)
-                        onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentType: null });
-                }, deleteHandle: () => {
-                    setSrc({});
+                        onChange({ type: 'edit', depth: 1, src, indexOrName: indexOrName, parentType: null, parentPath: parentPath });
+                }, deleteHandle: (indexOrName, parentPath) => {
+                    setSrc(undefined);
                     if (onDelete)
                         onDelete({
                             value: src,
                             depth: 1,
                             src,
-                            indexOrName: '',
-                            parentType: null
+                            indexOrName: indexOrName,
+                            parentType: null,
+                            parentPath: parentPath
                         });
                     if (onChange)
                         onChange({
                             depth: 1,
                             src,
-                            indexOrName: '',
+                            indexOrName: indexOrName,
                             parentType: null,
-                            type: 'delete'
+                            type: 'delete',
+                            parentPath: parentPath
                         });
-                } }) })) })));
+                }, parentPath: [] }) }) }));
 }
 
 exports.CancelSVG = SvgCancel;

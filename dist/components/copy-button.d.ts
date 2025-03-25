@@ -1,4 +1,7 @@
-/// <reference types="react" />
-export default function CopyButton({ node }: {
+import { NodeMeta } from 'src/types';
+interface Props {
     node: any;
-}): JSX.Element;
+    nodeMeta: NodeMeta;
+}
+export default function CopyButton({ node, nodeMeta }: Props): import("react/jsx-runtime").JSX.Element;
+export {};

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export declare type Collapsed = undefined | number | boolean | ((params: {
     node: Record<string, any> | Array<any>;
     indexOrName: number | string | undefined;
@@ -46,4 +45,11 @@ export type DeleteProps = {
     depth: number;
     src: any;
     parentType: 'object' | 'array' | null;
+};
+export type NodeMeta = {
+    depth: number;
+    indexOrName?: number | string;
+    parent?: Record<string, any> | Array<any>;
+    parentPath: string[];
+    currentPath: string[];
 };

@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import type { Collapsed, CustomizeOptions, DisplaySize, Editable } from './types';
 export declare function isObject(node: any): node is Record<string, any>;
 export declare function objectSize(node: Record<string, any> | Array<any>): number;

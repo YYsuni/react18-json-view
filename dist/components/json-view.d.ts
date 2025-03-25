@@ -1,14 +1,35 @@
-/// <reference types="react" />
-import type { AddProps, Collapsed, CustomizeCollapseStringUI, CustomizeNode, DeleteProps, DisplaySize, Editable, EditProps } from '../types';
-export type OnEdit = (params: EditProps) => void;
-export type OnDelete = (params: DeleteProps) => void;
-export type OnAdd = (params: AddProps) => void;
-export type OnChange = (params: {
+import type { Collapsed, CustomizeCollapseStringUI, CustomizeNode, DisplaySize, Editable, NodeMeta } from '../types';
+type OnEdit = (params: {
+    newValue: any;
+    oldValue: any;
+    depth: number;
+    src: any;
+    indexOrName: string | number;
+    parentType: 'object' | 'array' | null;
+    parentPath: string[];
+}) => void;
+type OnDelete = (params: {
+    value: any;
+    indexOrName: string | number;
+    depth: number;
+    src: any;
+    parentType: 'object' | 'array' | null;
+    parentPath: string[];
+}) => void;
+type OnAdd = (params: {
+    indexOrName: string | number;
+    depth: number;
+    src: any;
+    parentType: 'object' | 'array';
+    parentPath: string[];
+}) => void;
+type OnChange = (params: {
     indexOrName: string | number;
     depth: number;
     src: any;
     parentType: 'object' | 'array' | null;
     type: 'add' | 'edit' | 'delete';
+    parentPath: string[];
 }) => void;
 type OnCollapse = (params: {
     isCollapsing: boolean;
@@ -33,60 +54,60 @@ export declare const JsonViewContext: import("react").Context<{
     onChange: OnChange | undefined;
     forceUpdate: () => void;
     customizeNode: CustomizeNode | undefined;
-    customizeCopy: (node: any) => any;
+    customizeCopy: (node: any, nodeMeta?: NodeMeta) => any;
     displaySize: DisplaySize;
     displayArrayIndex: boolean;
     matchesURL: boolean;
     urlRegExp: RegExp;
     ignoreLargeArray: boolean;
-    CopyComponent: import("react").FC<{
+    CopyComponent: React.FC<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
-    }> | import("react").Component<{
+    }> | React.Component<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
-    }, {}, any> | undefined;
-    CopiedComponent: import("react").FC<{
+    }> | undefined;
+    CopiedComponent: React.FC<{
         className: string;
         style: React.CSSProperties;
-    }> | import("react").Component<{
+    }> | React.Component<{
         className: string;
         style: React.CSSProperties;
-    }, {}, any> | undefined;
-    EditComponent: import("react").FC<{
+    }> | undefined;
+    EditComponent: React.FC<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
         editCustom: (newValue: string) => void;
         value: string | null;
-    }> | import("react").Component<{
+    }> | React.Component<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
         editCustom: (newValue: string) => void;
         value: string | null;
-    }, {}, any> | undefined;
-    CancelComponent: import("react").FC<{
+    }> | undefined;
+    CancelComponent: React.FC<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
         style: React.CSSProperties;
-    }> | import("react").Component<{
+    }> | React.Component<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
         style: React.CSSProperties;
-    }, {}, any> | undefined;
-    DoneComponent: import("react").FC<{
+    }> | undefined;
+    DoneComponent: React.FC<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
         style: React.CSSProperties;
-    }> | import("react").Component<{
+    }> | React.Component<{
         onClick: (event: React.MouseEvent) => void;
         className: string;
         style: React.CSSProperties;
-    }, {}, any> | undefined;
-    CustomOperation: import("react").FC<{
+    }> | undefined;
+    CustomOperation: React.FC<{
         node: any;
-    }> | import("react").Component<{
+    }> | React.Component<{
         node: any;
-    }, {}, any> | undefined;
+    }> | undefined;
 }>;
 export interface JsonViewProps {
     src: any;
@@ -103,7 +124,7 @@ export interface JsonViewProps {
     onAdd?: OnAdd;
     onChange?: OnChange;
     customizeNode?: CustomizeNode;
-    customizeCopy?: (node: any) => any;
+    customizeCopy?: (node: any, nodeMeta?: NodeMeta) => any;
     dark?: boolean;
     theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming';
     displaySize?: DisplaySize;
@@ -162,5 +183,5 @@ export interface JsonViewProps {
         node: any;
     }>;
 }
-export default function JsonView({ src: _src, collapseStringsAfterLength, collapseStringMode, customizeCollapseStringUI, collapseObjectsAfterLength, collapsed, onCollapse, enableClipboard, editable, onEdit, onDelete, onAdd, onChange, dark, theme, customizeNode, customizeCopy, displaySize, displayArrayIndex, style, className, matchesURL, urlRegExp, ignoreLargeArray, CopyComponent, CopiedComponent, EditComponent, CancelComponent, DoneComponent, CustomOperation, }: JsonViewProps): JSX.Element;
+export default function JsonView({ src: _src, collapseStringsAfterLength, collapseStringMode, customizeCollapseStringUI, collapseObjectsAfterLength, collapsed, onCollapse, enableClipboard, editable, onEdit, onDelete, onAdd, onChange, dark, theme, customizeNode, customizeCopy, displaySize, displayArrayIndex, style, className, matchesURL, urlRegExp, ignoreLargeArray, CopyComponent, CopiedComponent, EditComponent, CancelComponent, DoneComponent, CustomOperation }: JsonViewProps): import("react/jsx-runtime").JSX.Element;
 export {};
