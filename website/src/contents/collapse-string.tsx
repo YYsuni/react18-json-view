@@ -1,4 +1,4 @@
-import { writeText } from '@/lib/clipboard'
+import { copyToClipboard } from '@/lib/clipboard'
 import clsx from 'clsx'
 import hljs from 'highlight.js/lib/core'
 import { useState } from 'react'
@@ -18,7 +18,7 @@ export default function CollapseString() {
 	const [copied, setCopied] = useState(false)
 
 	const copy = () => {
-		writeText(code)
+		void copyToClipboard(code)
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
 	}

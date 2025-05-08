@@ -38,14 +38,6 @@ export function stringifyForCopying(node: any, space?: string | number | undefin
 	}
 }
 
-export async function writeClipboard(value: string) {
-	try {
-		await navigator.clipboard.writeText(value)
-	} catch (err) {
-		copy(value)
-	}
-}
-
 export function isCollapsed(
 	node: Record<string, any> | Array<any>,
 	depth: number,

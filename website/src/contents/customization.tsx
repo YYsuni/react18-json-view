@@ -1,4 +1,4 @@
-import { writeText } from '@/lib/clipboard'
+import { copyToClipboard } from '@/lib/clipboard'
 import hljs from 'highlight.js/lib/core'
 import { useState } from 'react'
 import JsonView from 'react18-json-view'
@@ -43,7 +43,7 @@ export default function Customization() {
 	const [copied, setCopied] = useState(false)
 
 	const copy = () => {
-		writeText(CODE)
+		void copyToClipboard(CODE)
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
 	}

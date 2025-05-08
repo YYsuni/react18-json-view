@@ -1,4 +1,4 @@
-import { writeText } from '@/lib/clipboard'
+import { copyToClipboard } from '@/lib/clipboard'
 import '@/lib/hljs'
 import hljs from 'highlight.js/lib/core'
 import { useMemo } from 'react'
@@ -21,7 +21,7 @@ export default function Usage() {
 
 	const [copied, setCopied] = useState(false)
 	const copy = () => {
-		writeText(CODE)
+		void copyToClipboard(CODE)
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
 	}

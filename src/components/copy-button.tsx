@@ -4,6 +4,7 @@ import { ReactComponent as CopiedSVG } from '../svgs/copied.svg'
 import { JsonViewContext } from './json-view'
 import { writeClipboard } from 'src/utils'
 import { NodeMeta } from 'src/types'
+import { copyToClipboard } from '../clipboard'
 
 interface Props {
 	node: any
@@ -21,7 +22,7 @@ export default function CopyButton({ node, nodeMeta }: Props) {
 		const value = customizeCopy(node, nodeMeta)
 
 		if (typeof value === 'string' && value) {
-			writeClipboard(value)
+			void copyToClipboard(value)
 		}
 
 		setCopied(true)

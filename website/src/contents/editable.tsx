@@ -1,4 +1,4 @@
-import { writeText } from '@/lib/clipboard'
+import { copyToClipboard } from '@/lib/clipboard'
 import hljs from 'highlight.js'
 import { useState } from 'react'
 import CopySVG from '@/svgs/copy.svg'
@@ -23,7 +23,7 @@ export default function Editable() {
 	const [copied, setCopied] = useState(false)
 
 	const copy = () => {
-		writeText(CODE)
+		void copyToClipboard(CODE)
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
 	}

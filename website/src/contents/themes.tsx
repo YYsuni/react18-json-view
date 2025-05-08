@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import JsonView from 'react18-json-view'
 import clsx from 'clsx'
 import { useTheme } from '@/hooks/useTheme'
-import { writeText } from '@/lib/clipboard'
+import { copyToClipboard } from '@/lib/clipboard'
 import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
 import '@/lib/hljs'
@@ -57,7 +57,7 @@ export default function Themes() {
 	const code = `<JsonView src={json_object} theme="${theme}" />`
 
 	const copy = () => {
-		writeText(code)
+		void copyToClipboard(code)
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
 	}
@@ -78,7 +78,7 @@ export default function Themes() {
 	}, [])
 	const [copiedCSS, setCopiedCSS] = useState(false)
 	const copyCSS = () => {
-		writeText(cssText)
+		void copyToClipboard(cssText)
 		setCopiedCSS(true)
 		setTimeout(() => setCopiedCSS(false), 2000)
 	}

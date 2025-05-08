@@ -1,6 +1,6 @@
 'use client'
 
-import { writeText } from '@/lib/clipboard'
+import { copyToClipboard } from '@/lib/clipboard'
 import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
 import { useState } from 'react'
@@ -9,7 +9,7 @@ export default function Installation() {
 	const [copied, setCopied] = useState(false)
 
 	const copy = () => {
-		writeText('npm i react18-json-view')
+		void copyToClipboard('npm i react18-json-view')
 		setCopied(true)
 		setTimeout(() => setCopied(false), 2000)
 	}
