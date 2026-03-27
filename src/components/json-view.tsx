@@ -110,7 +110,7 @@ export interface JsonViewProps {
 	customizeCopy?: (node: any, nodeMeta?: NodeMeta) => any
 
 	dark?: boolean
-	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
+	theme?: 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming' | 'vitesse'
 
 	displaySize?: DisplaySize
 	displayArrayIndex?: boolean

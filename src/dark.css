@@ -52,3 +52,12 @@
 	--json-boolean: #f29fd8;
 	--json-null: #f29fd8;
 }
+:is(.dark .json-view_vitesse, .dark.json-view_vitesse) {
+	color: #dbd7caee;
+	--json-property: #b8a965;
+	--json-index: #4c9a91;
+	--json-number: #4c9a91;
+	--json-string: #c98a7d;
+	--json-boolean: #4d9375;
+	--json-null: #cb7676;
+}

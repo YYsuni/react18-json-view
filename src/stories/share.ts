@@ -19,7 +19,7 @@ export const argTypes = {
 	},
 	theme: {
 		control: 'select',
-		options: ['default', 'a11y', 'github', 'vscode', 'atom', 'winter-is-coming'],
+		options: ['default', 'a11y', 'github', 'vscode', 'atom', 'winter-is-coming', 'vitesse'],
 		table: {
 			defaultValue: { summary: false }
 		}
