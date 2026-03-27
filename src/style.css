@@ -146,3 +146,12 @@
 	--json-boolean: #0184bc;
 	--json-null: #0184bc;
 }
+.json-view_vitesse {
+	color: #393a34;
+	--json-property: #998418;
+	--json-index: #2f798a;
+	--json-number: #2f798a;
+	--json-string: #b56959;
+	--json-boolean: #1e754f;
+	--json-null: #ab5959;
+}

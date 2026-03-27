@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import JsonView from 'react18-json-view'
 import clsx from 'clsx'
 import { useTheme } from '@/hooks/useTheme'
@@ -7,7 +7,6 @@ import CopySVG from '@/svgs/copy.svg'
 import CopiedSVG from '@/svgs/copied.svg'
 import '@/lib/hljs'
 import hljs from 'highlight.js/lib/core'
-import { useMemo } from 'react'
 
 const cssText = `.json-view {
   color: #4d4d4d;
@@ -19,27 +18,32 @@ const cssText = `.json-view {
   --json-null: #dc155e;
 }`
 
-type Theme = 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming'
-const themes: Theme[] = ['default', 'a11y', 'github', 'vscode', 'atom', 'winter-is-coming']
+type Theme = 'default' | 'a11y' | 'github' | 'vscode' | 'atom' | 'winter-is-coming' | 'vitesse'
+
+const themes: Theme[] = ['default', 'a11y', 'github', 'vscode', 'atom', 'winter-is-coming', 'vitesse']
+
 const bgColors: Record<Theme, string> = {
-	default: '#FFFFFF',
-	a11y: 'FEFEFE',
-	github: '#FFFFFF',
-	vscode: '#FEFEFE',
-	atom: '#FFFFFF',
-	'winter-is-coming': '#FFFFFF'
+	default: '#ffffff',
+	a11y: '#fefefe',
+	github: '#ffffff',
+	vscode: '#fefefe',
+	atom: '#ffffff',
+	'winter-is-coming': '#ffffff',
+	vitesse: '#ffffff'
 }
+
 const bgColors_dark: Record<Theme, string> = {
-	default: '#0E0832',
-	a11y: '2B2B2B',
-	github: '#24292E',
-	vscode: '#1E1E1E',
-	atom: '#282C34',
-	'winter-is-coming': '#011627'
+	default: '#0e0832',
+	a11y: '#2b2b2b',
+	github: '#24292e',
+	vscode: '#1e1e1e',
+	atom: '#282c34',
+	'winter-is-coming': '#011627',
+	vitesse: '#121212'
 }
 
 export default function Themes() {
-	const [theme, setTheme] = useState(themes[0])
+	const [theme, setTheme] = useState<Theme>(themes[0])
 	const { theme: glabalTheme } = useTheme()
 	const currentTheme =
 		typeof window !== 'undefined'
