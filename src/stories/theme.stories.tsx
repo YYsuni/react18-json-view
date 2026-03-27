@@ -213,3 +213,33 @@ export const Winter_is_Coming_Dark: StoryObj<TYPE_FC> = {
 		)
 	]
 }
+
+export const Vitesse: StoryObj<TYPE_FC> = {
+	args: {
+		theme: 'vitesse'
+	},
+	decorators: [
+		Story => (
+			<div className='flex h-full items-center justify-center overflow-auto bg-[#eee] p-8'>
+				<div className='max-w-[600px] rounded-xl bg-[#fff] p-6 font-mono shadow backdrop-blur'>
+					<Story />
+				</div>
+			</div>
+		)
+	]
+}
+export const Vitesse_Dark: StoryObj<TYPE_FC> = {
+	args: {
+		theme: 'vitesse',
+		dark: true
+	},
+	decorators: [
+		Story => (
+			<div className='flex h-full items-center justify-center overflow-auto bg-[#333] p-8'>
+				<div className='max-w-[600px] rounded-xl bg-[#121212] p-6 font-mono shadow backdrop-blur'>
+					<Story />
+				</div>
+			</div>
+		)
+	]
+}

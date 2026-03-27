@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import { ReactComponent as CopySVG } from '../svgs/copy.svg'
 import { ReactComponent as CopiedSVG } from '../svgs/copied.svg'
+import type { NodeMeta } from '../types'
+import { writeClipboard } from '../utils'
 import { JsonViewContext } from './json-view'
-import { writeClipboard } from 'src/utils'
-import { NodeMeta } from 'src/types'
 
 interface Props {
 	node: any
